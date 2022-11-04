@@ -9,7 +9,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MedicardDbContext>(options =>
 {
-    options.UseLazyLoadingProxies();
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
@@ -36,6 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
