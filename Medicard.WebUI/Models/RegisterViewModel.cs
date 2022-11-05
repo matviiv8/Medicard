@@ -16,6 +16,7 @@ namespace Medicard.WebUI.Models
         [Required]
         public int Age { get; set; }
         public Gender Gender { get; set; }
+        public UserRole UserRole { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

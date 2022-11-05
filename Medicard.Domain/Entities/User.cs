@@ -18,5 +18,6 @@ namespace Medicard.Domain.Entities
         public string Email { get; set; }
         public int Age { get; set; }
         public Gender Gender { get; set; }
+        public UserRole UserRole { get; set; }
     }
 }

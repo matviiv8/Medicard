@@ -27,6 +27,8 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new DoctorConfiguration());
             builder.ApplyConfiguration(new AppointmentConfiguration());
             builder.ApplyConfiguration(new PatientConfiguration());
+            builder.ApplyConfiguration(new InstitutionConfiguration());
+            builder.ApplyConfiguration(new DiagnosisConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(p => p.Patients)
