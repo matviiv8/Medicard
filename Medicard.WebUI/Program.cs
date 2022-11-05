@@ -1,4 +1,5 @@
 using Medicard.Domain.Concrete;
+using Medicard.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ builder.Services.AddDbContext<MedicardDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MedicardDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MedicardDbContext>();
 
 var app = builder.Build();
 
@@ -27,7 +28,7 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MedicardDbContext>();
-    await context.Database.EnsureCreatedAsync();
+    //await context.Database.EnsureCreatedAsync();
 }
 
 app.UseHttpsRedirection();

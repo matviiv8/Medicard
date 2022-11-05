@@ -14,5 +14,6 @@ namespace Medicard.Domain.Entities
         public string Description { get; set; }
         public string Pharmacy { get; set; }
         public string Analyzes { get; set; }
+        public Appointment Appointment { get; set; }
     }
 }
