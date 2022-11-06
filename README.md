@@ -2,7 +2,7 @@
 ### The idea of the project: the online medical card is similar to Medics
 
 
-- Anonymous visitors:
+Markup : - Anonymous visitors:
         - Log in;
         - Registration;
         - Browse all doctors.
