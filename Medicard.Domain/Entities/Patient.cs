@@ -12,8 +12,8 @@ namespace Medicard.Domain.Entities
         public int Id { get; set; }
         public User User { get; set; }
         public int UserId { get; set; }
-        public string Address { get; set; }
-        public string BirthDate { get; set; }
+        public string? Address { get; set; }
+        public string? BirthDate { get; set; }
         public MaritalStatus MaritalStatus { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }

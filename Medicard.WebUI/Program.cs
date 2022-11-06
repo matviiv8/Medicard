@@ -1,3 +1,4 @@
+using Medicard.Domain.Astract;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +15,9 @@ builder.Services.AddDbContext<MedicardDbContext>(options =>
 });
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MedicardDbContext>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -41,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{Area=Account}/{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

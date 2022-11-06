@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Medicard.Domain.Entities.Patient>
+
+@{
+    ViewData["Title"] = "Patients List";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                Patients:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a><a> |</a>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

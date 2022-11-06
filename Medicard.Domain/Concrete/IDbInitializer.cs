@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Domain.Entities.Enums
+namespace Medicard.Domain.Concrete
 {
-    public enum UserRole
+    public interface IDbInitializer
     {
-        Administrator,
-        Medic,
-        User
+        void Initialize();
     }
 }

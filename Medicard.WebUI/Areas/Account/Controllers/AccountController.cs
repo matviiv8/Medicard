@@ -3,7 +3,7 @@ using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Medicard.WebUI.Controllers
+namespace Medicard.WebUI.Areas.Account.Controllers
 {
     public class AccountController : Controller
     {
@@ -25,11 +25,11 @@ namespace Medicard.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync((User)user, model.Password);
+                var user = new User { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync((User)user, isPersistent: false);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)

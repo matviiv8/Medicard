@@ -6,17 +6,16 @@ namespace Medicard.WebUI.Models
     public class RegisterViewModel
     {
         [Required]
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Required]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
         [Required]
-        public string ContactNumber { get; set; }
+        public string? ContactNumber { get; set; }
         [Required]
         public int Age { get; set; }
         public Gender Gender { get; set; }
-        public UserRole UserRole { get; set; }
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

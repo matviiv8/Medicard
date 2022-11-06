@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace Medicard.WebUI.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -14,7 +13,6 @@ namespace Medicard.WebUI.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();
