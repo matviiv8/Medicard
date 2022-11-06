@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace Medicard.WebUI.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
