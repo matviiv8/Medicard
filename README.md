@@ -2,4 +2,24 @@
 ### The idea of the project: the online medical card is similar to Medics
 
 
-There will be registration and entry. Administrator, doctor and patient account. Therefore, the patient can see only his card and information about doctors and hospitals, and the doctor has a list of your problems, can create, edit, delete a card...
+Anonymous visitors:
+    -Log in;
+    -Registration;
+    -Browse all doctors.
+Patient:
+    -Be able to complete your profile;
+    -Have access to view the list instutions;
+    -Have access to your medical record;
+    -Have access to every doctor;
+    -You can make an appointment if the doctor has free hours;
+    -Can make changes to the profile;
+    -Online chat with a doctor.
+Doctor:
+    -Their profile is created beforehand by the admin with username and password;
+    -After log in doctors have to complete their profile (Upload picture, write biography);
+    -Has access to the list of patients;
+    ...
+Admin:
+    -Create doctors;
+    ...
+
