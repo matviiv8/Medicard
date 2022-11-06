@@ -3,9 +3,9 @@
 
 
 * Anonymous visitors:
-        * Log in;
-        * Registration;
-        * Browse all doctors.
+    * Log in;
+    * Registration;
+    * Browse all doctors.
 -Patient:
     -Be able to complete your profile;
     -Have access to view the list instutions;
