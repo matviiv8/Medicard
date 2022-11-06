@@ -11,11 +11,14 @@ namespace Medicard.Domain.Entities
     public class Doctor
     {
         public int Id { get; set; }
+        public string? ContactNumber { get; set; }
+        public int Age { get; set; }
+        public Gender Gender { get; set; }
         public User? User { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string? Specialization { get; set; }
-        public int InstitutionId { get; set; }
+        public int? InstitutionId { get; set; }
         public Institution? Institution { get; set; }
-        public List<Patient> Patients { get; set; }
+        public List<Patient>? Patients { get; set; }
     }
 }

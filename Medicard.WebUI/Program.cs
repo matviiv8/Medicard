@@ -32,11 +32,13 @@ if (!app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MedicardDbContext>();
-    //await context.Database.EnsureCreatedAsync();
+    await context.Database.EnsureCreatedAsync();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+DataSedding();
 
 app.UseRouting();
 
@@ -45,6 +47,15 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{Area=Account}/{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void DataSedding()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

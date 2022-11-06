@@ -35,11 +35,6 @@ namespace Medicard.Domain.Concrete
                 .WithOne(t => t.Doctor)
                 .HasForeignKey(p => p.DoctorId);
 
-           builder.Entity<Institution>()
-                .HasMany(p => p.Doctors)
-                .WithOne(t => t.Institution)
-                .HasForeignKey(p => p.InstitutionId);
-
             builder.Entity<Patient>()
                 .HasMany(p => p.Appointments)
                 .WithOne(t => t.Patient)

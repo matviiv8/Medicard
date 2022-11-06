@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Medicard.WebUI.Areas.Doctor.Controllers
+namespace Medicard.WebUI.Controllers
 {
     public class DoctorController : Controller
     {

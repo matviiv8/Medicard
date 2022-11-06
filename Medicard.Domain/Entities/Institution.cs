@@ -13,6 +13,6 @@ namespace Medicard.Domain.Entities
         public string? Address { get; set; }
         public string? WorkSchedule { get; set; }
 
-        public List<Doctor> Doctors { get; set; }
+        public List<Doctor>? Doctors { get; set; }
     } 
 }

@@ -7,15 +7,17 @@ namespace Medicard.WebUI.Models
     {
         [Required]
         public string? Email { get; set; }
+
         [Required]
-        public string? FirstName { get; set; }
+        [Display(Name = "First Name")]
+        [MinLength(2)]
+        public string FirstName { get; set; }
+
         [Required]
-        public string? LastName { get; set; }
-        [Required]
-        public string? ContactNumber { get; set; }
-        [Required]
-        public int Age { get; set; }
-        public Gender Gender { get; set; }
+        [Display(Name = "Last Name")]
+        [MinLength(2)]
+        public string LastName { get; set; }
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }

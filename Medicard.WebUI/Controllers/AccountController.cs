@@ -1,4 +1,5 @@
-﻿using Medicard.Domain.Entities;
+﻿using Medicard.Domain.Concrete;
+using Medicard.Domain.Entities;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace Medicard.WebUI.Areas.Account.Controllers
 {
     public class AccountController : Controller
     {
+        private MedicardDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 

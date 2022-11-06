@@ -18,11 +18,9 @@ namespace Medicard.Domain.Concrete.EntityConfiguration
 			builder.Property(x => x.Id).IsRequired();
 			builder.HasIndex(a => a.Id).IsUnique();
 			builder.Property(x => x.UserId).IsRequired();
-			builder.Property(x => x.User).IsRequired();
 
 			builder.HasKey(x => x.Id);
 
-			builder.Property(x => x.Institution).HasMaxLength(250);
 			builder.Property(x => x.Specialization).HasMaxLength(100);
 
 		}

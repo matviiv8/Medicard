@@ -41,16 +41,30 @@ namespace Medicard.Domain.Concrete
                 _roleManager.CreateAsync(new IdentityRole(UserRoles.Doctor)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(UserRoles.Patient)).GetAwaiter().GetResult();
 
+                //admin
                 _userManager.CreateAsync(new User
                 {
-                    FirstName = "Andrew",
+                    FirstName = "Andrij",
                     LastName = "Matviiv",
                     Email = "matviivandrij13@gmail.com"
-                },"andrew13mtv").GetAwaiter().GetResult();
+                },"Andrew13mtv@").GetAwaiter().GetResult();
                 var appUser = _context.Users.FirstOrDefault(x => x.Email == "matviivandrij13@gmail.com");
                 if(appUser != null)
                 {
                     _userManager.AddToRoleAsync(appUser, UserRoles.Admin).GetAwaiter();
+                }
+
+                //doctor
+                _userManager.CreateAsync(new User
+                {
+                    FirstName = "Marta",
+                    LastName = "Dashko",
+                    Email = "martadashko@gmail.com"
+                }, "Martadashko@").GetAwaiter().GetResult();
+                var doctorUser = _context.Users.FirstOrDefault(x => x.Email == "martadashko@gmail.com");
+                if (doctorUser != null)
+                {
+                    _userManager.AddToRoleAsync(appUser, UserRoles.Doctor).GetAwaiter();
                 }
             }
         }
