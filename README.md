@@ -2,10 +2,10 @@
 ### The idea of the project: the online medical card is similar to Medics
 
 
-Markup : - Anonymous visitors:
-        - Log in;
-        - Registration;
-        - Browse all doctors.
+* Anonymous visitors:
+        * Log in;
+        * Registration;
+        * Browse all doctors.
 -Patient:
     -Be able to complete your profile;
     -Have access to view the list instutions;
