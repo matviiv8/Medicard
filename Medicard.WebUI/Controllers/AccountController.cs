@@ -51,18 +51,26 @@ namespace Medicard.WebUI.Areas.Account.Controllers
 
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            var user = new User { UserName = model.Email, Email = model.Email };
+
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<IdentityUser>();
+
+                if (PasswordVerificationResult.Failed == hasher.VerifyHashedPassword(
+                    new IdentityUser(user.Id.ToString()), 
+                    _signInManager.UserManager.Users.FirstOrDefault(x => x.Email == model.Email).PasswordHash,
+                    model.Password))
                 {
-                    return RedirectToAction("Privacy", "Home");
-
+                    ModelState.AddModelError("Password", "password is wrong");
                 }
-                ModelState.AddModelError(string.Empty, "Invalid login or password");
-            }
-            return View(model);
 
+            }
+            else
+            {
+                ModelState.AddModelError("Email", "email or password invalid");
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
