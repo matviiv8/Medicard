@@ -1,5 +1,6 @@
 ﻿using Medicard.Domain.Concrete.EntityConfiguration;
 using Medicard.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,13 +18,10 @@ namespace Medicard.Domain.Concrete
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Institution> Institutions { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
             builder.ApplyConfiguration(new DoctorConfiguration());
             builder.ApplyConfiguration(new AppointmentConfiguration());
             builder.ApplyConfiguration(new PatientConfiguration());
@@ -50,6 +48,56 @@ namespace Medicard.Domain.Concrete
                 .WithOne(t => t.Appointment)
                 .HasForeignKey<TreatmentPlan>(p => p.Id);
 
+            var hasher = new PasswordHasher<IdentityUser>();
+
+            var users = new List<User>()
+            {
+                new User
+                {
+                    FirstName = "Andrij",
+                    LastName = "Matviiv",
+                    Email = "matviivandrij13@gmail.com",
+                    PasswordHash = hasher.HashPassword(null, "Andrew13mtv@")
+                },
+                new User
+                {
+                    FirstName = "Petro",
+                    LastName = "Grinkiv",
+                    Email = "petrogrinkiv@gmail.com",
+                    PasswordHash = hasher.HashPassword(null, "PetroG12@")
+                }
+            };
+            builder.Entity<User>()
+                .HasData(users);
+
+            var roles = new List<IdentityRole>()
+            {
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Name = "Doctor", NormalizedName = "DOCTOR" },
+                new IdentityRole { Name = "Patient", NormalizedName = "PATIENT" }
+            };
+            builder.Entity<IdentityRole>().HasData(roles);
+
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = users[0].Id,
+                    RoleId =
+                    roles.First(q => q.Name == "Admin").Id
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = users[1].Id,
+                    RoleId =
+                    roles.First(q => q.Name == "Doctor").Id
+                });
+            builder.Entity<Doctor>()
+                .HasData(new Doctor
+                {
+                    Id = 1,
+                    UserId = users[1].Id
+                });
+            base.OnModelCreating(builder);
         }
     }
 }

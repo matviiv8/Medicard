@@ -15,7 +15,6 @@ builder.Services.AddDbContext<MedicardDbContext>(options =>
 });
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MedicardDbContext>();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddRazorPages();
 
@@ -38,8 +37,6 @@ using (var scope = app.Services.CreateScope())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-DataSedding();
-
 app.UseRouting();
 
 app.UseAuthentication();
@@ -50,12 +47,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-void DataSedding()
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        dbInitializer.Initialize();
-    }
-}

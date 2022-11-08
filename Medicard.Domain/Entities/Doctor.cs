@@ -15,7 +15,7 @@ namespace Medicard.Domain.Entities
         public int Age { get; set; }
         public Gender Gender { get; set; }
         public User? User { get; set; }
-        public int? UserId { get; set; }
+        public string UserId { get; set; }
         public string? Specialization { get; set; }
         public int? InstitutionId { get; set; }
         public Institution? Institution { get; set; }

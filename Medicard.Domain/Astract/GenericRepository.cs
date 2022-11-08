@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Medicard.Domain.Astract
 {
-    public class GenericRepository<T> : IDisposable, IGenericRepository<T> where T : class
+    class GenericRepository<T> : IDisposable, IGenericRepository<T> where T : class
     {
         private readonly MedicardDbContext _context;
         internal DbSet<T> dbSet;
