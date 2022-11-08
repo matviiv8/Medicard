@@ -50,25 +50,29 @@ namespace Medicard.Domain.Concrete
 
             var hasher = new PasswordHasher<IdentityUser>();
 
-            var users = new List<User>()
+            var admin = new User
             {
-                new User
-                {
-                    FirstName = "Andrij",
-                    LastName = "Matviiv",
-                    Email = "matviivandrij13@gmail.com",
-                    PasswordHash = hasher.HashPassword(null, "Andrew13mtv@")
-                },
-                new User
-                {
-                    FirstName = "Petro",
-                    LastName = "Grinkiv",
-                    Email = "petrogrinkiv@gmail.com",
-                    PasswordHash = hasher.HashPassword(null, "PetroG12@")
-                }
+                FirstName = "Andrij",
+                LastName = "Matviiv",
+                Email = "matviivandrij13@gmail.com",
+                UserName = "matviivandrij13@gmail.com"
             };
+            var doctor = new User
+            {
+                FirstName = "Petro",
+                LastName = "Grinkiv",
+                Email = "petrogrinkiv@gmail.com",
+                UserName = "petrogrinkiv@gmail.com"
+            };
+
+            var identityUser = new IdentityUser(admin.Id.ToString());
+            var identityDoctor = new IdentityUser(doctor.Id.ToString());
+
+            doctor.PasswordHash = hasher.HashPassword(identityDoctor, "PetroG12@");
+            admin.PasswordHash = hasher.HashPassword(identityUser, "Andrew13mtv@");
+
             builder.Entity<User>()
-                .HasData(users);
+                .HasData(admin,doctor);
 
             var roles = new List<IdentityRole>()
             {
@@ -81,13 +85,13 @@ namespace Medicard.Domain.Concrete
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
-                    UserId = users[0].Id,
+                    UserId = admin.Id,
                     RoleId =
                     roles.First(q => q.Name == "Admin").Id
                 },
                 new IdentityUserRole<string>
                 {
-                    UserId = users[1].Id,
+                    UserId = doctor.Id,
                     RoleId =
                     roles.First(q => q.Name == "Doctor").Id
                 });
@@ -95,7 +99,7 @@ namespace Medicard.Domain.Concrete
                 .HasData(new Doctor
                 {
                     Id = 1,
-                    UserId = users[1].Id
+                    UserId = doctor.Id
                 });
             base.OnModelCreating(builder);
         }
