@@ -10,6 +10,7 @@ namespace Medicard.Domain.Astract
     public interface IUnitOfWork
     {
         IGenericRepository<T> GenericRepository<T>() where T : class;
+
         void Save();
     }
 }

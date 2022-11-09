@@ -9,18 +9,20 @@ namespace Medicard.WebUI.Controllers
 {
     public class DoctorController : Controller
     {
-        private IGenericRepository<Doctor> repository;
+        private IGenericRepository<Doctor> _repository;
+
         public DoctorController(IGenericRepository<Doctor> repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
+
         public IActionResult AllDoctors(string search)
         {
             ViewData["CurrentFilter"] = search;
 
             AllDoctorsViewModel model = new AllDoctorsViewModel()
             {
-                Doctors = repository.GetAll()
+                Doctors = _repository.GetAll(),
             };
 
             if (!string.IsNullOrEmpty(search))
@@ -28,6 +30,7 @@ namespace Medicard.WebUI.Controllers
                 model.Doctors = model.Doctors.Where(doctor => doctor.LastName.ToLower().Contains(search)
                                        || doctor.FirstName.ToLower().Contains(search));
             }
+
             return View(model);
         }
     }
