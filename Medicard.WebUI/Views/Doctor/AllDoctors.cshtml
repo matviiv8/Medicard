@@ -1,0 +1,27 @@
+﻿@model Medicard.WebUI.Models.AllDoctorsViewModel
+
+<form asp-action="AllDoctors" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="Search" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> 
+        </p>
+    </div>
+</form>
+
+<div class="row offset-md-1">
+
+    @foreach(var doctor in Model.Doctors)
+    {
+        <div class="col-md-3 m-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@doctor.FirstName  @doctor.LastName</h5>
+                    <p class="card-text text-center">@doctor.Specialization</p>
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
