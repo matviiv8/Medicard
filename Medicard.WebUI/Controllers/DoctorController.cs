@@ -20,7 +20,7 @@ namespace Medicard.WebUI.Controllers
 
             AllDoctorsViewModel model = new AllDoctorsViewModel()
             {
-                Doctors = repository.GetAll(),
+                Doctors = repository.GetAll()
             };
 
             if (!string.IsNullOrEmpty(search))
