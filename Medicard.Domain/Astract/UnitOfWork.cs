@@ -18,6 +18,7 @@ namespace Medicard.Domain.Astract
         }
 
         private bool disposed = false;
+
         public void Dispose()
         {
             Dispose(true);

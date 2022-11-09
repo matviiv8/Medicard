@@ -12,14 +12,21 @@ using System.Threading.Tasks;
 namespace Medicard.Domain.Concrete
 {
     public class MedicardDbContext : IdentityDbContext<User>
-    {   
-        public MedicardDbContext() { }
+    {
+        public MedicardDbContext() {}
+
         public MedicardDbContext(DbContextOptions<MedicardDbContext> options) : base(options) { }
+
         public DbSet<Doctor> Doctors { get; set; }
+
         public DbSet<Patient> Patients { get; set; }
+
         public DbSet<Diagnosis> Diagnoses { get; set; }
+
         public DbSet<Institution> Institutions { get; set; }
+
         public DbSet<Appointment> Appointments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DoctorConfiguration());
@@ -29,24 +36,24 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new DiagnosisConfiguration());
 
             builder.Entity<Doctor>()
-                .HasMany(p => p.Patients)
-                .WithOne(t => t.Doctor)
-                .HasForeignKey(p => p.DoctorId);
+                .HasMany(doctor => doctor.Patients)
+                .WithOne(patient => patient.Doctor)
+                .HasForeignKey(patient => patient.DoctorId);
 
             builder.Entity<Patient>()
-                .HasMany(p => p.Appointments)
-                .WithOne(t => t.Patient)
-                .HasForeignKey(p => p.PatientId);
+                .HasMany(patient => patient.Appointments)
+                .WithOne(appointment => appointment.Patient)
+                .HasForeignKey(appointment => appointment.PatientId);
 
             builder.Entity<Appointment>()
-                .HasOne(p => p.Diagnosis)
-                .WithOne(t => t.Appointment)
-                .HasForeignKey<Diagnosis>(p => p.Id);
+                .HasOne(appointment => appointment.Diagnosis)
+                .WithOne(diagnosis => diagnosis.Appointment)
+                .HasForeignKey<Diagnosis>(diagnosis => diagnosis.Id);
 
             builder.Entity<Appointment>()
-                .HasOne(p => p.TreatmentPlan)
-                .WithOne(t => t.Appointment)
-                .HasForeignKey<TreatmentPlan>(p => p.Id);
+                .HasOne(appointment => appointment.TreatmentPlan)
+                .WithOne(treatmentPlan => treatmentPlan.Appointment)
+                .HasForeignKey<TreatmentPlan>(treatmentPlan => treatmentPlan.Id);
 
             var hasher = new PasswordHasher<IdentityUser>();
 
@@ -55,21 +62,21 @@ namespace Medicard.Domain.Concrete
                 FirstName = "Andrij",
                 LastName = "Matviiv",
                 Email = "matviivandrij13@gmail.com",
-                UserName = "matviivandrij13@gmail.com"
+                UserName = "matviivandrij13@gmail.com",
             };
             var firstDoctor = new User
             {
                 FirstName = "Petro",
                 LastName = "Grinkiv",
                 Email = "petrogrinkiv@gmail.com",
-                UserName = "petrogrinkiv@gmail.com"
+                UserName = "petrogrinkiv@gmail.com",
             };
             var secondDoctor = new User
             {
                 FirstName = "Maria",
                 LastName = "Koval",
                 Email = "mariakoval@gmail.com",
-                UserName = "mariakoval@gmail.com"
+                UserName = "mariakoval@gmail.com",
             };
 
             var identityUser = new IdentityUser(admin.Id.ToString());
@@ -87,7 +94,7 @@ namespace Medicard.Domain.Concrete
             {
                 new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
                 new IdentityRole { Name = "Doctor", NormalizedName = "DOCTOR" },
-                new IdentityRole { Name = "Patient", NormalizedName = "PATIENT" }
+                new IdentityRole { Name = "Patient", NormalizedName = "PATIENT" },
             };
             builder.Entity<IdentityRole>().HasData(roles);
 
@@ -96,30 +103,31 @@ namespace Medicard.Domain.Concrete
                 {
                     UserId = admin.Id,
                     RoleId =
-                    roles.First(q => q.Name == "Admin").Id
+                    roles.First(q => q.Name == "Admin").Id,
                 },
                 new IdentityUserRole<string>
                 {
                     UserId = firstDoctor.Id,
                     RoleId =
-                    roles.First(q => q.Name == "Doctor").Id
+                    roles.First(q => q.Name == "Doctor").Id,
                 });
             builder.Entity<Doctor>()
-                .HasData(new Doctor
+                .HasData(
+                new Doctor
                 {
                     Id = 1,
                     UserId = firstDoctor.Id,
                     FirstName = firstDoctor.FirstName,
                     LastName = firstDoctor.LastName,
-                    Specialization = "Therapist"
+                    Specialization = "Therapist",
                 },
                 new Doctor
                 {
-                    Id=2,
-                    UserId= secondDoctor.Id,
+                    Id = 2,
+                    UserId = secondDoctor.Id,
                     FirstName = secondDoctor.FirstName,
                     LastName = secondDoctor.LastName,
-                    Specialization = "Pediatrician"
+                    Specialization = "Pediatrician",
                 });
             base.OnModelCreating(builder);
         }

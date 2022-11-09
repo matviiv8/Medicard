@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 
 namespace Medicard.Domain.Astract.Repositories
 {
-    public class GenericRepository<T> : IDisposable, IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IDisposable, IGenericRepository<T>
+        where T : class
     {
         private readonly MedicardDbContext _context;
         internal DbSet<T> dbSet;
+
         public GenericRepository(MedicardDbContext context)
         {
             _context = context;
@@ -36,6 +38,7 @@ namespace Medicard.Domain.Astract.Repositories
             {
                 dbSet.Attach(entity);
             }
+
             dbSet.Remove(entity);
         }
 
@@ -45,6 +48,7 @@ namespace Medicard.Domain.Astract.Repositories
             {
                 dbSet.Attach(entity);
             }
+
             dbSet.Remove(entity);
             return entity;
         }
@@ -66,6 +70,7 @@ namespace Medicard.Domain.Astract.Repositories
                     _context.Dispose();
                 }
             }
+
             disposed = true;
         }
 
@@ -76,10 +81,12 @@ namespace Medicard.Domain.Astract.Repositories
             {
                 query = query.Where(filter);
             }
+
             foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
+
             if (orderBy != null)
             {
                 return orderBy(query).ToList();

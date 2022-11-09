@@ -17,11 +17,13 @@ namespace Medicard.WebUI.Areas.Account.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -47,8 +49,8 @@ namespace Medicard.WebUI.Areas.Account.Controllers
         {
             return View();
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var user = new User { UserName = model.Email, Email = model.Email };
@@ -57,19 +59,19 @@ namespace Medicard.WebUI.Areas.Account.Controllers
             {
                 var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<IdentityUser>();
 
-                if (PasswordVerificationResult.Failed == hasher.VerifyHashedPassword(
-                    new IdentityUser(user.Id.ToString()), 
+                if (hasher.VerifyHashedPassword(
+                    new IdentityUser(user.Id.ToString()),
                     _signInManager.UserManager.Users.FirstOrDefault(x => x.Email == model.Email).PasswordHash,
-                    model.Password))
+                    model.Password) == PasswordVerificationResult.Failed)
                 {
                     ModelState.AddModelError("Password", "password is wrong");
                 }
-
             }
             else
             {
                 ModelState.AddModelError("Email", "email or password invalid");
             }
+
             return RedirectToAction("Index", "Home");
         }
 
