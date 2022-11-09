@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Domain.Astract
+namespace Medicard.Domain.Astract.Repositories
 {
-    class GenericRepository<T> : IDisposable, IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IDisposable, IGenericRepository<T> where T : class
     {
         private readonly MedicardDbContext _context;
         internal DbSet<T> dbSet;
@@ -32,7 +32,7 @@ namespace Medicard.Domain.Astract
 
         public void Delete(T entity)
         {
-            if(_context.Entry(entity).State == EntityState.Detached)
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
                 dbSet.Attach(entity);
             }
@@ -59,14 +59,14 @@ namespace Medicard.Domain.Astract
 
         private void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     _context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedEnumerable<T>> orderBy = null, string includeProperties = "")

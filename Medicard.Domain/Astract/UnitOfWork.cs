@@ -1,4 +1,5 @@
-﻿using Medicard.Domain.Concrete;
+﻿using Medicard.Domain.Astract.Repositories;
+using Medicard.Domain.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;

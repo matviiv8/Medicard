@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Domain.Astract
+namespace Medicard.Domain.Astract.Repositories
 {
     public interface IGenericRepository<T> : IDisposable
     {

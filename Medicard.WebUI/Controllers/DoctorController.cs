@@ -1,4 +1,5 @@
-﻿using Medicard.Domain.Concrete;
+﻿using Medicard.Domain.Astract.Repositories;
+using Medicard.Domain.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,14 +7,15 @@ namespace Medicard.WebUI.Controllers
 {
     public class DoctorController : Controller
     {
-        private readonly MedicardDbContext _context;
-        public DoctorController(MedicardDbContext context)
+        private DoctorRepository repository;
+        public DoctorController(DoctorRepository repository)
         {
-            _context = context;
+
+            this.repository = repository;
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Patients.ToListAsync());
+            return View();
         }
     }
 }
