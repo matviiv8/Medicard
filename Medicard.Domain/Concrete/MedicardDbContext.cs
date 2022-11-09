@@ -57,22 +57,31 @@ namespace Medicard.Domain.Concrete
                 Email = "matviivandrij13@gmail.com",
                 UserName = "matviivandrij13@gmail.com"
             };
-            var doctor = new User
+            var firstDoctor = new User
             {
                 FirstName = "Petro",
                 LastName = "Grinkiv",
                 Email = "petrogrinkiv@gmail.com",
                 UserName = "petrogrinkiv@gmail.com"
             };
+            var secondDoctor = new User
+            {
+                FirstName = "Maria",
+                LastName = "Koval",
+                Email = "mariakoval@gmail.com",
+                UserName = "mariakoval@gmail.com"
+            };
 
             var identityUser = new IdentityUser(admin.Id.ToString());
-            var identityDoctor = new IdentityUser(doctor.Id.ToString());
+            var identityFirstDoctor = new IdentityUser(firstDoctor.Id.ToString());
+            var identitySecondDoctor = new IdentityUser(secondDoctor.Id.ToString());
 
-            doctor.PasswordHash = hasher.HashPassword(identityDoctor, "PetroG12@");
+            firstDoctor.PasswordHash = hasher.HashPassword(identityFirstDoctor, "PetroG12@");
+            secondDoctor.PasswordHash = hasher.HashPassword(identitySecondDoctor, "MariaK12@");
             admin.PasswordHash = hasher.HashPassword(identityUser, "Andrew13mtv@");
 
             builder.Entity<User>()
-                .HasData(admin,doctor);
+                .HasData(admin,firstDoctor,secondDoctor);
 
             var roles = new List<IdentityRole>()
             {
@@ -91,7 +100,7 @@ namespace Medicard.Domain.Concrete
                 },
                 new IdentityUserRole<string>
                 {
-                    UserId = doctor.Id,
+                    UserId = firstDoctor.Id,
                     RoleId =
                     roles.First(q => q.Name == "Doctor").Id
                 });
@@ -99,7 +108,18 @@ namespace Medicard.Domain.Concrete
                 .HasData(new Doctor
                 {
                     Id = 1,
-                    UserId = doctor.Id
+                    UserId = firstDoctor.Id,
+                    FirstName = firstDoctor.FirstName,
+                    LastName = firstDoctor.LastName,
+                    Specialization = "Therapist"
+                },
+                new Doctor
+                {
+                    Id=2,
+                    UserId= secondDoctor.Id,
+                    FirstName = secondDoctor.FirstName,
+                    LastName = secondDoctor.LastName,
+                    Specialization = "Pediatrician"
                 });
             base.OnModelCreating(builder);
         }
