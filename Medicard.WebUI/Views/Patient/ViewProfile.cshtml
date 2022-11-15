@@ -1,64 +1,17 @@
-﻿@model Medicard.WebUI.Models.PatientProfileViewModel
-@{
-    ViewBag.Title = "Personal info";
-}
+﻿@model Medicard.Services.ViewModels.PatientProfileViewModel
 
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
 
-            <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" placeholder="@this.Model.FirstName">
-                <span asp-validation-for="FirstName" class="small text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" placeholder="@this.Model.LastName">
-                <span asp-validation-for="LastName" class="small text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" placeholder="@this.Model.Address">
-                <span asp-validation-for="Address" class="small text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" 
-                    class="form-control" 
-                    asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.Gender>()">
-                <option>Select Gender</option>
-            </select>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Age"></label>
-                <input asp-for="Age" class="form-control" placeholder="@this.Model.Age">
-                <span asp-validation-for="Age" class="small text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="ContactNumber"></label>
-                <input asp-for="ContactNumber" class="form-control" placeholder="@this.Model.ContactNumber">
-                <span asp-validation-for="ContactNumber" class="small text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                 <label asp-for="BirthDate" class="control-label"></label>
-                 <input asp-for="BirthDate" type="date" class="form-control" placeholder="@this.Model.BirthDate" />
-                 <span asp-validation-for="BirthDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MaritalStatus" class="control-label"></label>
-                <select asp-for="MaritalStatus" 
-                    class="form-control" 
-                    asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.MaritalStatus>()">
-                <option>Select Marital Status</option>
-            </select>
-            </div>
-
+<div class="card text-center bg-info text-white">
+    <div class="card-body">
+            <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
+            <p class="card-text">Address - @this.Model.Address</p>
+            <p class="card-text">Gender - @this.Model.Gender</p>
+            <p class="card-text">Marital status - @this.Model.MaritalStatus</p>
+            <p class="card-text">Bithdate - @this.Model.BirthDate</p>
+            <p class="card-text">Contact number - @this.Model.ContactNumber</p>
+    </div>
+    <div class="card-footer text-white">
+            Age - @this.Model.Age
     </div>
 </div>
+<a asp-controller="Patient" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn btn-warning">Change Profile</a>

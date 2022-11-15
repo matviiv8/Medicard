@@ -1,7 +1,8 @@
 ﻿using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.WebUI.Models;
+using Medicard.Services.Services;
+using Medicard.Services.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -10,32 +11,46 @@ namespace Medicard.WebUI.Controllers
 {
     public class PatientController : Controller
     {
-        private readonly IGenericRepository<Patient> _repository;
+        private readonly IPatientService _patientService;
         private readonly UserManager<User> _userManager;
 
-        public PatientController(IGenericRepository<Patient> repository, UserManager<User> userManager)
+        public PatientController(IPatientService patientService, UserManager<User> userManager)
         {
-            _repository = repository;
+            _patientService = patientService;
             _userManager = userManager;
         }
 
         public IActionResult ViewProfile()
         {
-            var patient = _repository.GetAll().FirstOrDefault(u => u.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var patientInfo = new PatientProfileViewModel
+            var patient = this._patientService.ViewProfile(userId);
+
+            return this.View(patient);
+        }
+
+        public async Task<IActionResult> ChangeProfile(string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var patient = this._patientService.ViewProfile(userId);
+
+            return this.View(patient);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeProfile(PatientProfileViewModel model)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!this.ModelState.IsValid)
             {
-                FirstName = patient.FirstName,
-                LastName = patient.LastName,
-                BirthDate = patient.BirthDate,
-                Address = patient.Address,
-                Age = patient.Age,
-                ContactNumber = patient.ContactNumber,
-                Gender = patient.Gender,
-                MaritalStatus = patient.MaritalStatus,
-            };
+                return this.BadRequest();
+            }
 
-            return View(patientInfo);
+            await this._patientService.ChangePatient(model, userId);
+
+            return this.RedirectToAction("ViewProfile", "Patient");
         }
     }
 }

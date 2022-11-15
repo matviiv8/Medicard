@@ -1,7 +1,7 @@
 ﻿using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.WebUI.Models;
+using Medicard.Services.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +27,8 @@ namespace Medicard.WebUI.Controllers
 
             if (!string.IsNullOrEmpty(search))
             {
-                model.Doctors = model.Doctors.Where(doctor => doctor.LastName.ToLower().Contains(search)
-                                       || doctor.FirstName.ToLower().Contains(search));
+                model.Doctors = model.Doctors.Where(doctor => doctor.LastName.ToLower().Contains(search.ToLower())
+                                       || doctor.FirstName.ToLower().Contains(search.ToLower()));
             }
 
             return View(model);

@@ -1,7 +1,7 @@
 ﻿using Medicard.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Medicard.WebUI.Models
+namespace Medicard.Services.ViewModels
 {
     public class RegisterViewModel
     {

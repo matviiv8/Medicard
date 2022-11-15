@@ -1,6 +1,6 @@
 ﻿using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.WebUI.Models;
+using Medicard.Services.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,8 +62,8 @@ namespace Medicard.WebUI.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {

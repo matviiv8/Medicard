@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Medicard.Domain\Medicard.Domain.csproj" />
+    <ProjectReference Include="..\Medicard.Services\Medicard.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
