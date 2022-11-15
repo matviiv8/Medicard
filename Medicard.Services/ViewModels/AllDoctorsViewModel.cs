@@ -1,6 +1,6 @@
 ﻿using Medicard.Domain.Entities;
 
-namespace Medicard.WebUI.Models
+namespace Medicard.Services.ViewModels
 {
     public class AllDoctorsViewModel
     {

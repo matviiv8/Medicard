@@ -1,9 +1,10 @@
 ﻿using Medicard.Domain.Entities.Enums;
 
-namespace Medicard.WebUI.Models
+namespace Medicard.Services.ViewModels
 {
     public class PatientProfileViewModel
     {
+        public string Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
