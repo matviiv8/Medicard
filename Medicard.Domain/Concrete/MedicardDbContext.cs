@@ -63,6 +63,8 @@ namespace Medicard.Domain.Concrete
                 LastName = "Matviiv",
                 Email = "matviivandrij13@gmail.com",
                 UserName = "matviivandrij13@gmail.com",
+                NormalizedEmail = "MATVIIVANDRIJ13@GMAIL.COM",
+                NormalizedUserName = "MATVIIVANDRIJ13@GMAIL.COM",
             };
             var firstDoctor = new User
             {
@@ -70,6 +72,8 @@ namespace Medicard.Domain.Concrete
                 LastName = "Grinkiv",
                 Email = "petrogrinkiv@gmail.com",
                 UserName = "petrogrinkiv@gmail.com",
+                NormalizedEmail = "PETROGRINKOV@GMAIL.COM",
+                NormalizedUserName= "PETROGRINKOV@GMAIL.COM",
             };
             var secondDoctor = new User
             {
@@ -77,6 +81,8 @@ namespace Medicard.Domain.Concrete
                 LastName = "Koval",
                 Email = "mariakoval@gmail.com",
                 UserName = "mariakoval@gmail.com",
+                NormalizedEmail = "MARIAKOVAL@GMAIL.COM",
+                NormalizedUserName = "MARIAKOVAL@GMAIL.COM",
             };
 
             var identityUser = new IdentityUser(admin.Id.ToString());
