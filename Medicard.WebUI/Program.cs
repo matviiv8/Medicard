@@ -20,6 +20,7 @@ builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<Medi
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPatientService, PatientService>();
+builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

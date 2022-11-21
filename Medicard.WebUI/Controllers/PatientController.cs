@@ -2,7 +2,7 @@
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.Services;
-using Medicard.Services.ViewModels;
+using Medicard.Services.ViewModels.Patient;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

@@ -1,4 +1,4 @@
-﻿using Medicard.Services.ViewModels;
+﻿using Medicard.Services.ViewModels.Patient;
 using System;
 using System.Collections.Generic;
 using System.Linq;

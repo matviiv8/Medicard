@@ -1,4 +1,4 @@
-﻿@model Medicard.Services.ViewModels.Patient.PatientProfileViewModel
+﻿@model Medicard.Services.ViewModels.Doctor.ChangeDoctorProfileViewModel
 @{
     ViewBag.Title = "Personal info";
 }
@@ -19,11 +19,10 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Address"></label>
-                <input asp-for="Address" class="form-control" placeholder="@this.Model.Address">
-                <span asp-validation-for="Address" class="small text-danger"></span>
+                <label asp-for="Image"></label>
+                <input asp-for="Image" accept="images/*" />
+                <span asp-validation-for="Image" class="small text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" 
@@ -45,20 +44,6 @@
                 <span asp-validation-for="ContactNumber" class="small text-danger"></span>
             </div>
 
-            <div class="form-group">
-                 <label asp-for="BirthDate" class="control-label"></label>
-                 <input asp-for="BirthDate" type="date" class="form-control" placeholder="@this.Model.BirthDate" />
-                 <span asp-validation-for="BirthDate" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="MaritalStatus" class="control-label"></label>
-                <select asp-for="MaritalStatus" 
-                    class="form-control" 
-                    asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.MaritalStatus>()">
-                <option>Select Marital Status</option>
-            </select>
-            </div>
             <input class="btn btn-warning mt-3 text-center" type="submit" value="Change" />
         </form>
     </div>

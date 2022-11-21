@@ -1,6 +1,6 @@
 ﻿using Medicard.Domain.Entities.Enums;
 
-namespace Medicard.Services.ViewModels
+namespace Medicard.Services.ViewModels.Patient
 {
     public class PatientProfileViewModel
     {

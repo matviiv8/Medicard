@@ -1,37 +1,74 @@
 ﻿using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.ViewModels;
+using Medicard.Services.Services;
+using Medicard.Services.ViewModels.Doctors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Medicard.WebUI.Controllers
 {
     public class DoctorController : Controller
     {
-        private IGenericRepository<Doctor> _repository;
+        private readonly IDoctorService _doctorService;
+        private readonly UserManager<User> _userManager;
 
-        public DoctorController(IGenericRepository<Doctor> repository)
+        public DoctorController(IDoctorService doctorService, UserManager<User> userManager)
         {
-            _repository = repository;
+            _doctorService = doctorService;
+            _userManager = userManager;
         }
 
         public IActionResult AllDoctors(string search)
         {
             ViewData["CurrentFilter"] = search;
 
-            AllDoctorsViewModel model = new AllDoctorsViewModel()
-            {
-                Doctors = _repository.GetAll(),
-            };
+            var doctors = _doctorService.allDoctors();
 
-            if (!string.IsNullOrEmpty(search))
+            foreach (var doctor in doctors)
             {
-                model.Doctors = model.Doctors.Where(doctor => doctor.LastName.ToLower().Contains(search.ToLower())
-                                       || doctor.FirstName.ToLower().Contains(search.ToLower()));
+                if (!string.IsNullOrEmpty(search))
+                {
+                    doctors = doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
+                }
             }
 
-            return View(model);
+            return View(doctors);
+        }
+
+        public IActionResult ViewProfile()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var patient = this._doctorService.ViewProfile(userId);
+
+            return this.View(patient);
+        }
+
+        public async Task<IActionResult> ChangeProfile(string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var doctor = this._doctorService.ViewProfile(userId);
+
+            return this.View(doctor);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeProfile(DoctorProfileViewModel model)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            await this._doctorService.ChangeDoctor(model, userId);
+
+            return this.RedirectToAction("ViewProfile", "Doctor");
         }
     }
 }

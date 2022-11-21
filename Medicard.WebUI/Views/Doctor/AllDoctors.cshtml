@@ -1,6 +1,4 @@
-﻿@using Medicard.Services.ViewModels
-
-@model AllDoctorsViewModel;
+﻿@model IEnumerable<Medicard.Services.ViewModels.Doctor.AllDoctorsViewModel>
 
 <form asp-action="AllDoctors" method="get">
     <div class="form-actions no-color">
@@ -13,12 +11,24 @@
 
 <div class="row offset-md-1">
 
-    @foreach(var doctor in Model.Doctors)
+    @foreach(var doctor in Model)
     {
         <div class="col-md-3 m-4">
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 15rem;">
+                @if (doctor.Gender == Medicard.Domain.Entities.Enums.Gender.Male || doctor.Gender == 0)
+                {
+                    <img class="card-img-top" src="/images/menunknowndoctor.jpeg" alt="Unknown men doctor" height="260" width="210">
+                }
+                else if(doctor.Gender == Medicard.Domain.Entities.Enums.Gender.Female)
+                {
+                    <img class="card-img-top" src="/images/womenunknowndoctor.jpeg" alt="Unknown women doctor" height="260" width="210">
+                }
+                else
+                {
+                    
+                }
                 <div class="card-body text-center">
-                    <h5 class="card-title text-center">@doctor.FirstName  @doctor.LastName</h5>
+                    <h5 class="card-title text-center">@doctor.FullName</h5>
                     <p class="card-text text-center">@doctor.Specialization</p>
                 </div>
             </div>
