@@ -2,7 +2,7 @@
 using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.ViewModels;
+using Medicard.Services.ViewModels.Patient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,7 @@ namespace Medicard.Services.Services
     public class PatientService : IPatientService
     {
         private readonly MedicardDbContext _context;
+
         public PatientService(MedicardDbContext context)
         {
             this._context = context;

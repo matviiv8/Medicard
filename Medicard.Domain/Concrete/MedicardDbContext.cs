@@ -27,6 +27,8 @@ namespace Medicard.Domain.Concrete
 
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<DoctorImage> DoctorImages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DoctorConfiguration());
@@ -34,11 +36,17 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new InstitutionConfiguration());
             builder.ApplyConfiguration(new DiagnosisConfiguration());
+            builder.ApplyConfiguration(new DoctorImageConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(doctor => doctor.Patients)
                 .WithOne(patient => patient.Doctor)
                 .HasForeignKey(patient => patient.DoctorId);
+
+            builder.Entity<Doctor>()
+                .HasOne(doctor => doctor.Image)
+                .WithOne(image => image.Doctor)
+                .HasForeignKey<DoctorImage>(image => image.DoctorId);
 
             builder.Entity<Patient>()
                 .HasMany(patient => patient.Appointments)
@@ -126,6 +134,7 @@ namespace Medicard.Domain.Concrete
                     FirstName = firstDoctor.FirstName,
                     LastName = firstDoctor.LastName,
                     Specialization = "Therapist",
+                    Gender = Entities.Enums.Gender.Male,
                 },
                 new Doctor
                 {
@@ -134,6 +143,7 @@ namespace Medicard.Domain.Concrete
                     FirstName = secondDoctor.FirstName,
                     LastName = secondDoctor.LastName,
                     Specialization = "Pediatrician",
+                    Gender = Entities.Enums.Gender.Female,
                 });
             base.OnModelCreating(builder);
         }

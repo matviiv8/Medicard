@@ -1,4 +1,4 @@
-﻿using Medicard.Services.ViewModels;
+﻿using Medicard.Services.ViewModels.Doctors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace Medicard.Services.Services
 {
     public interface IDoctorService
     {
-        AllDoctorsViewModel allDoctors();
+        public IEnumerable<AllDoctorsViewModel> allDoctors();
         DoctorProfileViewModel ViewProfile(string userId);
         Task ChangeDoctor(DoctorProfileViewModel model, string userId);
     }

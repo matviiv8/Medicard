@@ -20,6 +20,10 @@ namespace Medicard.Domain.Entities
 
         public int Age { get; set; }
 
+        public string? ImageUrl { get; set; }
+
+        public DoctorImage? Image { get; set; }
+
         public Gender Gender { get; set; }
 
         public User? User { get; set; }

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.ViewModels
+namespace Medicard.Services.ViewModels.Doctors
 {
-    public class DoctorProfileViewModel
+    public class ChangeDoctorProfileViewModel
     {
         public string Id { get; set; }
 
@@ -17,6 +17,8 @@ namespace Medicard.Services.ViewModels
         public string? LastName { get; set; }
 
         public string? ContactNumber { get; set; }
+
+        public IFormFile Image { get; set; }
 
         public string ImagePath { get; set; }
 
@@ -27,6 +29,5 @@ namespace Medicard.Services.ViewModels
         public string? Specialization { get; set; }
 
         public int? InstitutionId { get; set; }
-
     }
 }

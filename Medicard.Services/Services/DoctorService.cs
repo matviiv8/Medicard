@@ -1,5 +1,5 @@
 ﻿using Medicard.Domain.Concrete;
-using Medicard.Services.ViewModels;
+using Medicard.Services.ViewModels.Doctors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +17,21 @@ namespace Medicard.Services.Services
             this._context = context;
         }
 
-        public AllDoctorsViewModel allDoctors()
+        public IEnumerable<AllDoctorsViewModel> allDoctors()
         {
-            AllDoctorsViewModel doctors = new AllDoctorsViewModel()
+            var users = _context.Doctors.ToList();
+            var doctors = new List<AllDoctorsViewModel>();
+            foreach(var user in users)
             {
-                Doctors = _context.Doctors.ToList(),
-            };
+                doctors.Add(new AllDoctorsViewModel
+                {
+                    Id = user.UserId,
+                    FullName = user.FirstName + " " + user.LastName,
+                    Specialty = user.Specialization,
+                    ContactNumber = user.ContactNumber,
+                    ImagePath = user.ImageUrl,
+                }); ;
+            }
 
             return doctors;
         }

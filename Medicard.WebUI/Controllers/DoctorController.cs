@@ -2,7 +2,7 @@
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.Services;
-using Medicard.Services.ViewModels;
+using Medicard.Services.ViewModels.Doctors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,15 +25,17 @@ namespace Medicard.WebUI.Controllers
         {
             ViewData["CurrentFilter"] = search;
 
-            var model = _doctorService.allDoctors();
+            var doctors = _doctorService.allDoctors();
 
-            if (!string.IsNullOrEmpty(search))
+            foreach (var doctor in doctors)
             {
-                model.Doctors = model.Doctors.Where(doctor => doctor.LastName.ToLower().Contains(search.ToLower())
-                                       || doctor.FirstName.ToLower().Contains(search.ToLower()));
+                if (!string.IsNullOrEmpty(search))
+                {
+                    doctors = doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
+                }
             }
 
-            return View(model);
+            return View(doctors);
         }
 
         public IActionResult ViewProfile()
