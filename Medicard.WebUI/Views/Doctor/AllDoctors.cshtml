@@ -1,13 +1,15 @@
 ﻿@model IEnumerable<Medicard.Services.ViewModels.Doctor.AllDoctorsViewModel>
 
-<form asp-action="AllDoctors" method="get">
-    <div class="form-actions no-color">
+<nav class="navbar navbar-light bg-white justify-content-between">
+ <div class="container-fluid">
+<form asp-action="AllDoctors" method="get" class="d-flex" role="search">
         <p>
             Find by name: <input type="text" name="Search" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> 
+            <input type="submit" value="Search" class=""btn btn-outline-success" /> 
         </p>
-    </div>
 </form>
+</div>
+</nav>
 
 <div class="row offset-md-1">
 
