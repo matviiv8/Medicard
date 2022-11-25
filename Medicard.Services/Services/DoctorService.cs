@@ -1,5 +1,5 @@
 ﻿using Medicard.Domain.Concrete;
-using Medicard.Services.ViewModels.Doctors;
+using Medicard.Services.ViewModels.Doctor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +27,9 @@ namespace Medicard.Services.Services
                 {
                     Id = user.UserId,
                     FullName = user.FirstName + " " + user.LastName,
-                    Specialty = user.Specialization,
+                    Specialization = user.Specialization,
                     ContactNumber = user.ContactNumber,
+                    Gender = user.Gender,
                     ImagePath = user.ImageUrl,
                 }); ;
             }
@@ -44,7 +45,7 @@ namespace Medicard.Services.Services
             doctor.LastName = model.LastName;
             doctor.ContactNumber = model.ContactNumber;
             doctor.Age = model.Age;
-            doctor.Specialization = model.ContactNumber;
+            doctor.Specialization = model.Specialization;
             doctor.Gender = model.Gender;
 
             _context.Update(doctor);
@@ -62,7 +63,7 @@ namespace Medicard.Services.Services
                 LastName = doctor.LastName,
                 ContactNumber = doctor.ContactNumber,
                 Age = doctor.Age,
-                Specialization = doctor.ContactNumber,
+                Specialization = doctor.Specialization,
                 Gender = doctor.Gender,
             };
 

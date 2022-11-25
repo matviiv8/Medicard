@@ -1,6 +1,7 @@
 ﻿using Medicard.Domain.Entities;
+using Medicard.Domain.Entities.Enums;
 
-namespace Medicard.Services.ViewModels.Doctors
+namespace Medicard.Services.ViewModels.Doctor
 {
     public class AllDoctorsViewModel
     {
@@ -8,7 +9,9 @@ namespace Medicard.Services.ViewModels.Doctors
 
         public string FullName { get; set; }
 
-        public string Specialty { get; set; }
+        public string Specialization { get; set; }
+        
+        public Gender Gender { get; set; }
 
         public string ContactNumber { get; set; }
 
