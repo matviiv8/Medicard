@@ -17,18 +17,8 @@
     {
         <div class="col-md-3 m-4">
             <div class="card" style="width: 15rem;">
-                @if (doctor.Gender == Medicard.Domain.Entities.Enums.Gender.Male || doctor.Gender == 0)
-                {
-                    <img class="card-img-top" src="/images/menunknowndoctor.jpeg" alt="Unknown men doctor" height="260" width="210">
-                }
-                else if(doctor.Gender == Medicard.Domain.Entities.Enums.Gender.Female)
-                {
-                    <img class="card-img-top" src="/images/womenunknowndoctor.jpeg" alt="Unknown women doctor" height="260" width="210">
-                }
-                else
-                {
-                    
-                }
+                <img class="card-img-top" src="~/images/@doctor.Image" alt="Card image" height="260" width="210">
+                
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@doctor.FullName</h5>
                     <p class="card-text text-center">@doctor.Specialization</p>

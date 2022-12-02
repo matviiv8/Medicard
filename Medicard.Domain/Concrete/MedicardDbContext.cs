@@ -127,6 +127,7 @@ namespace Medicard.Domain.Concrete
                     LastName = firstDoctor.LastName,
                     Specialization = "Therapist",
                     Gender = Entities.Enums.Gender.Male,
+                    DoctorPicture = "menunknowndoctor.jpeg",
                 },
                 new Doctor
                 {
@@ -136,6 +137,7 @@ namespace Medicard.Domain.Concrete
                     LastName = secondDoctor.LastName,
                     Specialization = "Pediatrician",
                     Gender = Entities.Enums.Gender.Female,
+                    DoctorPicture = "womenunknowndoctor.jpeg",
                 });
             base.OnModelCreating(builder);
         }

@@ -7,18 +7,8 @@
     <div class="card" style="width:400px">
         <h2 class="card-text text-center">This is your Profile</h2>
 
-        @if (this.Model.PictureName == null && this.Model.Gender == Medicard.Domain.Entities.Enums.Gender.Male)
-        {
-           <img class="card-img-top" src="/images/menunknowndoctor.jpeg" alt="Card image" style="width:100%">
-        }
-        else if(this.Model.PictureName == null && this.Model.Gender == Medicard.Domain.Entities.Enums.Gender.Female)
-        {
-           <img class="card-img-top" src="/images/womenunknowndoctor.jpeg" alt="Card image" style="width:100%">
-        }
-        else
-        {
-            <img class="card-img-top" src="~/images/@this.Model.PictureName" alt="Card image" style="width:100%">
-        }
+        <img class="card-img-top" src="~/images/@this.Model.PictureName" alt="Card image" style="width:100%">
+        
         <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
         <p class="card-text">Specialization - @this.Model.Specialization</p>
         <p class="card-text">ContactNumber - @this.Model.ContactNumber</p>

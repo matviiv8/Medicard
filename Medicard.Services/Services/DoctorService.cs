@@ -34,7 +34,8 @@ namespace Medicard.Services.Services
                     Specialization = user.Specialization,
                     ContactNumber = user.ContactNumber,
                     Gender = user.Gender,
-                }); ;
+                    Image = user.DoctorPicture,
+                }); 
             }
 
             return doctors;
