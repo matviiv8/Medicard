@@ -1,5 +1,8 @@
 ﻿using Medicard.Domain.Concrete;
+using Medicard.Domain.Entities;
 using Medicard.Services.ViewModels.Doctor;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,11 @@ namespace Medicard.Services.Services
     public class DoctorService : IDoctorService
     {
         private readonly MedicardDbContext _context;
-
-        public DoctorService(MedicardDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public DoctorService(MedicardDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             this._context = context;
+            this._webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<AllDoctorsViewModel> allDoctors()
@@ -30,8 +34,8 @@ namespace Medicard.Services.Services
                     Specialization = user.Specialization,
                     ContactNumber = user.ContactNumber,
                     Gender = user.Gender,
-                    ImagePath = user.ImageUrl,
-                }); ;
+                    Image = user.DoctorPicture,
+                }); 
             }
 
             return doctors;
@@ -48,7 +52,21 @@ namespace Medicard.Services.Services
             doctor.Specialization = model.Specialization;
             doctor.Gender = model.Gender;
 
+            string uniqueFileName = null;  
+            if (model.DoctorPicture != null)  
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                uniqueFileName = model.DoctorPicture.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.DoctorPicture.CopyTo(fileStream);
+                }
+            }
+            doctor.DoctorPicture = uniqueFileName;
+
             _context.Update(doctor);
+
             await _context.SaveChangesAsync();
         }
 
@@ -65,6 +83,7 @@ namespace Medicard.Services.Services
                 Age = doctor.Age,
                 Specialization = doctor.Specialization,
                 Gender = doctor.Gender,
+                PictureName = doctor.DoctorPicture,
             };
 
             return doctorInfo;

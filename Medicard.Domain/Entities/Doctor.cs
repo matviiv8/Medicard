@@ -1,4 +1,5 @@
 ﻿using Medicard.Domain.Entities.Enums;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,11 +21,9 @@ namespace Medicard.Domain.Entities
 
         public int Age { get; set; }
 
-        public string? ImageUrl { get; set; }
-
-        public DoctorImage? Image { get; set; }
-
         public Gender Gender { get; set; }
+
+        public string? DoctorPicture { get; set; }
 
         public User? User { get; set; }
 

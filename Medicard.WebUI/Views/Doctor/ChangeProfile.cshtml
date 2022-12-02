@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
-        <form asp-action="ChangeProfile">
+        <form asp-action="ChangeProfile" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="FirstName"></label>
                 <input asp-for="FirstName" class="form-control" placeholder="@this.Model.FirstName">
@@ -19,10 +19,11 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Image"></label>
-                <input asp-for="Image" class="form-control" type="file" id="formFile" accept="images/*" />
-                <span asp-validation-for="Image" class="small text-danger"></span>
+                <label asp-for="DoctorPicture" class="control-label"></label>
+                <input type="file" name="DoctorPicture" class="form-control-file" />
+                <span asp-validation-for="DoctorPicture" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" 
@@ -44,7 +45,7 @@
                 <span asp-validation-for="ContactNumber" class="small text-danger"></span>
             </div>
 
-            <input class="btn btn-warning mt-3 text-center" type="submit" value="Change" />
+            <input class="btn mt-3 text-center" style="background-color:#01ABC2" type="submit" value="Change" />
         </form>
     </div>
 </div>

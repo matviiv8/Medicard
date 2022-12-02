@@ -7,21 +7,11 @@
     <div class="card" style="width:400px">
         <h2 class="card-text text-center">This is your Profile</h2>
 
-        @if (String.IsNullOrEmpty(this.Model.ImagePath) && this.Model.Gender == Medicard.Domain.Entities.Enums.Gender.Male)
-        {
-            <img class="card-img-top" src="/images/menunknowndoctor.jpg" alt="Card image" style="width:100%">
-        }
-        else if(String.IsNullOrEmpty(this.Model.ImagePath) && this.Model.Gender == Medicard.Domain.Entities.Enums.Gender.Female)
-        {
-            <img class="card-img-top" src="/images/womenunknowndoctor.jpg" alt="Card image" style="width:100%">
-        }
-        else
-        {
-            <img class="card-img-top" src="~/images/@this.Model.ImagePath";base64,@this.Model.Image alt="Card image" style="width:100%;height:400px">
-        }
+        <img class="card-img-top" src="~/images/@this.Model.PictureName" alt="Card image" style="width:100%">
+        
         <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
         <p class="card-text">Specialization - @this.Model.Specialization</p>
         <p class="card-text">ContactNumber - @this.Model.ContactNumber</p>
     </div>
-    <a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn btn-warning">Change Profile</a>
+    <a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn" style="background-color:#01ABC2">Change Profile</a>
 </div>

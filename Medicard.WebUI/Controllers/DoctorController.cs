@@ -61,11 +61,6 @@ namespace Medicard.WebUI.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest();
-            }
-
             await this._doctorService.ChangeDoctor(model, userId);
 
             return this.RedirectToAction("ViewProfile", "Doctor");

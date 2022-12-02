@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicard.Domain.Migrations
 {
     [DbContext(typeof(MedicardDbContext))]
-    [Migration("20221119222013_AddDoctorImage")]
-    partial class AddDoctorImage
+    [Migration("20221202155432_EditDoctorImage")]
+    partial class EditDoctorImage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -86,14 +86,14 @@ namespace Medicard.Domain.Migrations
                     b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DoctorPicture")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("InstitutionId")
                         .HasColumnType("int");
@@ -125,56 +125,24 @@ namespace Medicard.Domain.Migrations
                         {
                             Id = 1,
                             Age = 0,
+                            DoctorPicture = "menunknowndoctor.jpeg",
                             FirstName = "Petro",
-                            Gender = 0,
+                            Gender = 1,
                             LastName = "Grinkiv",
                             Specialization = "Therapist",
-                            UserId = "46a12b23-5afd-47d2-945e-8f4e5d730981"
+                            UserId = "a218e893-e886-4aa5-9357-2ae18be53e97"
                         },
                         new
                         {
                             Id = 2,
                             Age = 0,
+                            DoctorPicture = "womenunknowndoctor.jpeg",
                             FirstName = "Maria",
-                            Gender = 0,
+                            Gender = 2,
                             LastName = "Koval",
                             Specialization = "Pediatrician",
-                            UserId = "12a69ba3-0519-4f10-8d9e-9fedc1ff11d3"
+                            UserId = "5befd447-bcd3-4a3f-b300-131a818f9035"
                         });
-                });
-
-            modelBuilder.Entity("Medicard.Domain.Entities.DoctorImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<byte[]>("Bytes")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Size")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId")
-                        .IsUnique();
-
-                    b.ToTable("Doctor image", (string)null);
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Institution", b =>
@@ -352,9 +320,9 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "af8c948f-020a-4678-9732-21e5a9973ff6",
+                            Id = "83f02277-dbad-4f40-bf29-9536f31a9bd5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "18cca749-bd1c-42d6-b1da-f561758dc225",
+                            ConcurrencyStamp = "4d75cfac-26bb-4cb7-a319-d3bd1adca83c",
                             Email = "matviivandrij13@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Andrij",
@@ -362,17 +330,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MATVIIVANDRIJ13@GMAIL.COM",
                             NormalizedUserName = "MATVIIVANDRIJ13@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGsnBZzi7P5unAz89tyvcKqnIQEgLL6GPluDofcFeLvpOIv1WiZbhCyJPqIY5OezUw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIbsqJWGK6pC+Fgp33EgwIgVFvxVVi1DHzyxcH4qT9uA/3poMcX3vJpcNvXbNiqaNw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "000b9f9b-fc52-4994-8932-f6ae7017e07a",
+                            SecurityStamp = "7d115234-8ee5-4262-9375-c48db9e31e9c",
                             TwoFactorEnabled = false,
                             UserName = "matviivandrij13@gmail.com"
                         },
                         new
                         {
-                            Id = "46a12b23-5afd-47d2-945e-8f4e5d730981",
+                            Id = "a218e893-e886-4aa5-9357-2ae18be53e97",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1e698baf-ca02-48a4-b5ab-76d1ced862e7",
+                            ConcurrencyStamp = "ea53d5f6-390e-4a62-a136-f73b5f439752",
                             Email = "petrogrinkiv@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Petro",
@@ -380,17 +348,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROGRINKOV@GMAIL.COM",
                             NormalizedUserName = "PETROGRINKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN7KF97d2dOf1iSTDP8kcU8Z6vfEYonp872PeVqzNZ8odr77MG+HbCVd+AlIfgojFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEB62gJn7Gl0usNGm7x7C3JNB8h9u/l7L1/vSACFrIbLJpcHQAbBwFe8n+BXuWMyPA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "926b06b4-6c63-4f25-ac7d-fbcb0a0a5a42",
+                            SecurityStamp = "db87cb42-5e31-4073-9e9d-33646caf8514",
                             TwoFactorEnabled = false,
                             UserName = "petrogrinkiv@gmail.com"
                         },
                         new
                         {
-                            Id = "12a69ba3-0519-4f10-8d9e-9fedc1ff11d3",
+                            Id = "5befd447-bcd3-4a3f-b300-131a818f9035",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bdb79983-efc8-4e9d-b496-3e7188302bd2",
+                            ConcurrencyStamp = "64e4d97d-b124-489a-931e-45da3eda0929",
                             Email = "mariakoval@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Maria",
@@ -398,9 +366,9 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MARIAKOVAL@GMAIL.COM",
                             NormalizedUserName = "MARIAKOVAL@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMNC+gf4TWSbW+jMe8nWY2JkEDTxmdsu4fOHMJjg8L4sIJJ8o8XxfMASaK55Su8olA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHIj9hqKJ8qwv49+exCVnb1dAITQjk/8HypVGiF79yTHQmL7O0HmMyDZuvS4Clfl6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b94e3c58-f8db-459c-a4cc-285785d5759d",
+                            SecurityStamp = "9e49e185-bcd4-4d19-a937-88c161ca07e0",
                             TwoFactorEnabled = false,
                             UserName = "mariakoval@gmail.com"
                         });
@@ -435,22 +403,22 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f2441f4d-4206-4a6c-89df-1f9e20eb8cda",
-                            ConcurrencyStamp = "ef10ef28-5d07-4269-8c4d-1ca58c4257b3",
+                            Id = "ede44275-816e-4de7-9aee-c39bd0dcb966",
+                            ConcurrencyStamp = "3796b066-ee59-4470-b66f-3b8394e2d888",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "011747c0-59c7-4c88-b971-a111593daaba",
-                            ConcurrencyStamp = "b4be9f32-4abc-4db5-ac4e-12a1f4bf87e7",
+                            Id = "ed3333ab-db37-4057-aaff-4b61f64be27e",
+                            ConcurrencyStamp = "ceb36d2d-6406-4a3e-8d3e-74584d6a30c0",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "be4349e9-9493-44f4-8f24-ca680d9f44ea",
-                            ConcurrencyStamp = "be1e817a-6197-4aee-8a4e-42b54fbab379",
+                            Id = "d8c3e7d3-f786-4d85-99b9-cf7a1a01df03",
+                            ConcurrencyStamp = "08a75bd6-1c3a-4a00-bdce-2baea1acf7d5",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -545,13 +513,13 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "af8c948f-020a-4678-9732-21e5a9973ff6",
-                            RoleId = "f2441f4d-4206-4a6c-89df-1f9e20eb8cda"
+                            UserId = "83f02277-dbad-4f40-bf29-9536f31a9bd5",
+                            RoleId = "ede44275-816e-4de7-9aee-c39bd0dcb966"
                         },
                         new
                         {
-                            UserId = "46a12b23-5afd-47d2-945e-8f4e5d730981",
-                            RoleId = "011747c0-59c7-4c88-b971-a111593daaba"
+                            UserId = "a218e893-e886-4aa5-9357-2ae18be53e97",
+                            RoleId = "ed3333ab-db37-4057-aaff-4b61f64be27e"
                         });
                 });
 
@@ -615,17 +583,6 @@ namespace Medicard.Domain.Migrations
                     b.Navigation("Institution");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Medicard.Domain.Entities.DoctorImage", b =>
-                {
-                    b.HasOne("Medicard.Domain.Entities.Doctor", "Doctor")
-                        .WithOne("Image")
-                        .HasForeignKey("Medicard.Domain.Entities.DoctorImage", "DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Patient", b =>
@@ -716,8 +673,6 @@ namespace Medicard.Domain.Migrations
 
             modelBuilder.Entity("Medicard.Domain.Entities.Doctor", b =>
                 {
-                    b.Navigation("Image");
-
                     b.Navigation("Patients");
                 });
 

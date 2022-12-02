@@ -27,8 +27,6 @@ namespace Medicard.Domain.Concrete
 
         public DbSet<Appointment> Appointments { get; set; }
 
-        public DbSet<DoctorImage> DoctorImages { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DoctorConfiguration());
@@ -36,17 +34,11 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new InstitutionConfiguration());
             builder.ApplyConfiguration(new DiagnosisConfiguration());
-            builder.ApplyConfiguration(new DoctorImageConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(doctor => doctor.Patients)
                 .WithOne(patient => patient.Doctor)
                 .HasForeignKey(patient => patient.DoctorId);
-
-            builder.Entity<Doctor>()
-                .HasOne(doctor => doctor.Image)
-                .WithOne(image => image.Doctor)
-                .HasForeignKey<DoctorImage>(image => image.DoctorId);
 
             builder.Entity<Patient>()
                 .HasMany(patient => patient.Appointments)
@@ -81,7 +73,7 @@ namespace Medicard.Domain.Concrete
                 Email = "petrogrinkiv@gmail.com",
                 UserName = "petrogrinkiv@gmail.com",
                 NormalizedEmail = "PETROGRINKOV@GMAIL.COM",
-                NormalizedUserName= "PETROGRINKOV@GMAIL.COM",
+                NormalizedUserName = "PETROGRINKOV@GMAIL.COM",
             };
             var secondDoctor = new User
             {
@@ -135,6 +127,7 @@ namespace Medicard.Domain.Concrete
                     LastName = firstDoctor.LastName,
                     Specialization = "Therapist",
                     Gender = Entities.Enums.Gender.Male,
+                    DoctorPicture = "menunknowndoctor.jpeg",
                 },
                 new Doctor
                 {
@@ -144,6 +137,7 @@ namespace Medicard.Domain.Concrete
                     LastName = secondDoctor.LastName,
                     Specialization = "Pediatrician",
                     Gender = Entities.Enums.Gender.Female,
+                    DoctorPicture = "womenunknowndoctor.jpeg",
                 });
             base.OnModelCreating(builder);
         }
