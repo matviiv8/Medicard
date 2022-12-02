@@ -13,16 +13,16 @@ namespace Medicard.Services.Services
 {
     public class PatientService : IPatientService
     {
-        private readonly MedicardDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PatientService(MedicardDbContext context)
+        public PatientService(IUnitOfWork unitOfWork)
         {
-            this._context = context;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task ChangePatient(PatientProfileViewModel model, string userId)
         {
-            var patient = _context.Patients.FirstOrDefault(d => d.UserId == userId);
+            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().FirstOrDefault(d => d.UserId == userId);
 
             patient.FirstName = model.FirstName;
             patient.LastName = model.LastName;
@@ -33,13 +33,13 @@ namespace Medicard.Services.Services
             patient.Gender = model.Gender;
             patient.MaritalStatus = model.MaritalStatus;
 
-            _context.Update(patient);
-            await _context.SaveChangesAsync(); 
+            _unitOfWork.GenericRepository<Patient>().Update(patient);
+            await _unitOfWork.SaveAsync(); 
         }
 
         public PatientProfileViewModel ViewProfile(string userId)
         {
-            var patient = _context.Patients.FirstOrDefault(d => d.UserId == userId);
+            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().FirstOrDefault(d => d.UserId == userId);
 
             var patientInfo = new PatientProfileViewModel
             {

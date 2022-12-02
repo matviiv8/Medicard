@@ -12,5 +12,7 @@ namespace Medicard.Domain.Astract
         IGenericRepository<T> GenericRepository<T>() where T : class;
 
         void Save();
+
+        Task SaveAsync();
     }
 }

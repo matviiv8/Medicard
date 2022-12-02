@@ -47,5 +47,10 @@ namespace Medicard.Domain.Astract
         {
             _context.SaveChanges();
         }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
