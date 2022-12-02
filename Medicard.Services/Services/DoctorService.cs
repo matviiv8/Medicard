@@ -1,4 +1,5 @@
-﻿using Medicard.Domain.Concrete;
+﻿using Medicard.Domain.Astract;
+using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.ViewModels.Doctor;
 using Microsoft.AspNetCore.Hosting;
@@ -13,17 +14,17 @@ namespace Medicard.Services.Services
 {
     public class DoctorService : IDoctorService
     {
-        private readonly MedicardDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public DoctorService(MedicardDbContext context, IWebHostEnvironment webHostEnvironment)
+        public DoctorService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
-            this._context = context;
+            this._unitOfWork = unitOfWork;
             this._webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<AllDoctorsViewModel> allDoctors()
         {
-            var users = _context.Doctors.ToList();
+            var users = _unitOfWork.GenericRepository<Doctor>().GetAll();
             var doctors = new List<AllDoctorsViewModel>();
             foreach(var user in users)
             {
@@ -43,7 +44,7 @@ namespace Medicard.Services.Services
 
         public async Task ChangeDoctor(DoctorProfileViewModel model, string userId)
         {
-            var doctor = _context.Doctors.FirstOrDefault(d => d.UserId == userId);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
 
             doctor.FirstName = model.FirstName;
             doctor.LastName = model.LastName;
@@ -65,14 +66,14 @@ namespace Medicard.Services.Services
             }
             doctor.DoctorPicture = uniqueFileName;
 
-            _context.Update(doctor);
+            _unitOfWork.GenericRepository<Doctor>().Update(doctor);
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveAsync();
         }
 
         public DoctorProfileViewModel ViewProfile(string userId)
         {
-            var doctor = _context.Doctors.FirstOrDefault(d => d.UserId == userId);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
 
             var doctorInfo = new DoctorProfileViewModel
             {
