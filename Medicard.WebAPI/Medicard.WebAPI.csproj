@@ -18,4 +18,7 @@
     <ProjectReference Include="..\Medicard.Domain\Medicard.Domain.csproj" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 </Project>

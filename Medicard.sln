@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicard.WebUI", "Medicard.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicard.Services", "Medicard.Services\Medicard.Services.csproj", "{7FDA9C67-F838-4FA3-ABA5-A90A2C974F7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medicard.WebAPI", "Medicard.WebAPI\Medicard.WebAPI.csproj", "{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicard.WebAPI", "Medicard.WebAPI\Medicard.WebAPI.csproj", "{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
