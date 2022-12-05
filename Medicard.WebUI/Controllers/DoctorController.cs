@@ -31,7 +31,7 @@ namespace Medicard.WebUI.Controllers
             {
                 if (!string.IsNullOrEmpty(search))
                 {
-                    doctors = doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
+                    doctors = (List<AllDoctorsViewModel>)doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
                 }
             }
 

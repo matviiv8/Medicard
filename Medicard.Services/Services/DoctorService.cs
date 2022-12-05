@@ -7,8 +7,12 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
+using System.Net.Http.Formatting;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Medicard.WebAPI.Controllers;
 
 namespace Medicard.Services.Services
 {
@@ -24,27 +28,31 @@ namespace Medicard.Services.Services
 
         public IEnumerable<AllDoctorsViewModel> allDoctors()
         {
-            var users = _unitOfWork.GenericRepository<Doctor>().GetAll();
             var doctors = new List<AllDoctorsViewModel>();
-            foreach(var user in users)
+            using (var client = new HttpClient())
             {
-                doctors.Add(new AllDoctorsViewModel
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7015/api/Doctor");
+                var response = client.SendAsync(requestMessage).Result;
+                var data = response.Content.ReadAsAsync<List<Doctor>>().Result;
+                foreach (var doctor in data)
                 {
-                    Id = user.UserId,
-                    FullName = user.FirstName + " " + user.LastName,
-                    Specialization = user.Specialization,
-                    ContactNumber = user.ContactNumber,
-                    Gender = user.Gender,
-                    Image = user.DoctorPicture,
-                }); 
+                    doctors.Add(new AllDoctorsViewModel
+                    {
+                        Id = doctor.UserId,
+                        FullName = doctor.FirstName + " " + doctor.LastName,
+                        Specialization = doctor.Specialization,
+                        ContactNumber = doctor.ContactNumber,
+                        Gender = doctor.Gender,
+                        Image = doctor.DoctorPicture,
+                    });
+                }
             }
-
             return doctors;
         }
 
         public async Task ChangeDoctor(DoctorProfileViewModel model, string userId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(doctor => doctor.UserId == userId); 
 
             doctor.FirstName = model.FirstName;
             doctor.LastName = model.LastName;
