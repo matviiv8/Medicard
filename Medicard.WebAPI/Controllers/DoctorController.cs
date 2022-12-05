@@ -75,7 +75,7 @@ namespace Medicard.WebAPI.Controllers
             {
                 return BadRequest();
             }
-            if (!_unitOfWork.GenericRepository<Doctor>().GetAll().Any(x => x.Id == id))
+            if (_unitOfWork.GenericRepository<Doctor>().GetById(id) == null)
             {
                 return NotFound();
             }
