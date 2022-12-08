@@ -27,6 +27,8 @@ namespace Medicard.Domain.Concrete
 
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DoctorConfiguration());
@@ -34,6 +36,7 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new PatientConfiguration());
             builder.ApplyConfiguration(new InstitutionConfiguration());
             builder.ApplyConfiguration(new DiagnosisConfiguration());
+            builder.ApplyConfiguration(new MessageConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(doctor => doctor.Patients)
@@ -54,6 +57,11 @@ namespace Medicard.Domain.Concrete
                 .HasOne(appointment => appointment.TreatmentPlan)
                 .WithOne(treatmentPlan => treatmentPlan.Appointment)
                 .HasForeignKey<TreatmentPlan>(treatmentPlan => treatmentPlan.Id);
+
+            builder.Entity<Message>()
+                .HasOne<User>(message => message.User)
+                .WithMany(user => user.Messages)
+                .HasForeignKey(message => message.UserId);
 
             var hasher = new PasswordHasher<IdentityUser>();
 
@@ -140,11 +148,6 @@ namespace Medicard.Domain.Concrete
                     DoctorPicture = "womenunknowndoctor.jpeg",
                 });
             base.OnModelCreating(builder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
         }
     }
 }

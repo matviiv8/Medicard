@@ -3,6 +3,7 @@ using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.Services;
+using Medicard.WebUI.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MedicardDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
 });
 
 builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<MedicardDbContext>();
@@ -22,6 +24,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -46,6 +49,11 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseEndpoints(routes =>
+{
+    routes.MapHub<ChatHub>("/chathub");
+});
 
 app.MapControllerRoute(
     name: "default",
