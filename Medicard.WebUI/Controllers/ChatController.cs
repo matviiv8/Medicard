@@ -1,5 +1,4 @@
-﻿using Medicard.Domain.Astract;
-using Medicard.Domain.Concrete;
+﻿using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.WebUI.Hubs;
 using Medicard.WebUI.Models;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace Medicard.WebUI.Controllers
 {
@@ -15,17 +13,35 @@ namespace Medicard.WebUI.Controllers
     {
         private readonly MedicardDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public ChatController(MedicardDbContext context, UserManager<User> userManager)
+        public ChatController(MedicardDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public async Task<IActionResult> Private()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var allUsers = _context.Users.Where(u => u.UserName != currentUser.UserName).ToList();
+            var isCurrentRoleDoctor = await _userManager.IsInRoleAsync(currentUser, "Doctor");
+            var isCurrentRoleAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
+            var allUsers = new List<User>();
+
+            if(isCurrentRoleDoctor || isCurrentRoleAdmin)
+            {
+                allUsers = _context.Users.Where(u => u.UserName != currentUser.UserName).ToList();
+            }
+            else
+            {
+                var allDoctors = _context.Doctors.ToList();
+                foreach (var doctor in allDoctors)
+                {
+                    allUsers.Add(_context.Users.Where(u => u.UserName != currentUser.UserName && u.Id == doctor.UserId).First());
+                }
+            }
+
             return View(allUsers);
         }
 

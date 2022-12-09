@@ -178,9 +178,11 @@ namespace Medicard.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TargetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     When = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TargetId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -331,9 +333,9 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1e585c5f-662f-4968-8bf2-3827037e794f", "a6eb2b0c-c418-4ef2-9caa-a3089fbc8047", "Patient", "PATIENT" },
-                    { "4500a2d7-075b-4f9d-bf26-5f90abdd5260", "44683a45-5741-4047-9e1a-41ca88abfd43", "Doctor", "DOCTOR" },
-                    { "47e8b9d5-df59-45ac-a7d1-45ccd2c7cf54", "a462e2e4-358c-4130-8e45-ed6855e1dfac", "Admin", "ADMIN" }
+                    { "21b6312a-498d-4687-be01-02f1c1393258", "9e8fea0a-fb1d-47bd-9cf0-84238b12100b", "Admin", "ADMIN" },
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "98bec9ba-2adf-46ef-aa07-635eba3edf36", "Doctor", "DOCTOR" },
+                    { "b5b463a5-17a2-464b-819f-e751db1f63a0", "250dcce8-8348-4647-986f-c2d6b5f2b645", "Patient", "PATIENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -341,9 +343,9 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "311cb0ab-f2af-4251-a47a-bea1eed5ab11", 0, "dc23fd71-bbc1-4223-80b8-b6bbc260605e", "mariakoval@gmail.com", false, "Maria", "Koval", false, null, "MARIAKOVAL@GMAIL.COM", "MARIAKOVAL@GMAIL.COM", "AQAAAAEAACcQAAAAEDIBCWp0xFcSFUT3YhbZzL2W6FuMKxYZDCIb78qgD+2IGhqusdPGXVjo4AyUU7Ncvw==", null, false, "75d0221f-6f45-47d9-8c36-4e4c88abf7d5", false, "mariakoval@gmail.com" },
-                    { "cb436c87-99f9-4f4c-aea4-637710b713de", 0, "5b75bc62-7564-4ac5-970a-4ed791f6cb36", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, "PETROGRINKOV@GMAIL.COM", "PETROGRINKOV@GMAIL.COM", "AQAAAAEAACcQAAAAEA8SVMdKSIcQvMtyPunoSGKqLJcNW0n7R1eIJS7x+pa7UYK60SyMxHO076GAF27xQA==", null, false, "df9328be-500d-41e4-a85c-1e0c6ca1ba00", false, "petrogrinkiv@gmail.com" },
-                    { "e34e761a-a813-47b1-8538-5a8385986564", 0, "fe947b02-73fe-4b59-a065-ad2c1b0f29f3", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, "MATVIIVANDRIJ13@GMAIL.COM", "MATVIIVANDRIJ13@GMAIL.COM", "AQAAAAEAACcQAAAAEJMMLf0DpcsjHRAYsF8lo/A3ow3xUG8h+acVMA/erqckYNsk/XJ2cfWj6O7wTc2l9A==", null, false, "aeb16ecd-e372-455e-b168-b38c1b36e045", false, "matviivandrij13@gmail.com" }
+                    { "49136316-7eb3-4c7b-87b4-91e18cdd3a8c", 0, "066dff65-9407-4243-a032-c9e3698fe80b", "mariakoval@gmail.com", false, "Maria", "Koval", false, null, "MARIAKOVAL@GMAIL.COM", "MARIAKOVAL@GMAIL.COM", "AQAAAAEAACcQAAAAEHiZgAQI0LnH93l/duInSZKSIKakfOP085oCQ1CdkTS2Xeg26AXZQg0ZcJCQmjSUag==", null, false, "25586067-9d89-427a-9d9b-c0997f57bbff", false, "mariakoval@gmail.com" },
+                    { "61a01012-4a44-40af-80ac-eb03d8c80e64", 0, "16b4df09-d21d-4a44-ae43-5723ffd59608", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, "MATVIIVANDRIJ13@GMAIL.COM", "MATVIIVANDRIJ13@GMAIL.COM", "AQAAAAEAACcQAAAAEJwKkNn82yzXD797eqIWrZ7SGHj38+B5jzg70LMbnu88QiPU1mNrhBt+fmJx8AjHpA==", null, false, "946418aa-802f-4ea8-8bbd-85c430faf199", false, "matviivandrij13@gmail.com" },
+                    { "80d3a72f-1fbe-440e-8b68-1951411074dc", 0, "8f73941a-415c-4ac8-8959-dba34ecdfb5d", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, "PETROGRINKOV@GMAIL.COM", "PETROGRINKOV@GMAIL.COM", "AQAAAAEAACcQAAAAECrMgOXrWBj6nVzn8fPB8Z6naoX2m3X/yFqgmireKYnRinkMQDUfnvgH+hBi4nDJHA==", null, false, "620574be-55ae-46ec-b6fa-0b3c773bacd3", false, "petrogrinkiv@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -351,8 +353,9 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "4500a2d7-075b-4f9d-bf26-5f90abdd5260", "cb436c87-99f9-4f4c-aea4-637710b713de" },
-                    { "47e8b9d5-df59-45ac-a7d1-45ccd2c7cf54", "e34e761a-a813-47b1-8538-5a8385986564" }
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "49136316-7eb3-4c7b-87b4-91e18cdd3a8c" },
+                    { "21b6312a-498d-4687-be01-02f1c1393258", "61a01012-4a44-40af-80ac-eb03d8c80e64" },
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "80d3a72f-1fbe-440e-8b68-1951411074dc" }
                 });
 
             migrationBuilder.InsertData(
@@ -360,8 +363,8 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "Age", "ContactNumber", "DoctorPicture", "FirstName", "Gender", "InstitutionId", "LastName", "Specialization", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 0, null, "menunknowndoctor.jpeg", "Petro", 1, null, "Grinkiv", "Therapist", "cb436c87-99f9-4f4c-aea4-637710b713de" },
-                    { 2, 0, null, "womenunknowndoctor.jpeg", "Maria", 2, null, "Koval", "Pediatrician", "311cb0ab-f2af-4251-a47a-bea1eed5ab11" }
+                    { 1, 0, null, "menunknowndoctor.jpeg", "Petro", 1, null, "Grinkiv", "Therapist", "80d3a72f-1fbe-440e-8b68-1951411074dc" },
+                    { 2, 0, null, "womenunknowndoctor.jpeg", "Maria", 2, null, "Koval", "Pediatrician", "49136316-7eb3-4c7b-87b4-91e18cdd3a8c" }
                 });
 
             migrationBuilder.CreateIndex(

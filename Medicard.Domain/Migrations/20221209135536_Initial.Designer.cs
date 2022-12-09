@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicard.Domain.Migrations
 {
     [DbContext(typeof(MedicardDbContext))]
-    [Migration("20221208205710_EditMessage")]
-    partial class EditMessage
+    [Migration("20221209135536_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,7 +130,7 @@ namespace Medicard.Domain.Migrations
                             Gender = 1,
                             LastName = "Grinkiv",
                             Specialization = "Therapist",
-                            UserId = "7a99585d-5d68-4e9f-a49f-4de3395d8c67"
+                            UserId = "80d3a72f-1fbe-440e-8b68-1951411074dc"
                         },
                         new
                         {
@@ -141,7 +141,7 @@ namespace Medicard.Domain.Migrations
                             Gender = 2,
                             LastName = "Koval",
                             Specialization = "Pediatrician",
-                            UserId = "e829138a-e0dd-4b2d-9e93-b3b64e22d74b"
+                            UserId = "49136316-7eb3-4c7b-87b4-91e18cdd3a8c"
                         });
                 });
 
@@ -358,9 +358,9 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "05b9ea37-79e2-437d-9a68-28c4da123630",
+                            Id = "61a01012-4a44-40af-80ac-eb03d8c80e64",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36bd4619-0d78-4145-8cd6-bdb688a4c4f2",
+                            ConcurrencyStamp = "16b4df09-d21d-4a44-ae43-5723ffd59608",
                             Email = "matviivandrij13@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Andrij",
@@ -368,17 +368,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MATVIIVANDRIJ13@GMAIL.COM",
                             NormalizedUserName = "MATVIIVANDRIJ13@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIzzjcA5tg42XtKAIK/+/1jDygzs9pRz21fT8rDb4UWSnQOJRuRLtJU7KDcfZRogbQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJwKkNn82yzXD797eqIWrZ7SGHj38+B5jzg70LMbnu88QiPU1mNrhBt+fmJx8AjHpA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2b4ff0c7-3b96-4272-8f1e-d8d712170bee",
+                            SecurityStamp = "946418aa-802f-4ea8-8bbd-85c430faf199",
                             TwoFactorEnabled = false,
                             UserName = "matviivandrij13@gmail.com"
                         },
                         new
                         {
-                            Id = "7a99585d-5d68-4e9f-a49f-4de3395d8c67",
+                            Id = "80d3a72f-1fbe-440e-8b68-1951411074dc",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d792db4c-3fd5-49cb-9ede-3fbc4691df3f",
+                            ConcurrencyStamp = "8f73941a-415c-4ac8-8959-dba34ecdfb5d",
                             Email = "petrogrinkiv@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Petro",
@@ -386,17 +386,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROGRINKOV@GMAIL.COM",
                             NormalizedUserName = "PETROGRINKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAECD/PahSNZHx61IEoKldWTxJAvABuYyMZxf2QQ5jvboQe/o9fCI9SDoXFr9OSo3aIg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECrMgOXrWBj6nVzn8fPB8Z6naoX2m3X/yFqgmireKYnRinkMQDUfnvgH+hBi4nDJHA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "958ece8e-df81-4a09-a30e-f0e0ea898431",
+                            SecurityStamp = "620574be-55ae-46ec-b6fa-0b3c773bacd3",
                             TwoFactorEnabled = false,
                             UserName = "petrogrinkiv@gmail.com"
                         },
                         new
                         {
-                            Id = "e829138a-e0dd-4b2d-9e93-b3b64e22d74b",
+                            Id = "49136316-7eb3-4c7b-87b4-91e18cdd3a8c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a40b0806-6f78-4d67-896b-25838174b7c7",
+                            ConcurrencyStamp = "066dff65-9407-4243-a032-c9e3698fe80b",
                             Email = "mariakoval@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Maria",
@@ -404,9 +404,9 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MARIAKOVAL@GMAIL.COM",
                             NormalizedUserName = "MARIAKOVAL@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFqq9Vroce76fhL3ax3lo4PUWUoMVL9HvEBIbsZVPpS0FVjj9GN5t0PrZZm9i5F5EQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHiZgAQI0LnH93l/duInSZKSIKakfOP085oCQ1CdkTS2Xeg26AXZQg0ZcJCQmjSUag==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c1e8779-3347-41fb-acbb-6c61b699e32f",
+                            SecurityStamp = "25586067-9d89-427a-9d9b-c0997f57bbff",
                             TwoFactorEnabled = false,
                             UserName = "mariakoval@gmail.com"
                         });
@@ -441,22 +441,22 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8d6f843a-69ea-471a-9c7d-0f34d966c7ca",
-                            ConcurrencyStamp = "54005303-853c-43a5-84e7-1bd42e74ee0c",
+                            Id = "21b6312a-498d-4687-be01-02f1c1393258",
+                            ConcurrencyStamp = "9e8fea0a-fb1d-47bd-9cf0-84238b12100b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "ed1e9388-1aac-4734-a97e-e92052d20b80",
-                            ConcurrencyStamp = "b4ea3eec-8648-474c-9f59-4cdbcaae1292",
+                            Id = "7511a824-2a79-4c87-9d50-44df889ef1cb",
+                            ConcurrencyStamp = "98bec9ba-2adf-46ef-aa07-635eba3edf36",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "f773c497-9b09-42d9-a8fb-6a63e7d36b51",
-                            ConcurrencyStamp = "0ee0dd24-b91e-45af-b2ce-a09012c5a30f",
+                            Id = "b5b463a5-17a2-464b-819f-e751db1f63a0",
+                            ConcurrencyStamp = "250dcce8-8348-4647-986f-c2d6b5f2b645",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -551,13 +551,18 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "05b9ea37-79e2-437d-9a68-28c4da123630",
-                            RoleId = "8d6f843a-69ea-471a-9c7d-0f34d966c7ca"
+                            UserId = "61a01012-4a44-40af-80ac-eb03d8c80e64",
+                            RoleId = "21b6312a-498d-4687-be01-02f1c1393258"
                         },
                         new
                         {
-                            UserId = "7a99585d-5d68-4e9f-a49f-4de3395d8c67",
-                            RoleId = "ed1e9388-1aac-4734-a97e-e92052d20b80"
+                            UserId = "80d3a72f-1fbe-440e-8b68-1951411074dc",
+                            RoleId = "7511a824-2a79-4c87-9d50-44df889ef1cb"
+                        },
+                        new
+                        {
+                            UserId = "49136316-7eb3-4c7b-87b4-91e18cdd3a8c",
+                            RoleId = "7511a824-2a79-4c87-9d50-44df889ef1cb"
                         });
                 });
 

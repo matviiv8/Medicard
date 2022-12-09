@@ -124,6 +124,12 @@ namespace Medicard.Domain.Concrete
                     UserId = firstDoctor.Id,
                     RoleId =
                     roles.First(q => q.Name == "Doctor").Id,
+                },
+                new IdentityUserRole<string>
+                {
+                    UserId = secondDoctor.Id,
+                    RoleId =
+                    roles.First(q => q.Name == "Doctor").Id,
                 });
             builder.Entity<Doctor>()
                 .HasData(
