@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Medicard.Services.ViewModels.Doctor.AllDoctorsViewModel>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Medicard.Domain.Entities.User> SignInManager
 
 <nav class="navbar navbar-light bg-white justify-content-between">
  <div class="container-fluid">
@@ -23,6 +25,10 @@
                     <h5 class="card-title text-center">@doctor.FullName</h5>
                     <p class="card-text text-center">@doctor.Specialization</p>
                     <a href="tel:@doctor.ContactNumber">@doctor.ContactNumber</a>
+                     @if (SignInManager.IsSignedIn(this.User))
+                     {
+                        <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">message</a>
+                     }
                 </div>
             </div>
         </div>

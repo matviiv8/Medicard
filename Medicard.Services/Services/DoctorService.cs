@@ -44,6 +44,7 @@ namespace Medicard.Services.Services
                         ContactNumber = doctor.ContactNumber,
                         Gender = doctor.Gender,
                         Image = doctor.DoctorPicture,
+                        UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
                     });
                 }
             }
