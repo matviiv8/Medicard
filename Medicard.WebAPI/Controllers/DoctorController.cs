@@ -52,17 +52,18 @@ namespace Medicard.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var entity = _unitOfWork.GenericRepository<Doctor>().GetById(id);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetById(id);
 
-            if(entity != null)
+            if(doctor != null)
             {
-                _unitOfWork.GenericRepository<Doctor>().Delete(entity);
+                _unitOfWork.GenericRepository<Doctor>().Delete(doctor);
                 _unitOfWork.Save();
                 return Ok();
             }
 
             return NotFound();
         }
+
         /// <summary>  
         /// update doctor 
         /// </summary>  
