@@ -1,12 +1,13 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@{
     ViewData["Title"] = "Home Page";
 }
+@inject IViewLocalizer Localizer
 
 <div
   class="bg-image p-5 text-center mb-5 text-black">
-  <h1 class="mb-3 h2">Welcome to medical system Medicard</h1>
+  <h2 class="display-2">@Localizer["Header"]</h2>
 
-  <p>
-    Access medical services, prescription medicines and hospital care for free
-  </p>
+  <h5>@Localizer["Description"]</h5>
+    <img src="~/images/bg-banner.jpg" alt = "banner" class="center" style="width:100%; height: 80% ">
 </div>

@@ -1,4 +1,7 @@
 ﻿@using Medicard.Services.ViewModels
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 
 @model LoginViewModel;
 
@@ -7,7 +10,7 @@
 }
 <a asp-action="Register" asp-controller="Account">Registration</a>
 
-<h1>User Login</h1>
+<h1>@Localizer["LoginHeader"]</h1>
 <div class="row">
     <div class="col-md-12">
         <form method="post" >
@@ -33,7 +36,7 @@
                </div>
             </div>
             <button type="submit" class="btn btn-primary">
-                Log In
+                @Localizer["LoginHeader"]
             </button>
         </form>
     </div>

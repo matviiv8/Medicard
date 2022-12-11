@@ -1,11 +1,14 @@
 ﻿@model IEnumerable<Medicard.Services.ViewModels.Doctor.AllDoctorsViewModel>
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 
 <nav class="navbar navbar-light bg-white justify-content-between">
  <div class="container-fluid">
 <form asp-action="AllDoctors" method="get" class="d-flex" role="search">
         <p>
-            Find by name: <input type="text" name="Search" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class=""btn btn-outline-success" /> 
+            @Localizer["FindByName"] <input type="text" name="Search" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value=@Localizer["Search"] class="btn btn-outline-success" /> 
         </p>
 </form>
 </div>
