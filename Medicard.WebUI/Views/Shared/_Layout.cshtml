@@ -36,6 +36,12 @@
                   <ul class="dropdown-menu">
                         @if (SignInManager.IsSignedIn(this.User))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Private">Messages</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
+                            </li>
                                 @if (this.User.IsInRole("Patient"))
                                 {
                                     <li class="nav-item">
@@ -83,6 +89,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
 </body>
 </html>
 

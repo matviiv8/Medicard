@@ -16,5 +16,7 @@ namespace Medicard.Services.ViewModels.Doctor
         public string ContactNumber { get; set; }
 
         public string Image { get; set; }
+
+        public string UserName { get; set; }
     }
 }

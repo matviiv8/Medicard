@@ -10,9 +10,16 @@ namespace Medicard.Domain.Entities
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+            Messages = new HashSet<Message>();
+        }
+
         public string? FirstName { get; set; }
 
         public string? LastName { get; set; }
+
+        public ICollection<Message> Messages { get; set; }
 
     }
 }

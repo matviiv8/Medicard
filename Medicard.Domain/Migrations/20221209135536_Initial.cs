@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Medicard.Domain.Migrations
 {
-    public partial class addmigratinInitial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -172,14 +172,41 @@ namespace Medicard.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Message",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TargetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    When = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TargetId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Message_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctor",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
+                    DoctorPicture = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Specialization = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     InstitutionId = table.Column<int>(type: "int", nullable: true)
@@ -206,6 +233,8 @@ namespace Medicard.Domain.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ContactNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
@@ -304,9 +333,9 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "719b01c3-ec6c-4efe-b5a5-e93569b17df2", "e7854c19-b28d-4943-86d8-0557fb5c527f", "Admin", "ADMIN" },
-                    { "7e45ccb8-23bc-46a4-95ac-15978051b1c6", "a75cb207-693c-474c-921a-9274f58a0315", "Patient", "PATIENT" },
-                    { "929a717d-d102-403f-a174-20527587d414", "7327da68-4d98-459a-8ce8-3d0b1ea1dc1c", "Doctor", "DOCTOR" }
+                    { "21b6312a-498d-4687-be01-02f1c1393258", "9e8fea0a-fb1d-47bd-9cf0-84238b12100b", "Admin", "ADMIN" },
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "98bec9ba-2adf-46ef-aa07-635eba3edf36", "Doctor", "DOCTOR" },
+                    { "b5b463a5-17a2-464b-819f-e751db1f63a0", "250dcce8-8348-4647-986f-c2d6b5f2b645", "Patient", "PATIENT" }
                 });
 
             migrationBuilder.InsertData(
@@ -314,24 +343,29 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "558a96b1-42d5-4bde-999e-d652e017b8c5", 0, "a6b18e4d-eba2-4b4c-a0ec-8602f8174f94", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, null, null, "AQAAAAEAACcQAAAAEDsW2LRtgYKZvzEJnYzBbEqu1hH9AzrRTyzruO7uApbmgn6Ecc/VR11qHe8zv+pKlg==", null, false, "570a8579-b9a6-4f56-9f5c-c4cd4626117b", false, "matviivandrij13@gmail.com" },
-                    { "dc693496-124f-4f7a-afe2-0e6cfa42dfa7", 0, "d7b5c1c5-b749-4018-888c-b3f29802877a", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, null, null, "AQAAAAEAACcQAAAAEMU682fBhCaJ14t8N1Zwg6usw9uf79Ne7zSqHiTXHAVyWMsnqUy+IHVWFVM9PkkiLw==", null, false, "20228201-be43-4762-bde1-bb1395a80bd7", false, "petrogrinkiv@gmail.com" }
+                    { "49136316-7eb3-4c7b-87b4-91e18cdd3a8c", 0, "066dff65-9407-4243-a032-c9e3698fe80b", "mariakoval@gmail.com", false, "Maria", "Koval", false, null, "MARIAKOVAL@GMAIL.COM", "MARIAKOVAL@GMAIL.COM", "AQAAAAEAACcQAAAAEHiZgAQI0LnH93l/duInSZKSIKakfOP085oCQ1CdkTS2Xeg26AXZQg0ZcJCQmjSUag==", null, false, "25586067-9d89-427a-9d9b-c0997f57bbff", false, "mariakoval@gmail.com" },
+                    { "61a01012-4a44-40af-80ac-eb03d8c80e64", 0, "16b4df09-d21d-4a44-ae43-5723ffd59608", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, "MATVIIVANDRIJ13@GMAIL.COM", "MATVIIVANDRIJ13@GMAIL.COM", "AQAAAAEAACcQAAAAEJwKkNn82yzXD797eqIWrZ7SGHj38+B5jzg70LMbnu88QiPU1mNrhBt+fmJx8AjHpA==", null, false, "946418aa-802f-4ea8-8bbd-85c430faf199", false, "matviivandrij13@gmail.com" },
+                    { "80d3a72f-1fbe-440e-8b68-1951411074dc", 0, "8f73941a-415c-4ac8-8959-dba34ecdfb5d", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, "PETROGRINKOV@GMAIL.COM", "PETROGRINKOV@GMAIL.COM", "AQAAAAEAACcQAAAAECrMgOXrWBj6nVzn8fPB8Z6naoX2m3X/yFqgmireKYnRinkMQDUfnvgH+hBi4nDJHA==", null, false, "620574be-55ae-46ec-b6fa-0b3c773bacd3", false, "petrogrinkiv@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "719b01c3-ec6c-4efe-b5a5-e93569b17df2", "558a96b1-42d5-4bde-999e-d652e017b8c5" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "929a717d-d102-403f-a174-20527587d414", "dc693496-124f-4f7a-afe2-0e6cfa42dfa7" });
+                values: new object[,]
+                {
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "49136316-7eb3-4c7b-87b4-91e18cdd3a8c" },
+                    { "21b6312a-498d-4687-be01-02f1c1393258", "61a01012-4a44-40af-80ac-eb03d8c80e64" },
+                    { "7511a824-2a79-4c87-9d50-44df889ef1cb", "80d3a72f-1fbe-440e-8b68-1951411074dc" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Doctor",
-                columns: new[] { "Id", "Age", "ContactNumber", "Gender", "InstitutionId", "Specialization", "UserId" },
-                values: new object[] { 1, 0, null, 0, null, null, "dc693496-124f-4f7a-afe2-0e6cfa42dfa7" });
+                columns: new[] { "Id", "Age", "ContactNumber", "DoctorPicture", "FirstName", "Gender", "InstitutionId", "LastName", "Specialization", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 0, null, "menunknowndoctor.jpeg", "Petro", 1, null, "Grinkiv", "Therapist", "80d3a72f-1fbe-440e-8b68-1951411074dc" },
+                    { 2, 0, null, "womenunknowndoctor.jpeg", "Maria", 2, null, "Koval", "Pediatrician", "49136316-7eb3-4c7b-87b4-91e18cdd3a8c" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointment_DoctorId",
@@ -399,6 +433,11 @@ namespace Medicard.Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Message_UserId",
+                table: "Message",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Patient_DoctorId",
                 table: "Patient",
                 column: "DoctorId");
@@ -434,6 +473,9 @@ namespace Medicard.Domain.Migrations
 
             migrationBuilder.DropTable(
                 name: "Diagnosis");
+
+            migrationBuilder.DropTable(
+                name: "Message");
 
             migrationBuilder.DropTable(
                 name: "TreatmentPlan");
