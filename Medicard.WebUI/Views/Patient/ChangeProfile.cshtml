@@ -1,4 +1,8 @@
 ﻿@model Medicard.Services.ViewModels.Patient.PatientProfileViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+ 
+@inject IViewLocalizer Localizer
+
 @{
     ViewBag.Title = "Personal info";
 }
@@ -29,7 +33,7 @@
                 <select asp-for="Gender" 
                     class="form-control" 
                     asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.Gender>()">
-                <option>Select Gender</option>
+                <option>@Localizer["SelectGender"]</option>
             </select>
             </div>
 
@@ -56,10 +60,10 @@
                 <select asp-for="MaritalStatus" 
                     class="form-control" 
                     asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.MaritalStatus>()">
-                <option>Select Marital Status</option>
+                <option>@Localizer["SelectMaritalStatus"]</option>
             </select>
             </div>
-            <input class="btn btn-warning mt-3 text-center" type="submit" value="Change" />
+            <input class="btn btn-warning mt-3 text-center" type="submit" value=@Localizer["Change"] />
         </form>
     </div>
 </div>
