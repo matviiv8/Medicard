@@ -1,17 +1,19 @@
 ﻿@model Medicard.Services.ViewModels.Patient.PatientProfileViewModel
-
+@using Microsoft.AspNetCore.Mvc.Localization
+ 
+@inject IViewLocalizer Localizer
 
 <div class="card text-center bg-info text-white">
     <div class="card-body">
             <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
-            <p class="card-text">Address - @this.Model.Address</p>
-            <p class="card-text">Gender - @this.Model.Gender</p>
-            <p class="card-text">Marital status - @this.Model.MaritalStatus</p>
-            <p class="card-text">Bithdate - @this.Model.BirthDate</p>
-            <p class="card-text">Contact number - @this.Model.ContactNumber</p>
+            <p class="card-text">@Localizer["Address"] - @this.Model.Address</p>
+            <p class="card-text">@Localizer["Gender"] - @this.Model.Gender</p>
+            <p class="card-text">@Localizer["MaritalStatus"] - @this.Model.MaritalStatus</p>
+            <p class="card-text">@Localizer["BirthDate"] - @this.Model.BirthDate</p>
+            <p class="card-text">@Localizer["ContactNumber"] - @this.Model.ContactNumber</p>
     </div>
     <div class="card-footer text-white">
-            Age - @this.Model.Age
+            @Localizer["Age"] - @this.Model.Age
     </div>
 </div>
-<a asp-controller="Patient" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn btn-warning">Change Profile</a>
+<a asp-controller="Patient" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn btn-warning">@Localizer["ChangeProfile"]</a>

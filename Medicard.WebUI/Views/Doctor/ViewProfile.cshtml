@@ -1,17 +1,19 @@
 ﻿@model Medicard.Services.ViewModels.Doctor.DoctorProfileViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer Localizer
 
 
 <div class="container col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6 d-flex justify-content-center">
     
     <div class="card" style="width:400px">
-        <h2 class="card-text text-center">This is your Profile</h2>
+        <h2 class="card-text text-center">@Localizer["Header"]</h2>
 
         <img class="card-img-top" src="~/images/@this.Model.PictureName" alt="Card image" style="width:100%">
         
         <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
-        <p class="card-text">Specialization - @this.Model.Specialization</p>
-        <p class="card-text">ContactNumber - @this.Model.ContactNumber</p>
+        <p class="card-text">@Localizer["Specialization"] - @this.Model.Specialization</p>
+        <p class="card-text">@Localizer["ContactNumber"] - @this.Model.ContactNumber</p>
     </div>
-    <a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn" style="background-color:#01ABC2">Change Profile</a>
+    <a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn" style="background-color:#01ABC2">@Localizer["ChangeProfile"]</a>
 </div>
