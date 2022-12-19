@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateDoctor" xml:space="preserve">
+    <value>Створити лікаря</value>
+  </data>
+  <data name="DeleteDoctor" xml:space="preserve">
+    <value>Видалити цього лікаря</value>
+  </data>
   <data name="FindByName" xml:space="preserve">
     <value>Знайти за прізвищем або ім'ям:</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Надіслати повідомлення</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
