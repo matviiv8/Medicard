@@ -1,0 +1,69 @@
+﻿@model Medicard.Services.ViewModels.Admin.CreateDoctorViewModel;
+
+@{
+    ViewBag.Title = "Create Doctor";
+}
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <h2 class="heading-margin text-center">@ViewBag.Title</h2>
+
+        <form class="mx-auto half-width" asp-controller="Admin" asp-action="CreateDoctor" method="post">
+
+
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" type="text" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" type="text" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" type="text" class="form-control">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" type="text" class="form-control">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="ContactNumber"></label>
+                <input asp-for="ContactNumber" type="text" class="form-control">
+                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Specialization"></label>
+                <input asp-for="Specialization" type="text" class="form-control">
+                <span asp-validation-for="Specialization" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" 
+                    class="form-control" 
+                    asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.Gender>()">
+                <option>Select Gender</option>
+            </select>
+            </div>
+
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-success">Create</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

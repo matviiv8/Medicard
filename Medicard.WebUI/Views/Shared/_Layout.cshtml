@@ -39,9 +39,6 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Private">Messages</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Log out</a>
-                            </li>
                                 @if (this.User.IsInRole("Patient"))
                                 {
                                     <li class="nav-item">
