@@ -26,23 +26,11 @@ namespace Medicard.Tests.WebAPI.Controllers
             _unitOfWork = new Mock<IUnitOfWork>();
         }
 
-        private static List<Doctor> SetUpDoctors()
-        {
-            var doctorId = new int();
-            var doctors = DataInitializer.GetAllDoctors();
-            foreach (var doctor in doctors)
-            {
-                doctor.Id = ++doctorId;
-            }
-
-            return doctors;
-        }
-
         [Test]
         public void GetAllDoctors_ListOfDoctors()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
 
             _doctorRepository.Setup(x => x.GetAll(null, null, ""))
                         .Returns(doctors);
@@ -56,16 +44,16 @@ namespace Medicard.Tests.WebAPI.Controllers
             var actual = result.Value as IEnumerable<Doctor>;
 
             //assert
-            Assert.AreEqual(SetUpDoctors().Count(), actual.Count());
+            Assert.AreEqual(FakeDataBogus.GetDoctors(3).Count(), actual.Count());
 
-            actual.Count().Should().Be(SetUpDoctors().Count());
+            actual.Count().Should().Be(FakeDataBogus.GetDoctors(3).Count());
         }
 
         [Test]
         public void GetAllDoctors_WhenCalled_ReturnsOkResult()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
 
             _doctorRepository.Setup(x => x.GetAll(null, null, ""))
                         .Returns(doctors);
@@ -83,7 +71,7 @@ namespace Medicard.Tests.WebAPI.Controllers
         public void GetById_ReturnsNotFoundResult_DoctorWithIdNotExists()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
             var firstDoctor = doctors[0];
 
             _doctorRepository.Setup(x => x.GetById(1))
@@ -103,7 +91,7 @@ namespace Medicard.Tests.WebAPI.Controllers
         public void GetById_DoctorObject_DoctorWithSpecificeIdExists()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
             var firstDoctor = doctors[0];
 
             _doctorRepository.Setup(x => x.GetById(1))
@@ -127,7 +115,7 @@ namespace Medicard.Tests.WebAPI.Controllers
         public void Delete_NotExistingDoctorPassed_ReturnsNotFoundResponse()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
             var notExistingDoctor = new Doctor
             {
                 Id = 100,
@@ -154,7 +142,7 @@ namespace Medicard.Tests.WebAPI.Controllers
         public void Delete_ExistingDoctorPassed_ReturnOkResult()
         {
             //arrange
-            var doctors = SetUpDoctors();
+            var doctors = FakeDataBogus.GetDoctors(3);
             int maxID = doctors.Max(a => a.Id);
             var lastDoctor = doctors.Last();
 
