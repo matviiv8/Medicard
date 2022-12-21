@@ -25,7 +25,7 @@ namespace Medicard.WebUI.Controllers
         {
             ViewData["CurrentFilter"] = search;
 
-            var doctors = _doctorService.allDoctors();
+            var doctors = _doctorService.AllDoctors();
 
             foreach (var doctor in doctors)
             {

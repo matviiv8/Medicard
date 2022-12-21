@@ -9,7 +9,7 @@ namespace Medicard.Services.Services
 {
     public interface IDoctorService
     {
-        public IEnumerable<AllDoctorsViewModel> allDoctors();
+        public IEnumerable<AllDoctorsViewModel> AllDoctors();
         DoctorProfileViewModel ViewProfile(string userId);
         Task ChangeDoctor(DoctorProfileViewModel model, string userId);
     }

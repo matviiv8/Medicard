@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicard.Services", "Medica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medicard.WebAPI", "Medicard.WebAPI\Medicard.WebAPI.csproj", "{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medicard.Tests", "Medicard.Tests\Medicard.Tests.csproj", "{C6A73E32-1FB0-4ACA-B53D-4EF4F11F215F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{260E3ECC-81BA-4858-ABE8-15C5A5DB19DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6A73E32-1FB0-4ACA-B53D-4EF4F11F215F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6A73E32-1FB0-4ACA-B53D-4EF4F11F215F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6A73E32-1FB0-4ACA-B53D-4EF4F11F215F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6A73E32-1FB0-4ACA-B53D-4EF4F11F215F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
