@@ -26,7 +26,7 @@ namespace Medicard.Services.Services
             this._webHostEnvironment = webHostEnvironment;
         }
 
-        public IEnumerable<AllDoctorsViewModel> allDoctors()
+        public IEnumerable<AllDoctorsViewModel> AllDoctors()
         {
             var doctors = new List<AllDoctorsViewModel>();
             using (var client = new HttpClient())
