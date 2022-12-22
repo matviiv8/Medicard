@@ -9,6 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\**" />
+    <Compile Remove="WebUI\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="WebUI\**" />
+    <None Remove="Services\**" />
+    <None Remove="WebUI\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.2" />
     <PackageReference Include="FluentAssertions" Version="6.8.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
@@ -24,11 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Medicard.Services\Medicard.Services.csproj" />
     <ProjectReference Include="..\Medicard.WebUI\Medicard.WebUI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="WebUI\" />
   </ItemGroup>
 
 </Project>

@@ -116,14 +116,7 @@ namespace Medicard.Tests.WebAPI.Controllers
         {
             //arrange
             var doctors = FakeDataBogus.GetDoctors(3);
-            var notExistingDoctor = new Doctor
-            {
-                Id = 100,
-                FirstName = "Karpen",
-                LastName = "Karpenko",
-                UserId = "DKfwrfekfkew",
-                Gender = Domain.Entities.Enums.Gender.Male,
-            };
+            var notExistingDoctor = FakeDataBogus.GetDoctors(1).First();
 
             _doctorRepository.Setup(x => x.Delete(notExistingDoctor));
             _unitOfWork.Setup(x => x.GenericRepository<Doctor>()).Returns(_doctorRepository.Object);
