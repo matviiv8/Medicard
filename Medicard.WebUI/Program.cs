@@ -26,6 +26,13 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.AddSupportedCultures("en", "uk", "de");
     options.FallBackToParentUICultures = false;
 });
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+});
+
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();

@@ -23,6 +23,12 @@ namespace Medicard.Services.ViewModels
         public string Password { get; set; }
 
         [Required]
+        public Medicard.Domain.Entities.Enums.Gender Gender { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         [Compare("Password", ErrorMessage = "Passwords don't match")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]

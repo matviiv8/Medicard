@@ -4,45 +4,121 @@
   
 @model RegisterViewModel
 
-@{
-    ViewBag.Title = "User Registration";
-}
 @inject IViewLocalizer Localizer
 
-<h1>@Localizer["HeaderRegistration"]</h1>
-<h3>@Localizer["Description"]</h3>
+<div class="container">
+        <div class="row">
+            <div class="offset-lg-3 offset-sm-0 col-sm-12 col-lg-6">
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <h1><b>@Localizer["HeaderRegistration"]</b></h1>
+                    </div>
+                    <div class="card-body">
+                        <p style="text-align: center;">@Localizer["Description"]</p>
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1">
+                                        <input asp-for="Email" class="form-control" autocomplete="email" placeholder="Your email" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                        <input asp-for="Password" class="form-control" autocomplete="password" placeholder="Password" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                        <input asp-for="PasswordConfirm" class="form-control" autocomplete="confirmpassword" placeholder="Confirm password" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                        <input asp-for="FirstName" class="form-control" autocomplete="firstname" placeholder="Firstname" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                        <input asp-for="LastName" class="form-control" autocomplete="lastname" placeholder="Lastname" />
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-user"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                        <input asp-for="PhoneNumber" class="form-control" autocomplete="phonenumber" placeholder="+380888888888" />
 
-<div class="row">
-    <div class="col-md-12">
-        <form method="post">
-            <div asp-validation-summary="All" class=text-danger></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-envelope"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-6 col-lg-6">
+                                    <div class="input-group mb-1 mt-3">
+                                         <select asp-for="Gender" 
+                                        class="form-control" 
+                                        asp-items="Html.GetEnumSelectList<Medicard.Domain.Entities.Enums.Gender>()">
+                                        </select>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-4 offset-4 mt-2">
+                               <button type="submit" class="btn mt-3 text-center" style="background-color:#01ABC2">@Localizer["Register"]</button>
+                            </div>
+                        </div>
+                        </form>
+                    <p class="text-center text-muted mt-3 mb-0">
+                        <a asp-controller="Account" asp-action="Login" class="fw-bold text-body">
+                            <u>Login</u>
+                        </a>
+                    </p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control"/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PasswordConfirm"></label>
-                <input asp-for="PasswordConfirm" class="form-control"/>
-                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FirstName"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <button type="submit"  class="btn-primary">@Localizer["Register"]</button>
-        </form>
-    </div>
-
+        </div>
 </div>

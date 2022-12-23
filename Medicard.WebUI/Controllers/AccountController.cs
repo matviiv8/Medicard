@@ -3,6 +3,7 @@ using Medicard.Domain.Entities;
 using Medicard.Services.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Medicard.WebUI.Areas.Account.Controllers
 {
@@ -52,9 +53,15 @@ namespace Medicard.WebUI.Areas.Account.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(string? returnUrl = null)
         {
-            return View();
+            var loginModel = new LoginViewModel()
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+            };
+
+            return View(loginModel);
         }
 
         [HttpPost]
@@ -73,6 +80,118 @@ namespace Medicard.WebUI.Areas.Account.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult ExternalLogin(string provider, string returnUrl)
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = returnUrl });
+
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+            return new ChallengeResult(provider, properties);
+        }
+
+        public async Task<IActionResult> ExternalLoginCallback(string? returnUrl = null, string? remoteError = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            var loginModel = new LoginViewModel
+            {
+                ReturnUrl = returnUrl,
+                ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
+            };
+
+            if (remoteError != null)
+            {
+                return View(nameof(Login), loginModel);
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return View(nameof(Login), loginModel);
+            }
+
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+                if (email != null)
+                {
+                    var user = await _userManager.FindByEmailAsync(email);
+
+                    if (user == null)
+                    {
+
+                        var registerExternalViewModel = new RegisterExternalViewModel
+                        {
+                            Email = email,
+                            FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName),
+                            LastName = info.Principal.FindFirstValue(ClaimTypes.Surname),
+                            ReturnUrl = returnUrl,
+                            LoginProvider = info.LoginProvider
+                        };
+
+                        return View(nameof(ExternalLoginRegister), registerExternalViewModel);
+                    }
+
+                    await _userManager.AddLoginAsync(user, info);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    return LocalRedirect(returnUrl);
+                }
+
+                return View("Error");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ExternalLoginRegister(RegisterExternalViewModel registerExternalViewModel)
+        {
+            string phoneNumber = registerExternalViewModel.PhoneNumber.Contains('+')
+                ? registerExternalViewModel.PhoneNumber
+                : $"{registerExternalViewModel.PhoneNumber.Remove(0, 1)}";
+
+            var user = new User
+            {
+                Email = registerExternalViewModel.Email,
+                FirstName = registerExternalViewModel.FirstName,
+                LastName = registerExternalViewModel.LastName,
+                PhoneNumber = phoneNumber,
+                UserName = registerExternalViewModel.Email,
+            };
+
+            var result = await _userManager.CreateAsync(user);
+
+            if (result.Succeeded)
+            {
+                _context.Patients.Add(new Patient
+                {
+                    UserId = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    ContactNumber = user.PhoneNumber,
+                    Gender = registerExternalViewModel.Gender,
+                });
+
+                _context.SaveChanges();
+
+                _userManager.AddToRoleAsync(user, "Patient").Wait();
+                await _signInManager.SignInAsync(user, isPersistent: false);
+            }
+
+            if (registerExternalViewModel.ReturnUrl == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return LocalRedirect(registerExternalViewModel.ReturnUrl);
         }
 
         public async Task<IActionResult> Logout()

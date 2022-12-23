@@ -8,37 +8,83 @@
 @{
     ViewBag.Title = "User Login";
 }
-<a asp-action="Register" asp-controller="Account">Registration</a>
-
-<h1>@Localizer["LoginHeader"]</h1>
-<div class="row">
-    <div class="col-md-12">
-        <form method="post" >
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
+<div class="container mt-5">
+    <div class="row">
+        <div class="offset-lg-4 offset-sm-2 col-sm-8 col-lg-4">
+            <div>
+                <div class="card card-outline card-primary">
+                    <div class="card-header text-center">
+                        <h1>@Localizer["LoginHeader"]</h1>
+                    </div>
+                    <div class="card-body">
+                        <p>Вхід в систему</p>
+                        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
+                                <div class="input-group mb-1">
+                                    <input asp-for="Email" class="form-control" placeholder="Email" autocomplete="email" />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <div class="input-group mb-1 mt-3">
+                                    <input asp-for="Password" class="form-control" placeholder="Password" autocomplete="password" />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger mt-2"></span>
+                                <div class="row">
+                                    <div class="col-4 offset-4 mt-3">
+                                        <button type="submit" class="btn mt-3 text-center" style="background-color:#01ABC2">Log in</button>
+                                    </div>
+                                </div>
+                            </form>
+    
+                     <div class="social-auth-links text-center mt-2 mb-3">
+                            <section>
+                                <h3>Use another service to log in.</h3>
+                                <hr />
+                                @{
+                                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                    {
+                                        <div>
+                                            <p>
+                                                There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                                                about setting up this ASP.NET application to support logging in via external services</a>.
+                                            </p>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <form id="external-account" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                            <div>
+                                                <p>
+                                                    @foreach (var provider in Model.ExternalLogins)
+                                                    {
+                                                        <button type="submit" class="btn btn-outline-info" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="bi bi-google" style="color:#01ABC2"></i> Sign in with Google</button>
+                                                    }
+                                                </p>
+                                            </div>
+                                        </form>
+                                    }
+                                }
+                            </section>
+                            </div>
+                    </div>
+                    <p class="text-center text-muted mt-4 mb-0">
+                        <a asp-action="Register" asp-controller="Account" class="fw-bold text-body">Registration</a>
+                    </p>
+                 </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control"/>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <div class="checkbox">
-                <label asp-for="RememberMe">
-                    <input asp-for="RememberMe"/>
-                    @Html.DisplayNameFor(m =>m.RememberMe)
-                </label>
-               </div>
-            </div>
-            <button type="submit" class="btn btn-primary">
-                @Localizer["LoginHeader"]
-            </button>
-        </form>
+        </div>
     </div>
-
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
