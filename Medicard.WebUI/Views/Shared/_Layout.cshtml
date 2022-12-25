@@ -31,6 +31,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Institution" asp-action="AllInstitutions">@Localizer["LinkToViewAllInstitutions"]</a>
                         </li>
+                        <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Private">Messages</a>
+                        </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     @Localizer["Profile"]
@@ -38,8 +41,11 @@
                   <ul class="dropdown-menu">
                         @if (SignInManager.IsSignedIn(this.User))
                         {
+                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangePassword">Change password</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Private">Messages</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="DeletePersonalData">Delete personal data</a>
                             </li>
                                 @if (this.User.IsInRole("Patient"))
                                 {
