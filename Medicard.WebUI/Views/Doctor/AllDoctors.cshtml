@@ -1,9 +1,11 @@
-﻿@model IEnumerable<Medicard.Services.ViewModels.Doctor.AllDoctorsViewModel>
+﻿@model ShowAllDoctorsViewModel
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Medicard.Domain.Entities.User> SignInManager
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject IViewLocalizer Localizer
+
+@addTagHelper *, Medicard.WebUI
 
 <nav class="navbar navbar-light bg-white justify-content-between">
  <div class="container-fluid">
@@ -22,33 +24,49 @@
 </div>
 </nav>
 
-<div class="row offset-md-1">
+ <div class="text-center row offset-lg-1">
+@foreach(var doctor in Model.AllDoctors)
+{  
+    <div class="card col-sm-12 col-lg-5 m-2">   
+            <div class="row">
+                <div class="col-2" style="width: 10rem; ">
+                    <img class="card-img-top img-responsive w-100 m-2" style="width: 10rem;" src="~/images/@doctor.Image" alt="Doctor Image">
+                </div>
+                <div class="col-lg-8 col-m-5 col-sm-8">
 
-    @foreach(var doctor in Model)
-    {
-        <div class="col-md-3 m-4">
-            <div class="card" style="width: 15rem;">
-                <img class="card-img-top" src="~/images/@doctor.Image" alt="Card image" height="260" width="210">
-                
-                <div class="card-body text-center">
-                    <h5 class="card-title text-center">@doctor.FullName</h5>
-                    <p class="card-text text-center">@doctor.Specialization</p>
-                    <a href="tel:@doctor.ContactNumber">@doctor.ContactNumber</a>
-                     @if (SignInManager.IsSignedIn(this.User))
-                     {
-                        <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
-                        @if (this.User.IsInRole("Admin"))
-                        {
-                            <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
+                    <h5 class="card-title mt-1 mb-2">Doctor @doctor.FullName</h5>
+                    <h6 class="mb-3">@doctor.Specialization</h6>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="border-bottom: 1px solid #ffffff;"><i class="fa fa-phone"></i></td>
+                                @if (String.IsNullOrEmpty(@doctor.ContactNumber))
+                                {
+                                    <td style="border-bottom: 1px solid #ffffff;">No contact number</td>
+                                }
+                                else
+                                {
+                                    <td style="border-bottom: 1px solid #ffffff;">@doctor.ContactNumber</td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+
+                         @if (SignInManager.IsSignedIn(this.User))
+                         {
+                            <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
+                            @if (this.User.IsInRole("Admin"))
+                            {
+                                <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
+                            }
                         }
-                    }
                 </div>
             </div>
-        </div>
-
-    }
-
+    </div>
+}
 </div>
+
+<page-link paging-info="Model.PagingInfo" page-action="AllDoctors"></page-link>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

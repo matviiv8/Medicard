@@ -14,5 +14,7 @@
         <p class="card-text">@Localizer["Specialization"] - @this.Model.Specialization</p>
         <p class="card-text">@Localizer["ContactNumber"] - @this.Model.ContactNumber</p>
     </div>
-    <a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn" style="background-color:#01ABC2">@Localizer["ChangeProfile"]</a>
 </div>
+<p align="center">
+<a asp-controller="Doctor" asp-action="ChangeProfile" asp-route-id="@this.Model.Id" class="btn" style="background-color:#01ABC2">@Localizer["ChangeProfile"]</a>
+</p>

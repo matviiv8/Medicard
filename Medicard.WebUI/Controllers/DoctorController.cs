@@ -3,6 +3,7 @@ using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.Services;
 using Medicard.Services.ViewModels.Doctor;
+using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace Medicard.WebUI.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult AllDoctors(string search)
+        public IActionResult AllDoctors(string search, int page = 1)
         {
             ViewData["CurrentFilter"] = search;
 
@@ -35,7 +36,18 @@ namespace Medicard.WebUI.Controllers
                 }
             }
 
-            return View(doctors);
+            int pageSize = 4;
+            var count = doctors.Count();
+            var items = doctors.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pagingInfo = new PageViewModel(count, page, pageSize);
+            ShowAllDoctorsViewModel viewModel = new ShowAllDoctorsViewModel
+            {
+                PagingInfo = pagingInfo,
+                AllDoctors = items,
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult ViewProfile()

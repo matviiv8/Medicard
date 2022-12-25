@@ -21,3 +21,10 @@ body {
     display: -ms-flexbox;
     display: flex;
 }
+
+.icon {
+    overflow: hidden;
+    margin: 0 auto;
+    height: 71px;
+    width: 92px;
+}

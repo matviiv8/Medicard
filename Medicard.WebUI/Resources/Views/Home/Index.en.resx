@@ -120,8 +120,26 @@
   <data name="Description" xml:space="preserve">
     <value>Access medical services, prescription medicines and hospital care for free</value>
   </data>
+  <data name="DescriptionCarouselItem1" xml:space="preserve">
+    <value>We’re here to care for you and your entire family. Regular visits to the doctor will depend on your age and general health!</value>
+  </data>
+  <data name="DescriptionCarouselItem2" xml:space="preserve">
+    <value>Since the first days of operation of Medicard, our teaming has been focused on building a high-qualities medicals service by Medicard</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Welcome to medical system Medicard</value>
     <comment>header on the main page</comment>
+  </data>
+  <data name="HeaderCarouselItem1" xml:space="preserve">
+    <value>We care about your health</value>
+  </data>
+  <data name="HeaderCarouselItem2" xml:space="preserve">
+    <value>Find A Doctor &amp; Book Appointment</value>
+  </data>
+  <data name="TextUnderIcon1" xml:space="preserve">
+    <value>Registration of the patient and creation of a medical card</value>
+  </data>
+  <data name="TextUnderIcon2" xml:space="preserve">
+    <value>Appointment to the doctor and many other functions</value>
   </data>
 </root>
