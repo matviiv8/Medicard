@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
+  </data>
+  <data name="Chats" xml:space="preserve">
+    <value>Mitteilungen</value>
+  </data>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>Persönliche Daten löschen</value>
+  </data>
   <data name="LinkToViewAllDoctors" xml:space="preserve">
     <value>Ärzte</value>
   </data>
