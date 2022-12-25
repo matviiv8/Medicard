@@ -120,8 +120,26 @@
   <data name="Description" xml:space="preserve">
     <value>Отримайте безкоштовний доступ до медичних послуг, ліків за рецептом і лікарняного лікування</value>
   </data>
+  <data name="DescriptionCarouselItem1" xml:space="preserve">
+    <value>Ми тут, щоб подбати про вас і всю вашу родину. Регулярність візитів до лікаря буде залежати від вашого віку та загального стану здоров’я!</value>
+  </data>
+  <data name="DescriptionCarouselItem2" xml:space="preserve">
+    <value>З перших днів роботи Medicard наша команда була зосереджена на побудові високоякісної медичної послуги від Medicard</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Ласкаво просимо до медичної системи Medicard</value>
     <comment>заголовок на головній сторінці</comment>
+  </data>
+  <data name="HeaderCarouselItem1" xml:space="preserve">
+    <value>Ми дбаємо про ваше здоров'я</value>
+  </data>
+  <data name="HeaderCarouselItem2" xml:space="preserve">
+    <value>Знайдіть лікаря та запишіться на прийом</value>
+  </data>
+  <data name="TextUnderIcon1" xml:space="preserve">
+    <value>Реєстрація пацієнта і створення медичної карти</value>
+  </data>
+  <data name="TextUnderIcon2" xml:space="preserve">
+    <value>Запис до лікаря і багато інших функцій</value>
   </data>
 </root>

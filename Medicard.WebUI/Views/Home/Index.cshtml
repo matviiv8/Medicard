@@ -4,10 +4,68 @@
 }
 @inject IViewLocalizer Localizer
 
-<div
-  class="bg-image p-5 text-center mb-5 text-black">
-  <h2 class="display-2">@Localizer["Header"]</h2>
+<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
 
-  <h5>@Localizer["Description"]</h5>
-    <img src="~/images/bg-banner.jpg" alt = "banner" class="center" style="width:100%; height: 80% ">
+        <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="5000">
+            <img src="~/images/slider-1.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption  d-none d-md-block">
+                <h3 class="display-2" style="color:#01ABC2"> <b>@Localizer["Header"] </b></h3>
+                 <h5 style="color:#01ABC2">@Localizer["Description"]</h5>
+            </div>
+        </div>
+        <div class="carousel-item" data-bs-interval="5000">
+            <img src="~/images/slider-2.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                  <h3 class="display-2" style="color:#01ABC2"> <b>@Localizer["HeaderCarouselItem1"] </b></h3>
+                 <h5 style="color:#01ABC2">@Localizer["DescriptionCarouselItem1"]</h5>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="~/images/slider-3.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                 <h3 class="display-2" style="color:#01ABC2"> <b>@Localizer["HeaderCarouselItem2"] </b></h3>
+                 <h5 style="color:#01ABC2">@Localizer["DescriptionCarouselItem2"]</h5>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="row mt-5 d-flex justify-content-center">
+    <div class=col-3>
+        <article class="info">
+        <figure class="icon"><img src="~/images/icon1.jpg" alt=""></figure>
+            <p class="text-center" id="total-user"></p>
+            <p class="text-center">
+                <em>
+                    @Localizer["TextUnderIcon1"]
+                </em>
+            </p>
+    </article>
+    </div>
+    <div class=col-3>
+    <article class="info">
+    <figure class="icon"><img src="~/images/icon2.jpg" alt=""></figure>
+
+            <p class="text-center" id="total-past-examination"></p>
+            <p class="text-center">
+                <em>
+                    @Localizer["TextUnderIcon2"]
+                </em>
+            </p>    
+            
+    </article>
+    </div>
 </div>

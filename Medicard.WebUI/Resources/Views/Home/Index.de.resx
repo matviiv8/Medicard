@@ -120,8 +120,26 @@
   <data name="Description" xml:space="preserve">
     <value>Erhalten Sie kostenlosen Zugang zu medizinischen Dienstleistungen, verschreibungspflichtigen Medikamenten und Krankenhausversorgung</value>
   </data>
+  <data name="DescriptionCarouselItem1" xml:space="preserve">
+    <value>Wir kümmern uns um Sie und Ihre ganze Familie. Regelmäßige Arztbesuche sind abhängig von Ihrem Alter und allgemeinen Gesundheitszustand!</value>
+  </data>
+  <data name="DescriptionCarouselItem2" xml:space="preserve">
+    <value>Seit den ersten Tagen des Betriebs von Medicard konzentriert sich unser Team auf den Aufbau eines qualitativ hochwertigen medizinischen Service von Medicard</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Willkommen beim medizinischen System Medicard</value>
     <comment>kopfzeile auf der Hauptseite</comment>
+  </data>
+  <data name="HeaderCarouselItem1" xml:space="preserve">
+    <value>Ihre Gesundheit liegt uns am Herzen</value>
+  </data>
+  <data name="HeaderCarouselItem2" xml:space="preserve">
+    <value>Finden Sie einen Arzt und buchen Sie einen Termin</value>
+  </data>
+  <data name="TextUnderIcon1" xml:space="preserve">
+    <value>Registrierung des Patienten und Erstellung einer Gesundheitskarte</value>
+  </data>
+  <data name="TextUnderIcon2" xml:space="preserve">
+    <value>Arzttermin und viele weitere Funktionen</value>
   </data>
 </root>
