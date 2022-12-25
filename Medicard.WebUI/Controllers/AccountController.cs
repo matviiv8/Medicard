@@ -1,12 +1,14 @@
 ﻿using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.ViewModels;
+using Medicard.Services.ViewModels.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Medicard.WebUI.Areas.Account.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private MedicardDbContext _context;
@@ -38,6 +40,7 @@ namespace Medicard.WebUI.Areas.Account.Controllers
                 {
                     _context.Patients.Add(new Patient { UserId = user.Id, FirstName = user.FirstName, LastName = user.LastName });
 
+                    _userManager.AddToRoleAsync(user, "Patient").Wait();
                     await _context.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
@@ -49,6 +52,7 @@ namespace Medicard.WebUI.Areas.Account.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
             return View(model);
         }
 
@@ -198,6 +202,72 @@ namespace Medicard.WebUI.Areas.Account.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel changePassword)
+        {
+            changePassword.User = _userManager.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).First();
+            var result = await _userManager.ChangePasswordAsync(changePassword.User, changePassword.CurrentPassword, changePassword.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult DeletePersonalData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePersonalData(DeletePersonalDataViewModel deletePersonalDataViewModel)
+        {
+            var deleteUser = _userManager.Users.FirstOrDefault(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            if (VerifyPasswordHash(deleteUser, deletePersonalDataViewModel.Password))
+            {
+                var patient = _context.Patients.FirstOrDefault(p => p.UserId == deleteUser.Id);
+
+                _context.Patients.Remove(patient);
+                await _context.SaveChangesAsync();
+
+                var result = await _userManager.DeleteAsync(deleteUser);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View("Error");
+                }
+            }
+
+            return View("Error");
+        }
+
+        private bool VerifyPasswordHash(User user, string newPassword)
+        {
+            var hasher = new PasswordHasher<IdentityUser>();
+            var identityUser = new IdentityUser(user.Id.ToString());
+
+            var result = hasher.VerifyHashedPassword(identityUser, user.PasswordHash, newPassword);
+
+            return result == PasswordVerificationResult.Success;
         }
     }
 }

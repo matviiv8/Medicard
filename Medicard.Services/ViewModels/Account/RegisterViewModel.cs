@@ -1,7 +1,7 @@
 ﻿using Medicard.Domain.Entities.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace Medicard.Services.ViewModels
+namespace Medicard.Services.ViewModels.Account
 {
     public class RegisterViewModel
     {
@@ -23,7 +23,7 @@ namespace Medicard.Services.ViewModels
         public string Password { get; set; }
 
         [Required]
-        public Medicard.Domain.Entities.Enums.Gender Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [Required]
         public string PhoneNumber { get; set; }

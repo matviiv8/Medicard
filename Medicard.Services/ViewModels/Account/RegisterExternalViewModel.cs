@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.ViewModels
+namespace Medicard.Services.ViewModels.Account
 {
     public class RegisterExternalViewModel
-    { 
+    {
         public string Email { get; set; }
 
         public string FirstName { get; set; }
@@ -20,7 +20,7 @@ namespace Medicard.Services.ViewModels
 
         public string? ReturnUrl { get; set; }
 
-        public Medicard.Domain.Entities.Enums.Gender Gender { get; set; }
+        public Domain.Entities.Enums.Gender Gender { get; set; }
 
         public string? LoginProvider { get; set; }
 

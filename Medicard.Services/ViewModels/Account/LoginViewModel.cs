@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using System.ComponentModel.DataAnnotations;
 
-namespace Medicard.Services.ViewModels
+namespace Medicard.Services.ViewModels.Account
 {
     public class LoginViewModel
     {
