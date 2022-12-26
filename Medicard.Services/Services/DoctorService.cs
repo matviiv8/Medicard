@@ -62,18 +62,21 @@ namespace Medicard.Services.Services
             doctor.Specialization = model.Specialization;
             doctor.Gender = model.Gender;
 
-            string uniqueFileName = null;  
-            if (model.DoctorPicture != null)  
+            if (model.DoctorPicture != null)
             {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
-                uniqueFileName = model.DoctorPicture.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                string uniqueFileName = null;
+                if (model.DoctorPicture != null)
                 {
-                    model.DoctorPicture.CopyTo(fileStream);
+                    string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    uniqueFileName = model.DoctorPicture.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        model.DoctorPicture.CopyTo(fileStream);
+                    }
                 }
+                doctor.DoctorPicture = uniqueFileName;
             }
-            doctor.DoctorPicture = uniqueFileName;
 
             _unitOfWork.GenericRepository<Doctor>().Update(doctor);
 
