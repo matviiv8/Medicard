@@ -7,22 +7,52 @@
 
 @addTagHelper *, Medicard.WebUI
 
-<nav class="navbar navbar-light bg-white justify-content-between">
- <div class="container-fluid">
-<form asp-action="AllDoctors" method="get" class="d-flex" role="search">
-        <p>
-            @Localizer["FindByName"] <input type="text" name="Search" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value=@Localizer["Search"] class="btn btn-outline-success" /> 
-        </p>
-        <p>
-                @if (this.User.IsInRole("Admin"))
-                {
-                    <a asp-controller="Admin" asp-action="CreateDoctor" class="btn btn-info">@Localizer["CreateDoctor"]</a>
-                }
-        </p>
+<div class="container">
+    @if (this.User.IsInRole("Admin"))
+    {
+        <table class="table">
+            <thead style="background-color:#e6e6e6">
+            <tr scope="col" colspan="12" class="text-center">
+                <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateDoctor" class="btn btn-secondary">@Localizer["CreateDoctor"]</a></th>
+            </tr>
+        </thead>
+    </table>
+    }
+<form asp-action="AllDoctors" method="get" class="pb-3" role="search">
+            <div class="row">
+            <div class="card-header col-sm-3 col-lg-4 align-self-center">
+                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                    <select name="specialization" value="specialization" class="form-control">
+                        <option value="">@Localizer["Specialization"]</option>
+                        @foreach (var speciality in Model.Specializations)
+                        {
+                            <option value="@speciality">@speciality</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="card-header col-sm-3 col-lg-4 align-self-center">
+                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                     <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
+                </div>
+            </div>
+           
+            <div class="card-header col-sm-2 col-lg-1 align-self-center">
+                <div class="form-group px-1 pb-3">
+                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
+                </div>
+            </div>
+            <div class="card-header col-sm-4 col-lg-3 align-self-center">
+                <div class="form-group px-1 pb-3">
+                    <a class="btn btn-warning" type="reset"
+                       asp-controller="Doctor"
+                       asp-action="AllDoctors">@Localizer["Reset"]</a>
+            </div>
+        </div>
+     </div>
 </form>
 </div>
-</nav>
 
  <div class="text-center row offset-lg-1">
 @foreach(var doctor in Model.AllDoctors)
@@ -34,7 +64,7 @@
                 </div>
                 <div class="col-lg-8 col-m-5 col-sm-8">
 
-                    <h5 class="card-title mt-1 mb-2">Doctor @doctor.FullName</h5>
+                    <h5 class="card-title mt-1 mb-2">@Localizer["Doctor"] @doctor.FullName</h5>
                     <h6 class="mb-3">@doctor.Specialization</h6>
                     <table class="table">
                         <tbody>
@@ -42,7 +72,7 @@
                                 <td style="border-bottom: 1px solid #ffffff;"><i class="fa fa-phone"></i></td>
                                 @if (String.IsNullOrEmpty(@doctor.ContactNumber))
                                 {
-                                    <td style="border-bottom: 1px solid #ffffff;">No contact number</td>
+                                    <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoContactNumber"]</td>
                                 }
                                 else
                                 {
@@ -59,7 +89,11 @@
                             {
                                 <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
                             }
+                        @if (doctor.Specialization == "Family doctor")
+                        {
+                            <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">AppointPersonalDoctor</a>
                         }
+                    }
                 </div>
             </div>
     </div>

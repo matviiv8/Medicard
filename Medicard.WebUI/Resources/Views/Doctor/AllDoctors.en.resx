@@ -123,13 +123,25 @@
   <data name="DeleteDoctor" xml:space="preserve">
     <value>Delete this doctor</value>
   </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Doctor</value>
+  </data>
   <data name="FindByName" xml:space="preserve">
     <value>Find by firstname or lastname:</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Send a message</value>
   </data>
+  <data name="NoContactNumber" xml:space="preserve">
+    <value>No contact number</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
+  </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Specialization</value>
   </data>
 </root>

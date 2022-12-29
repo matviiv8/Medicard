@@ -14,26 +14,30 @@ namespace Medicard.WebUI.Controllers
     public class DoctorController : Controller
     {
         private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
         private readonly UserManager<User> _userManager;
 
-        public DoctorController(IDoctorService doctorService, UserManager<User> userManager)
+        public DoctorController(IDoctorService doctorService, UserManager<User> userManager, IPatientService patientService)
         {
             _doctorService = doctorService;
             _userManager = userManager;
+            _patientService = patientService;
         }
 
-        public IActionResult AllDoctors(string search, int page = 1)
+        public IActionResult AllDoctors(string specialization, string search, int page = 1)
         {
-            ViewData["CurrentFilter"] = search;
+            ViewData["Search"] = search;
 
             var doctors = _doctorService.AllDoctors();
 
-            foreach (var doctor in doctors)
+            if (!string.IsNullOrEmpty(search))
             {
-                if (!string.IsNullOrEmpty(search))
-                {
-                    doctors = (List<AllDoctorsViewModel>)doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
-                }
+                doctors = doctors.Where(doctor => doctor.FullName.ToLower().Contains(search.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(specialization))
+            {
+                doctors = doctors.Where(doctor => doctor.Specialization == specialization);
             }
 
             int pageSize = 4;
@@ -45,6 +49,7 @@ namespace Medicard.WebUI.Controllers
             {
                 PagingInfo = pagingInfo,
                 AllDoctors = items,
+                Specializations = doctors.Select(doctor => doctor.Specialization).Distinct(),
             };
 
             return View(viewModel);
@@ -76,6 +81,23 @@ namespace Medicard.WebUI.Controllers
             await this._doctorService.ChangeDoctor(model, userId);
 
             return this.RedirectToAction("ViewProfile", "Doctor");
+        }
+
+        public async Task<IActionResult> AppointPersonalDoctor(string id)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var currentPatient = this._patientService.GetByUserId(userId);
+
+            var doctor = this._doctorService.GetById(id);
+
+            if (doctor.Specialization.ToLower() == "family doctor" && doctor != null)
+            {
+                await this._patientService.AppointPersonalDoctor(currentPatient, id);
+
+            }
+
+            return this.RedirectToAction("AllDoctors", "Doctor");
         }
     }
 }
