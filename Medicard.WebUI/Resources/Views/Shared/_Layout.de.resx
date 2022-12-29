@@ -138,6 +138,9 @@
   <data name="Logout" xml:space="preserve">
     <value>Ausloggen</value>
   </data>
+  <data name="Patients" xml:space="preserve">
+    <value />
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>

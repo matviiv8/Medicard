@@ -1,0 +1,64 @@
+﻿@model ShowAllPatientsViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Medicard.WebUI
+
+<nav class="navbar navbar-light bg-white justify-content-between">
+ <div class="container-fluid">
+<form asp-action="AllPatients" method="get" class="d-flex" role="search">
+        <p>
+            <input type="text" name="Search" value="@ViewData["CurrentFilter"]" placeholder="@Localizer["FindByName"]"/>
+            <input type="submit" value=@Localizer["Search"] style="background-color:#01ABC2" class="btn btn-primary" /> 
+        </p>
+</form>
+</div>
+</nav>
+
+ <div class="row flex-lg-nowrap">
+      <div class="col mb-3">
+        <div class="e-panel card">
+          <div class="card-body">
+            <div class="card-title">
+              <h6 class="mr-2"><span>@Localizer["Patients"]</span></h6>
+            </div>
+            <div class="e-table">
+              <div class="table-responsive table-lg mt-3">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="max-width">Name</th>
+                      <th class="sortable">Date</th>
+                      <th class="max-width">Contact number</th>
+                      <th class="max-width">Address</th>
+                      <th class="max-width">Family Doctor</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach(var patient in Model.AllPatients)
+                        {
+                    <tr>
+                      <td class="text-nowrap align-middle">@patient.FullName</td>
+                      <td class="text-nowrap align-middle"><span>@patient.BirthDate</span></td>
+                      <td class="text-nowrap align-middle"><span>@patient.ContactNumber</span></td>
+                      <td class="text-nowrap align-middle"><span>@patient.Address</span></td>
+                      <td class="text-nowrap align-middle"><span>@patient.PersonalDoctorFullName</span></td>
+                      <td class="text-center align-middle">
+                        <div class="btn-group align-top">
+                            <button class="btn btn-sm btn-outline-secondary badge" type="button">Create</button>
+                        </div>
+                      </td>
+                    </tr>
+                        }
+                     </tbody>
+                </table>
+              </div>
+              </div>
+           </div>
+        </div>
+    </div>
+</div>
+
+<page-link paging-info="Model.PagingInfo" page-action="AllPatients"></page-link>

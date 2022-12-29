@@ -38,7 +38,7 @@ namespace Medicard.WebUI.Areas.Account.Controllers
 
                 if (result.Succeeded)
                 {
-                    _context.Patients.Add(new Patient { UserId = user.Id, FirstName = user.FirstName, LastName = user.LastName });
+                    _context.Patients.Add(new Patient { UserId = user.Id, FirstName = user.FirstName, LastName = user.LastName, ContactNumber = model.PhoneNumber });
 
                     _userManager.AddToRoleAsync(user, "Patient").Wait();
                     await _context.SaveChangesAsync();

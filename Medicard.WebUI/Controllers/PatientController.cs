@@ -3,6 +3,7 @@ using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
 using Medicard.Services.Services;
 using Medicard.Services.ViewModels.Patient;
+using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -43,14 +44,37 @@ namespace Medicard.WebUI.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest();
-            }
-
             await this._patientService.ChangePatient(model, userId);
 
             return this.RedirectToAction("ViewProfile", "Patient");
+        }
+
+        public IActionResult AllPatients(string search, int page = 1)
+        {
+            ViewData["CurrentFilter"] = search;
+
+            var patients = _patientService.AllPatients();
+
+            foreach (var patient in patients)
+            {
+                if (!string.IsNullOrEmpty(search))
+                {
+                    patients = patients.Where(patient => patient.FullName.ToLower().Contains(search.ToLower()));
+                }
+            }
+
+            int pageSize = 10;
+            var count = patients.Count();
+            var items = patients.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            PageViewModel pagingInfo = new PageViewModel(count, page, pageSize);
+            ShowAllPatientsViewModel viewModel = new ShowAllPatientsViewModel
+            {
+                PagingInfo = pagingInfo,
+                AllPatients = items,
+            };
+
+            return View(viewModel);
         }
     }
 }

@@ -9,7 +9,7 @@
 
 <div class="row">
    <div class="card border-dark mb-3" style="max-width: 18rem;">
-        <form asp-action="ChangeProfile">
+        <form asp-action="ChangeProfile" enctype="multipart/form-data">
             <div class="form-group">
                 <label asp-for="FirstName"></label>
                 <input asp-for="FirstName" class="form-control" placeholder="@this.Model.FirstName">

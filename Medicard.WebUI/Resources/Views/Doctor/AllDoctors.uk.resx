@@ -123,13 +123,25 @@
   <data name="DeleteDoctor" xml:space="preserve">
     <value>Видалити цього лікаря</value>
   </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Лікар</value>
+  </data>
   <data name="FindByName" xml:space="preserve">
     <value>Знайти за прізвищем або ім'ям:</value>
   </data>
   <data name="Message" xml:space="preserve">
     <value>Надіслати повідомлення</value>
   </data>
+  <data name="NoContactNumber" xml:space="preserve">
+    <value>Немає номера телефона</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
+  </data>
+  <data name="Specialization" xml:space="preserve">
+    <value>Спеціалізація</value>
   </data>
 </root>

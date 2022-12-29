@@ -7,5 +7,7 @@ namespace Medicard.WebUI.Models
         public IEnumerable<AllDoctorsViewModel> AllDoctors { get; set; }
 
         public PageViewModel PagingInfo { get; set; }
+
+        public IEnumerable<string> Specializations { get; set; } = new List<string>();
     }
 }
