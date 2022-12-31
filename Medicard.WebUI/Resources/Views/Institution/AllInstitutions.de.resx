@@ -118,42 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AgreeToDelete" xml:space="preserve">
-    <value>Do you agree to remove this doctor?</value>
+    <value>Sind Sie damit einverstanden, diese Einrichtung zu entfernen?</value>
   </data>
-  <data name="AppointPersonalDoctor" xml:space="preserve">
-    <value>Appoint a personal doctor</value>
+  <data name="AgreeToJoin" xml:space="preserve">
+    <value>Bist du einverstanden, diesem Establishment beizutreten?</value>
   </data>
-  <data name="CreateDoctor" xml:space="preserve">
-    <value>Create doctor</value>
+  <data name="ChangeInstitution" xml:space="preserve">
+    <value>Institutionsinformationen ändern</value>
   </data>
-  <data name="DeleteDoctor" xml:space="preserve">
-    <value>Delete this doctor</value>
+  <data name="CreateInstitution" xml:space="preserve">
+    <value>Erstellen Sie eine Institution</value>
   </data>
-  <data name="Doctor" xml:space="preserve">
-    <value>Doctor</value>
+  <data name="DeleteInstitution" xml:space="preserve">
+    <value>Einrichtung löschen</value>
   </data>
   <data name="FindByName" xml:space="preserve">
-    <value>Find by firstname or lastname:</value>
+    <value>Suche nach Institutionsnamen</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>Send a message</value>
+  <data name="JoinToInstitution" xml:space="preserve">
+    <value>Der Institution beitreten</value>
   </data>
   <data name="NoContactNumber" xml:space="preserve">
-    <value>No contact number</value>
-  </data>
-  <data name="NoDoctors" xml:space="preserve">
-    <value>There are no specialists for the specified criteria!</value>
-  </data>
-  <data name="NoInstitution" xml:space="preserve">
-    <value>The place of work is not specified</value>
+    <value>Keine Kontaktnummer</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Suche</value>
   </data>
-  <data name="Specialization" xml:space="preserve">
-    <value>Specialization</value>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Mo - Fr:</value>
+  </data>
+  <data name="Weekends" xml:space="preserve">
+    <value>Sa:</value>
   </data>
 </root>

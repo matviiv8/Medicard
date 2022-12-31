@@ -43,6 +43,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
+builder.Services.AddTransient<IInstitutionService, InstitutionService>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 

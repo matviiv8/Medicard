@@ -13,6 +13,14 @@
         <h5 class="card-title">@this.Model.FirstName @this.Model.LastName</h5>
         <p class="card-text">@Localizer["Specialization"] - @this.Model.Specialization</p>
         <p class="card-text">@Localizer["ContactNumber"] - @this.Model.ContactNumber</p>
+        @if(string.IsNullOrEmpty(this.Model.Institution))
+        {
+            <p class="card-text">@Localizer["Institution"] - @Localizer["NoInstitution"]</p>
+        }
+        else
+        {
+            <p class="card-text">@Localizer["Institution"] - @this.Model.Institution</p>
+        }
     </div>
 </div>
 <p align="center">

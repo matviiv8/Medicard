@@ -13,8 +13,6 @@ namespace Medicard.Domain.Concrete
 {
     public class MedicardDbContext : IdentityDbContext<User>
     {
-        public MedicardDbContext() {}
-
         public MedicardDbContext(DbContextOptions<MedicardDbContext> options) : base(options) { }
 
         public DbSet<Doctor> Doctors { get; set; }

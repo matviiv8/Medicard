@@ -27,8 +27,8 @@ namespace Medicard.Services.ViewModels.Doctor
         public Gender Gender { get; set; }
 
         public string? Specialization { get; set; }
-
-        public int? InstitutionId { get; set; }
+        
+        public string Institution { get; set; }
 
     }
 }

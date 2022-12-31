@@ -9,5 +9,7 @@ namespace Medicard.WebUI.Models
         public PageViewModel PagingInfo { get; set; }
 
         public IEnumerable<string> Specializations { get; set; } = new List<string>();
+
+        public IEnumerable<string> Institutions { get; set; } = new List<string>();
     }
 }

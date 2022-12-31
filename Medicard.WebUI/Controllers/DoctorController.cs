@@ -15,16 +15,18 @@ namespace Medicard.WebUI.Controllers
     {
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
+        private readonly IInstitutionService _institutionService;
         private readonly UserManager<User> _userManager;
 
-        public DoctorController(IDoctorService doctorService, UserManager<User> userManager, IPatientService patientService)
+        public DoctorController(IDoctorService doctorService, UserManager<User> userManager, IPatientService patientService, IInstitutionService institutionService)
         {
             _doctorService = doctorService;
             _userManager = userManager;
             _patientService = patientService;
+            _institutionService = institutionService;
         }
 
-        public IActionResult AllDoctors(string specialization, string search, int page = 1)
+        public IActionResult AllDoctors(string institution, string specialization, string search, int page = 1)
         {
             ViewData["Search"] = search;
 
@@ -40,16 +42,22 @@ namespace Medicard.WebUI.Controllers
                 doctors = doctors.Where(doctor => doctor.Specialization == specialization);
             }
 
+            if (!string.IsNullOrEmpty(institution))
+            {
+                doctors = doctors.Where(doctor => doctor.Institution == institution);
+            }
+
             int pageSize = 4;
             var count = doctors.Count();
             var items = doctors.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+            ViewData["Specializations"] = doctors.Select(doctor => doctor.Specialization).Distinct();
             PageViewModel pagingInfo = new PageViewModel(count, page, pageSize);
             ShowAllDoctorsViewModel viewModel = new ShowAllDoctorsViewModel
             {
                 PagingInfo = pagingInfo,
                 AllDoctors = items,
                 Specializations = doctors.Select(doctor => doctor.Specialization).Distinct(),
+                Institutions = _institutionService.AllInstitutions().Select(institution => institution.Name),
             };
 
             return View(viewModel);

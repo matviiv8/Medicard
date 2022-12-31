@@ -1,0 +1,57 @@
+﻿@model Medicard.Services.ViewModels.Institution.InstitutionViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="ChangeInstitution" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="@this.Model.Name">
+                <span asp-validation-for="Name" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" class="form-control" placeholder="@this.Model.Address">
+                <span asp-validation-for="Address" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="WorkScheduleWeekdayStart"></label>
+                <input asp-for="WorkScheduleWeekdayStart" type="time"  min="09:00" max="18:00" class="form-control" placeholder="@this.Model.WorkScheduleWeekdayStart">
+                <span asp-validation-for="WorkScheduleWeekdayStart" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="WorkScheduleWeekdayEnd"></label>
+                <input asp-for="WorkScheduleWeekdayEnd" type="time"  min="09:00" max="18:00" class="form-control" placeholder="@this.Model.WorkScheduleWeekdayEnd">
+                <span asp-validation-for="WorkScheduleWeekdayEnd" class="small text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="WorkScheduleWeekendStart"></label>
+                <input asp-for="WorkScheduleWeekendStart" type="time"  min="09:00" max="18:00" class="form-control" placeholder="@this.Model.WorkScheduleWeekendStart">
+                <span asp-validation-for="WorkScheduleWeekendStart" class="small text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label asp-for="WorkScheduleWeekendEnd"></label>
+                <input asp-for="WorkScheduleWeekendEnd" type="time"  min="09:00" max="18:00" class="form-control" placeholder="@this.Model.WorkScheduleWeekendEnd">
+                <span asp-validation-for="WorkScheduleWeekendEnd" class="small text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContactNumber"></label>
+                <input asp-for="ContactNumber" type="text" class="form-control" placeholder="+3808888888888">
+                <span asp-validation-for="ContactNumber" class="text-danger"></span>
+            </div>
+
+            <input class="btn mt-3 text-center" style="background-color:#01ABC2" type="submit" value=@Localizer["Change"] />
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
