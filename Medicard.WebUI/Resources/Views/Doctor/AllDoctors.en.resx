@@ -135,6 +135,12 @@
   <data name="NoContactNumber" xml:space="preserve">
     <value>No contact number</value>
   </data>
+  <data name="NoDoctors" xml:space="preserve">
+    <value>There are no specialists for the specified criteria!</value>
+  </data>
+  <data name="NoInstitution" xml:space="preserve">
+    <value>The place of work is not specified</value>
+  </data>
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>

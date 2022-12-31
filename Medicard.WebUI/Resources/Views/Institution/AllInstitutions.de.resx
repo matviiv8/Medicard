@@ -117,37 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateDoctor" xml:space="preserve">
-    <value>Створити лікаря</value>
+  <data name="ChangeInstitution" xml:space="preserve">
+    <value>Institutionsinformationen ändern</value>
   </data>
-  <data name="DeleteDoctor" xml:space="preserve">
-    <value>Видалити цього лікаря</value>
+  <data name="CreateInstitution" xml:space="preserve">
+    <value>Erstellen Sie eine Institution</value>
   </data>
-  <data name="Doctor" xml:space="preserve">
-    <value>Лікар</value>
+  <data name="DeleteInstitution" xml:space="preserve">
+    <value>Einrichtung löschen</value>
   </data>
   <data name="FindByName" xml:space="preserve">
-    <value>Знайти за прізвищем або ім'ям:</value>
+    <value>Suche nach Institutionsnamen</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>Надіслати повідомлення</value>
+  <data name="JoinToInstitution" xml:space="preserve">
+    <value>Der Institution beitreten</value>
   </data>
   <data name="NoContactNumber" xml:space="preserve">
-    <value>Немає номера телефона</value>
-  </data>
-  <data name="NoDoctors" xml:space="preserve">
-    <value>За вказаними критеріями спеціалістів немає!</value>
-  </data>
-  <data name="NoInstitution" xml:space="preserve">
-    <value>Не вказано місце роботи</value>
+    <value>Keine Kontaktnummer</value>
   </data>
   <data name="Reset" xml:space="preserve">
-    <value>Скинути</value>
+    <value>Zurücksetzen</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Пошук</value>
+    <value>Suche</value>
   </data>
-  <data name="Specialization" xml:space="preserve">
-    <value>Спеціалізація</value>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Mo - Fr:</value>
+  </data>
+  <data name="Weekends" xml:space="preserve">
+    <value>Sa:</value>
   </data>
 </root>

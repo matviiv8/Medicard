@@ -1,6 +1,7 @@
 ﻿using Medicard.Domain.Astract;
 using Medicard.Domain.Entities;
 using Medicard.Services.ViewModels.Admin;
+using Medicard.Services.ViewModels.Institution;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,22 @@ namespace Medicard.Services.Services
             }
         }
 
+        public async Task CreateInstitution(InstitutionViewModel institution)
+        {
+            _unitOfWork.GenericRepository<Institution>().Add(new Institution
+            {
+                Name = institution.Name,
+                Address = institution.Address,
+                WorkScheduleWeekdayStart = institution.WorkScheduleWeekdayStart,
+                WorkScheduleWeekdayEnd = institution.WorkScheduleWeekdayEnd,
+                WorkScheduleWeekendStart = institution.WorkScheduleWeekendStart,
+                WorkScheduleWeekendEnd = institution.WorkScheduleWeekendEnd,
+                ContactNumber = institution.ContactNumber,
+        });
+
+            await _unitOfWork.SaveAsync();
+        }
+
         public async void DeleteDoctor(string id)
         {
             var user = _unitOfWork.GenericRepository<User>().GetById(id);
@@ -77,6 +94,37 @@ namespace Medicard.Services.Services
             }
 
             _userManager.RemoveFromRoleAsync(user, "Doctor");
+
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async void DeleteInstitution(int institutionId)
+        {
+            var institution = _unitOfWork.GenericRepository<Institution>().GetById(institutionId);
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://localhost:7015/api/");
+                var deleteTask = client.DeleteAsync("Institution/" + institution.Id);
+                deleteTask.Wait();
+            }
+
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task ChangeInstitution(InstitutionViewModel model, int institutionId)
+        {
+            var institution = _unitOfWork.GenericRepository<Institution>().GetById(institutionId);
+
+            institution.Name = model.Name;
+            institution.Address = model.Address;
+            institution.WorkScheduleWeekendEnd = model.WorkScheduleWeekendEnd;
+            institution.WorkScheduleWeekendStart = model.WorkScheduleWeekendStart;
+            institution.WorkScheduleWeekdayEnd = model.WorkScheduleWeekdayEnd;
+            institution.WorkScheduleWeekdayStart = model.WorkScheduleWeekdayStart;
+            institution.ContactNumber = model.ContactNumber;
+
+            _unitOfWork.GenericRepository<Institution>().Update(institution);
 
             await _unitOfWork.SaveAsync();
         }

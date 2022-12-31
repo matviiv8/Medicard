@@ -34,9 +34,10 @@ namespace Medicard.Services.Services
                 HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7015/api/Doctor");
                 var response = client.SendAsync(requestMessage).Result;
                 var data = response.Content.ReadAsAsync<List<Doctor>>().Result;
+
                 foreach (var doctor in data)
                 {
-                    doctors.Add(new AllDoctorsViewModel
+                    var currentDoctor = new AllDoctorsViewModel
                     {
                         Id = doctor.UserId,
                         FullName = doctor.FirstName + " " + doctor.LastName,
@@ -45,7 +46,14 @@ namespace Medicard.Services.Services
                         Gender = doctor.Gender,
                         Image = doctor.DoctorPicture,
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
-                    });
+                    };
+
+                    if(doctor.InstitutionId != null)
+                    {
+                        currentDoctor.Institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId).Name;
+                    }
+
+                    doctors.Add(currentDoctor);
                 }
             }
             return doctors;
@@ -104,6 +112,10 @@ namespace Medicard.Services.Services
                 PictureName = doctor.DoctorPicture,
             };
 
+            if(doctor.Institution != null)
+            {
+                doctorInfo.Institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId).Name;
+            }
             return doctorInfo;
         }
     }

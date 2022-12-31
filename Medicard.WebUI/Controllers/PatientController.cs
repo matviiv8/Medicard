@@ -55,12 +55,9 @@ namespace Medicard.WebUI.Controllers
 
             var patients = _patientService.AllPatients();
 
-            foreach (var patient in patients)
+            if (!string.IsNullOrEmpty(search))
             {
-                if (!string.IsNullOrEmpty(search))
-                {
-                    patients = patients.Where(patient => patient.FullName.ToLower().Contains(search.ToLower()));
-                }
+                patients = patients.Where(patient => patient.FullName.ToLower().Contains(search.ToLower()));
             }
 
             int pageSize = 10;

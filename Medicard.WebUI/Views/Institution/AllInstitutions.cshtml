@@ -1,0 +1,104 @@
+﻿@model ShowAllInstitutionsViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<Medicard.Domain.Entities.User> SignInManager
+@inject IViewLocalizer Localizer
+
+@addTagHelper *, Medicard.WebUI
+
+ <div class="container">
+    @if (this.User.IsInRole("Admin"))
+    {
+        <table class="table">
+            <thead style="background-color:#e6e6e6">
+            <tr scope="col" colspan="12" class="text-center">
+                <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateInstitution" class="btn btn-secondary">@Localizer["CreateInstitution"]</a></th>
+            </tr>
+        </thead>
+    </table>
+    }
+    <form asp-action="AllInstitutions" method="get" class="pb-3" role="search">
+            <div class="row justify-content-md-center">
+
+            <div class="card-header col-sm-3 col-lg-4 align-self-center">
+                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                     <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
+                </div>
+            </div>
+           
+            <div class="card-header col-sm-2 col-lg-1 align-self-center">
+                <div class="form-group px-1 pb-3">
+                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
+                </div>
+            </div>
+            <div class="card-header col-sm-4 col-lg-3 align-self-center">
+                <div class="form-group px-1 pb-3">
+                    <a class="btn btn-warning" type="reset"
+                       asp-controller="Institution"
+                       asp-action="AllInstitutions">@Localizer["Reset"]</a>
+            </div>
+        </div>
+     </div>
+</form>
+</div>
+  <div class="row offset-lg-1">
+    @foreach (var institution in Model.AllInstitutions)
+    {
+        <div class="card flex-row" style="height: 8rem;"><img class="card-img-left example-card-img-responsive" src="~/images/institution.PNG"/>
+            <div class="card-body">
+        <p style="text-align:left;">
+           <span class="fas fa-building"></span>
+           @institution.Name
+            <span style="float:right;">
+                <span class="fas fa-clock"></span>
+                @Localizer["Weekdays"] @institution.WorkScheduleWeekdayStart - @institution.WorkScheduleWeekdayEnd
+            </span>
+        </p>
+        <p style="text-align:left;">
+           <span class="fas fa-map-marker-alt"></span>
+           <a href="https://maps.google.com/maps?q=@institution.Address">@institution.Address</a>
+            <span style="float:right;">
+                @Localizer["Weekends"]      @institution.WorkScheduleWeekendStart - @institution.WorkScheduleWeekendEnd
+            </span>
+        </p>
+        <span style="float:right;">
+            <span class="fa fa-phone"></span>
+           @if (String.IsNullOrEmpty(@institution.ContactNumber))
+           {
+                @Localizer["NoContactNumber"]
+           }
+           else
+           {
+                @institution.ContactNumber
+           }
+        </span>
+    </div>
+    @if (SignInManager.IsSignedIn(this.User) && !this.User.IsInRole("Patient"))
+    {
+      <div class="card-footer text-center">
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="col">
+                    <a href="@Url.Action("DeleteInstitution", "Admin", new { id = institution.Id })" class="btn btn-info btn-primary">@Localizer["DeleteInstitution"]</a>
+                </div>
+                <br />
+                <div class="col">
+                    <a asp-controller="Admin" asp-action="ChangeInstitution" asp-route-id="@institution.Id" class="btn btn-info btn-primary">@Localizer["ChangeInstitution"]</a>
+                </div>
+            }
+            @if (this.User.IsInRole("Doctor"))
+            {
+                <div class="col">
+                    <a href="@Url.Action("JoinToInstitution", "Institution", new {id = institution.Id})"  class="btn btn-info btn-primary">@Localizer["JoinToInstitution"]</a>
+                </div>
+            }
+      </div>
+    }
+    </div>
+}
+</div>
+@if (Model.AllInstitutions.Count() != 0)
+{
+    <page-link paging-info="Model.PagingInfo" page-action="AllInstitutions"></page-link>
+}

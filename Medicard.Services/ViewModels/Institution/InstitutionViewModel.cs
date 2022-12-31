@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Domain.Entities
+namespace Medicard.Services.ViewModels.Institution
 {
-    public class Institution
+    public class InstitutionViewModel
     {
-        public int Id { get; set; }
+        public string Name { get; set; }
 
-        public string? Name { get; set; }
-
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         public string? WorkScheduleWeekdayStart { get; set; }
 
@@ -24,6 +22,5 @@ namespace Medicard.Domain.Entities
 
         public string? ContactNumber { get; set; }
 
-        public List<Doctor>? Doctors { get; set; }
-    } 
+    }
 }

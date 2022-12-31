@@ -117,29 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateDoctor" xml:space="preserve">
-    <value>Створити лікаря</value>
+  <data name="ChangeInstitution" xml:space="preserve">
+    <value>Змінити інформацію закладу</value>
   </data>
-  <data name="DeleteDoctor" xml:space="preserve">
-    <value>Видалити цього лікаря</value>
+  <data name="CreateInstitution" xml:space="preserve">
+    <value>Створити заклад</value>
   </data>
-  <data name="Doctor" xml:space="preserve">
-    <value>Лікар</value>
+  <data name="DeleteInstitution" xml:space="preserve">
+    <value>Видалити даний заклад</value>
   </data>
   <data name="FindByName" xml:space="preserve">
-    <value>Знайти за прізвищем або ім'ям:</value>
+    <value>Знайти за назвою закладу</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>Надіслати повідомлення</value>
+  <data name="JoinToInstitution" xml:space="preserve">
+    <value />
   </data>
   <data name="NoContactNumber" xml:space="preserve">
     <value>Немає номера телефона</value>
-  </data>
-  <data name="NoDoctors" xml:space="preserve">
-    <value>За вказаними критеріями спеціалістів немає!</value>
-  </data>
-  <data name="NoInstitution" xml:space="preserve">
-    <value>Не вказано місце роботи</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Скинути</value>
@@ -147,7 +141,10 @@
   <data name="Search" xml:space="preserve">
     <value>Пошук</value>
   </data>
-  <data name="Specialization" xml:space="preserve">
-    <value>Спеціалізація</value>
+  <data name="Weekdays" xml:space="preserve">
+    <value>Пн - Пт:</value>
+  </data>
+  <data name="Weekends" xml:space="preserve">
+    <value>Сб:</value>
   </data>
 </root>

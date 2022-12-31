@@ -7,100 +7,132 @@
 
 @addTagHelper *, Medicard.WebUI
 
-<div class="container">
-    @if (this.User.IsInRole("Admin"))
-    {
-        <table class="table">
-            <thead style="background-color:#e6e6e6">
-            <tr scope="col" colspan="12" class="text-center">
-                <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateDoctor" class="btn btn-secondary">@Localizer["CreateDoctor"]</a></th>
-            </tr>
-        </thead>
-    </table>
-    }
-<form asp-action="AllDoctors" method="get" class="pb-3" role="search">
-            <div class="row">
-            <div class="card-header col-sm-3 col-lg-4 align-self-center">
-                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
-                    <select name="specialization" value="specialization" class="form-control">
-                        <option value="">@Localizer["Specialization"]</option>
-                        @foreach (var speciality in Model.Specializations)
-                        {
-                            <option value="@speciality">@speciality</option>
-                        }
-                    </select>
-                </div>
-            </div>
+    <div class="container">
+        @if (this.User.IsInRole("Admin"))
+        {
+            <table class="table">
+                <thead style="background-color:#e6e6e6">
+                <tr scope="col" colspan="12" class="text-center">
+                    <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateDoctor" class="btn btn-secondary">@Localizer["CreateDoctor"]</a></th>
+                </tr>
+            </thead>
+        </table>
+        }
+    <form asp-action="AllDoctors" method="get" class="pb-3" role="search">
+                <div class="row">
 
-            <div class="card-header col-sm-3 col-lg-4 align-self-center">
-                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
-                     <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
-                </div>
-            </div>
-           
-            <div class="card-header col-sm-2 col-lg-1 align-self-center">
-                <div class="form-group px-1 pb-3">
-                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
-                </div>
-            </div>
-            <div class="card-header col-sm-4 col-lg-3 align-self-center">
-                <div class="form-group px-1 pb-3">
-                    <a class="btn btn-warning" type="reset"
-                       asp-controller="Doctor"
-                       asp-action="AllDoctors">@Localizer["Reset"]</a>
-            </div>
-        </div>
-     </div>
-</form>
-</div>
-
- <div class="text-center row offset-lg-1">
-@foreach(var doctor in Model.AllDoctors)
-{  
-    <div class="card col-sm-12 col-lg-5 m-2">   
-            <div class="row">
-                <div class="col-2" style="width: 10rem; ">
-                    <img class="card-img-top img-responsive w-100 m-2" style="width: 10rem;" src="~/images/@doctor.Image" alt="Doctor Image">
-                </div>
-                <div class="col-lg-8 col-m-5 col-sm-8">
-
-                    <h5 class="card-title mt-1 mb-2">@Localizer["Doctor"] @doctor.FullName</h5>
-                    <h6 class="mb-3">@doctor.Specialization</h6>
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td style="border-bottom: 1px solid #ffffff;"><i class="fa fa-phone"></i></td>
-                                @if (String.IsNullOrEmpty(@doctor.ContactNumber))
-                                {
-                                    <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoContactNumber"]</td>
-                                }
-                                else
-                                {
-                                    <td style="border-bottom: 1px solid #ffffff;">@doctor.ContactNumber</td>
-                                }
-                            </tr>
-                        </tbody>
-                    </table>
-
-                         @if (SignInManager.IsSignedIn(this.User))
-                         {
-                            <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
-                            @if (this.User.IsInRole("Admin"))
+                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                        <select name="institution" value="institution" class="form-control">
+                            <option value="">@Localizer["Institution"]</option>
+                            @foreach (var institution in Model.Institutions)
                             {
-                                <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
+                                @if (!string.IsNullOrEmpty(institution))
+                                {
+                                    <option value="@institution">@institution</option>
+                                }
                             }
-                        @if (doctor.Specialization == "Family doctor")
-                        {
-                            <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">AppointPersonalDoctor</a>
-                        }
-                    }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                        <select name="specialization" value="specialization" class="form-control">
+                            <option value="">@Localizer["Specialization"]</option>
+                            @foreach (var speciality in Model.Specializations)
+                            {
+                                <option value="@speciality">@speciality</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
+                         <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
+                    </div>
+                </div>
+           
+                <div class="card-header col-sm-2 col-lg-1 align-self-center">
+                    <div class="form-group px-1 pb-3">
+                        <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
+                    </div>
+                </div>
+                <div class="card-header col-sm-3 col-lg-2 align-self-center">
+                    <div class="form-group px-1 pb-3">
+                        <a class="btn btn-warning" type="reset"
+                           asp-controller="Doctor"
+                           asp-action="AllDoctors">@Localizer["Reset"]</a>
                 </div>
             </div>
+         </div>
+    </form>
     </div>
-}
-</div>
 
+@if (Model.AllDoctors.Count() == 0)
+{
+    <h3 class="text-center" style="padding:50px;font-family:Monospace"><em>@Localizer["NoDoctors"]</em></h3>
+}
+else{
+     <div class="text-center row offset-lg-1">
+    @foreach(var doctor in Model.AllDoctors)
+    {  
+        <div class="card col-sm-12 col-lg-5 m-2">   
+                <div class="row">
+                    <div class="col-2" style="width: 10rem; ">
+                        <img class="card-img-top img-responsive w-100 m-2" style="width: 10rem;" src="~/images/@doctor.Image" alt="Doctor Image">
+                    </div>
+                    <div class="col-lg-8 col-m-5 col-sm-8">
+
+                        <h5 class="card-title mt-1 mb-2">@Localizer["Doctor"] @doctor.FullName</h5>
+                        <h6 class="mb-3">@doctor.Specialization</h6>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #ffffff;"><i class="fas fa-building"></i></td>
+                                    @if (String.IsNullOrEmpty(@doctor.Institution))
+                                    {
+                                         <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoInstitution"]</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-bottom: 1px solid #ffffff;">@doctor.Institution</td>
+                                    }
+                                </tr>
+                                <tr>
+                                    <td style="border-bottom: 1px solid #ffffff;"><i class="fa fa-phone"></i></td>
+                                    @if (String.IsNullOrEmpty(@doctor.ContactNumber))
+                                    {
+                                        <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoContactNumber"]</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="border-bottom: 1px solid #ffffff;">@doctor.ContactNumber</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+
+                             @if (SignInManager.IsSignedIn(this.User))
+                             {
+                                <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
+                                @if (this.User.IsInRole("Admin"))
+                                {
+                                    <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
+                                }
+                            @if (doctor.Specialization == "Family doctor")
+                            {
+                                <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">AppointPersonalDoctor</a>
+                            }
+                        }
+                    </div>
+                </div>
+        </div>
+    }
+    </div>
 <page-link paging-info="Model.PagingInfo" page-action="AllDoctors"></page-link>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
