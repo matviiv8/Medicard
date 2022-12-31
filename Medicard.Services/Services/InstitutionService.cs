@@ -50,6 +50,7 @@ namespace Medicard.Services.Services
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(id);
             return new InstitutionViewModel
             {
+                Id = institution.Id,
                 Name = institution.Name,
                 Address = institution.Address,
                 WorkScheduleWeekendStart = institution.WorkScheduleWeekendStart,

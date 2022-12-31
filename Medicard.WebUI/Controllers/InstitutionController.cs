@@ -1,4 +1,5 @@
 ﻿using Medicard.Services.Services;
+using Medicard.Services.ViewModels.Institution;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AgreeToDelete" xml:space="preserve">
+    <value>Ви згодні видалити даний заклад?</value>
+  </data>
+  <data name="AgreeToJoin" xml:space="preserve">
+    <value>Ви згодні приєднатися до цього закладу?</value>
+  </data>
   <data name="ChangeInstitution" xml:space="preserve">
     <value>Змінити інформацію закладу</value>
   </data>
@@ -130,7 +136,7 @@
     <value>Знайти за назвою закладу</value>
   </data>
   <data name="JoinToInstitution" xml:space="preserve">
-    <value />
+    <value>Приєднатися до даного закладу</value>
   </data>
   <data name="NoContactNumber" xml:space="preserve">
     <value>Немає номера телефона</value>
