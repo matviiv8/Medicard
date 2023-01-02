@@ -5,7 +5,8 @@
 * Anonymous visitors:
     * Log in;
     * Registration;
-    * Browse all doctors.
+    * Browse all doctors;
+    * Browse all institutions.
     
 * Patient:
     * Be able to complete your profile;
@@ -14,14 +15,16 @@
     * Have access to every doctor;
     * You can make an appointment if the doctor has free hours;
     * Can make changes to the profile;
-    * Online chat with a doctor.
-    * 
+    * Online chat with a doctor;
+    * Can appoint a family doctor
 * Doctor:
     * Their profile is created beforehand by the admin with username and password;
     * After log in doctors have to complete their profile (Upload picture, write biography);
     * Has access to the list of patients;
-    ...
+    * Can appoint an institution;
     
 * Admin:
     * Create doctors;
-    ...
+    * Create Institutions;
+    * Delete doctors;
+    * Delete institutions;
