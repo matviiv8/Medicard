@@ -71,16 +71,27 @@ namespace Medicard.WebUI.Areas.Account.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            if (await _userManager.FindByEmailAsync(model.Email) != null)
             {
-                var user = _userManager.Users.Where(u => u.Email == model.Email).FirstOrDefault();
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
-
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    var user = _userManager.Users.Where(u => u.Email == model.Email).FirstOrDefault();
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
+
+                    if (result.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Password wrong");
+                    }
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Not found this login");
             }
 
             return View(model);

@@ -43,7 +43,7 @@ namespace Medicard.WebUI.Controllers
             var doctor = _doctorService.GetById(model.DoctorId);
             var patient = _patientService.GetByUserId(userId);
             var appointment = _appointmentService.GetByDoctorId(doctor.Id);
-
+            
             await _appointmentService.CreateAppointment(patient, doctor, model);
 
             return this.RedirectToAction("AllAppointments", "Appointment");
