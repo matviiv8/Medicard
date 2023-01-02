@@ -97,7 +97,7 @@ namespace Medicard.WebUI.Controllers
 
             var currentPatient = this._patientService.GetByUserId(userId);
 
-            var doctor = this._doctorService.GetById(id);
+            var doctor = this._doctorService.GetByUserId(id);
 
             if (doctor.Specialization.ToLower() == "family doctor" && doctor != null)
             {

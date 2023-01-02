@@ -1,0 +1,55 @@
+﻿@model ShowAllUserAppointmentsViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<table class="table table-hover" style="font-size:16px;">
+        <thead class="table">
+            <tr>
+                <th scope="col">@Localizer["Date"]</th>
+                <th scope="col">@Localizer["Time"]</th>
+            @if (this.User.IsInRole("Doctor"))
+            {
+                <th scope="col" class="text-center">@Localizer["Patient"]</th>
+            }
+            else if (this.User.IsInRole("Patient"))
+            {
+                <th scope="col" class="text-center">@Localizer["Doctor"]</th>
+            }
+            else
+            {
+                <th scope="col" class="text-center">@Localizer["Patient"]</th>
+                <th scope="col" class="text-center">@Localizer["Doctor"]</th>
+            }
+            <th scope="col" class="text-center">@Localizer["Specializations"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.AllAppointments)
+            {
+                <tr>
+                    <td scope="row">@appointment.Date</td>
+                    <td scope="row">@appointment.Time</td>
+                    @if (this.User.IsInRole("Doctor"))
+                    {
+                        <td scope="row" class="text-center">@appointment.PatientFullName</td>
+                    }
+                    else if (this.User.IsInRole("Patient"))
+                    {
+                        <td scope="row" class="text-center">@appointment.DoctorFullName</td>
+                    }
+                    else
+                    {
+                        <td scope="row" class="text-center">@appointment.PatientFullName</td>
+                        <td scope="row" class="text-center">@appointment.DoctorFullName</td>
+                    }
+                    <td scope="row" class="text-center">@appointment.Specialization</td>
+                    <td scope="row" class="text-center">
+                        <form asp-controller="Appointment" asp-action="DeleteAppointment" asp-route-id="@appointment.Id" method="get">
+                            <input type="hidden" value="@appointment.Id" name="id" />
+                            <input type="submit" value="@Localizer["Cancel"]" class="btn btn-outline-danger" onclick = "return confirm('Cancel');" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -31,6 +31,7 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    googleOptions.Scope.Add(Google.Apis.Calendar.v3.CalendarService.Scope.Calendar);
 });
 
 builder.Services.AddControllersWithViews()
@@ -44,6 +45,7 @@ builder.Services.AddTransient<IPatientService, PatientService>();
 builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IInstitutionService, InstitutionService>();
+builder.Services.AddTransient<IAppointmentService, AppointmentService>();
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 

@@ -126,6 +126,9 @@
   <data name="DeletePersonalData" xml:space="preserve">
     <value>Видалити аккаунт</value>
   </data>
+  <data name="LinkToViewAllAppointments" xml:space="preserve">
+    <value>Записи</value>
+  </data>
   <data name="LinkToViewAllDoctors" xml:space="preserve">
     <value>Лікарі</value>
   </data>

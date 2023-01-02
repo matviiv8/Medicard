@@ -121,10 +121,11 @@ else{
                                 {
                                     <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" onclick = "return confirm('@Localizer["AgreeToDelete"]');" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
                                 }
-                            @if (doctor.Specialization == "Family doctor")
-                            {
-                                <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">@Localizer["AppointPersonalDoctor"]</a>
-                            }
+                                @if (doctor.Specialization == "Family doctor")
+                                {
+                                    <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">@Localizer["AppointPersonalDoctor"]</a>
+                                }
+                                <a href="@Url.Action("Appoint", "Appointment", new {id = doctor.Id})"  class="btn btn-info">@Localizer["MakeAppointment"]</a>
                         }
                     </div>
                 </div>

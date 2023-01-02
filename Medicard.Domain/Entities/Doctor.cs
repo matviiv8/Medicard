@@ -36,5 +36,9 @@ namespace Medicard.Domain.Entities
         public Institution? Institution { get; set; }
 
         public List<Patient>? Patients { get; set; }
+
+        public int? ScheduleId { get; set; }
+
+        public Schedule? Schedule { get; set; }
     }
 }
