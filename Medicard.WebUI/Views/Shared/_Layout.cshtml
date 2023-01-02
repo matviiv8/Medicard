@@ -46,6 +46,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="AllPatients">@Localizer["Patients"]</a>
                              </li>
                         }
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                             <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Statistics">@Localizer["Statistics"]</a>
+                             </li>
+                        }
                         <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     @Localizer["Profile"]

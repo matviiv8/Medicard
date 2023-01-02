@@ -32,6 +32,8 @@ namespace Medicard.Services.ViewModels.Appointment
 
         public string? Specialization { get; set; }
 
+        public bool HasError { get; set; } = false;
+
         public IEnumerable<string> WorkHours { get; set; } = new List<string>();
     }
 }

@@ -7,7 +7,10 @@
  @section Styles{
      <link href="~/css/date-picker.css" rel="stylesheet" asp-append-version="true" />
  }
- 
+ @if(@Model.HasError)
+ {
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
+ }
  <div class="container-fluid">
         <div class="row">
             <div class="col-3">

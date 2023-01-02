@@ -4,6 +4,7 @@ using Medicard.Domain.Entities;
 using Medicard.Services.Services;
 using Medicard.Services.ViewModels.Patient;
 using Medicard.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -21,6 +22,7 @@ namespace Medicard.WebUI.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "Patient")]
         public IActionResult ViewProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -30,6 +32,7 @@ namespace Medicard.WebUI.Controllers
             return this.View(patient);
         }
 
+        [Authorize(Roles = "Patient")]
         public async Task<IActionResult> ChangeProfile(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -39,6 +42,7 @@ namespace Medicard.WebUI.Controllers
             return this.View(patient);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(PatientProfileViewModel model)
         {
@@ -49,6 +53,7 @@ namespace Medicard.WebUI.Controllers
             return this.RedirectToAction("ViewProfile", "Patient");
         }
 
+        [Authorize(Roles = "Doctor, Admin")]
         public IActionResult AllPatients(string search, int page = 1)
         {
             ViewData["CurrentFilter"] = search;

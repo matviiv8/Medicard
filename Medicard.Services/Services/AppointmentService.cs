@@ -57,7 +57,7 @@ namespace Medicard.Services.Services
             {
                 DoctorId = doctor.Id,
                 DoctorFullName = $"{doctor.FirstName} {doctor.LastName}",
-                WorkHours = GetDoctorWorkHoursByDoctorId(doctorId),
+                WorkHours = GetDoctorWorkHoursByDoctorId(doctor.Id),
                 ProfileImage = doctor.DoctorPicture,
                 Specialization = doctor.Specialization,
                 DoctorConctactNumber = doctor.ContactNumber,
@@ -116,15 +116,26 @@ namespace Medicard.Services.Services
         {
             return _unitOfWork.GenericRepository<Appointment>().GetAll().Where(appointment => appointment.DoctorId == doctorId).FirstOrDefault();
         }
-
-        public IEnumerable<string> GetDoctorWorkHoursByDoctorId(string doctorId)
+        public Appointment GetAppointment(string userId, AppointmentViewModel model)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == doctorId).FirstOrDefault();
-            var institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId);
+            var date = DateTime.ParseExact(model.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
+            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().Where(patient => patient.UserId == userId).FirstOrDefault();
+
+            return _unitOfWork.GenericRepository<Appointment>().GetAll()
+                .Where(e => e.PatientId == patient.Id)
+                .Where(d => d.Date == date && d.Time == time)
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<string> GetDoctorWorkHoursByDoctorId(int id)
+        {
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetById(id);
             var workHours = _unitOfWork.GenericRepository<WorkHour>().GetAll().Where(hour => hour.ScheduleId == doctor.ScheduleId).Select(hour => hour.Hour);
             var doctorWorkHours = new List<string>();
+            var institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId);
 
-            if(institution != null)
+            if (institution != null)
             {
                 foreach(var hour in workHours) {
                     if (DateTime.ParseExact(hour, "HH:mm", CultureInfo.InvariantCulture) >= DateTime.ParseExact(institution.WorkScheduleWeekdayStart, "HH:mm", CultureInfo.InvariantCulture)
@@ -142,5 +153,27 @@ namespace Medicard.Services.Services
             }
         }
 
+        public bool IsUserFreeOnDateAnHourAsync(string userId, AppointmentViewModel model)
+        {
+            var date = DateTime.ParseExact(model.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
+            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().Where(patient => patient.UserId == userId).FirstOrDefault();
+
+            return _unitOfWork.GenericRepository<Appointment>().GetAll()
+                .Where(e => e.PatientId == patient.Id)
+                .Where(d => d.Date == date && d.Time == time)
+                .FirstOrDefault() == null;
+        }
+
+        public bool IsDoctorFreeOnDateAnHourAsync(AppointmentViewModel model)
+        {
+            var date = DateTime.ParseExact(model.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
+
+            return _unitOfWork.GenericRepository<Appointment>().GetAll()
+                .Where(e => e.DoctorId == model.DoctorId)
+                .Where(d => d.Date == date && d.Time == time)
+                .FirstOrDefault() == null;
+        }
     }
 }

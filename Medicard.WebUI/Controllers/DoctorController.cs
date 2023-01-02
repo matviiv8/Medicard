@@ -4,6 +4,7 @@ using Medicard.Domain.Entities;
 using Medicard.Services.Services;
 using Medicard.Services.ViewModels.Doctor;
 using Medicard.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace Medicard.WebUI.Controllers
             _institutionService = institutionService;
         }
 
+        [AllowAnonymous]
         public IActionResult AllDoctors(string institution, string specialization, string search, int page = 1)
         {
             ViewData["Search"] = search;
@@ -63,6 +65,7 @@ namespace Medicard.WebUI.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Doctor")]
         public IActionResult ViewProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -72,6 +75,7 @@ namespace Medicard.WebUI.Controllers
             return this.View(patient);
         }
 
+        [Authorize(Roles = "Doctor")]
         public async Task<IActionResult> ChangeProfile(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -81,6 +85,7 @@ namespace Medicard.WebUI.Controllers
             return this.View(doctor);
         }
 
+        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(DoctorProfileViewModel model)
         {
@@ -91,6 +96,7 @@ namespace Medicard.WebUI.Controllers
             return this.RedirectToAction("ViewProfile", "Doctor");
         }
 
+        [Authorize(Roles = "Patient")]
         public async Task<IActionResult> AppointPersonalDoctor(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

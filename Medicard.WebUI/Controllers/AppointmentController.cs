@@ -42,8 +42,25 @@ namespace Medicard.WebUI.Controllers
             var user = _userManager.Users.Where(user => user.Id == userId).FirstOrDefault();
             var doctor = _doctorService.GetById(model.DoctorId);
             var patient = _patientService.GetByUserId(userId);
-            var appointment = _appointmentService.GetByDoctorId(doctor.Id);
+
+            if (!_appointmentService.IsUserFreeOnDateAnHourAsync(userId, model))
+            {
+                var appointment = _appointmentService.GetAppointment(userId, model);
+
+                ModelState.AddModelError("", $"You are already scheduled to see a doctor {model.DoctorFullName} for this {model.Date} {model.Time}");
+                model.WorkHours = _appointmentService.GetDoctorWorkHoursByDoctorId(doctor.Id);
+                model.HasError = true;
+                return View(model);
+            }
             
+            if (!_appointmentService.IsDoctorFreeOnDateAnHourAsync(model))
+            {
+                ModelState.AddModelError("", $"On {model.Date}, at {model.Time}, the doctor is already busy.");
+                model.WorkHours = _appointmentService.GetDoctorWorkHoursByDoctorId(doctor.Id);
+                model.HasError = true;
+                return View(model);
+            }
+
             await _appointmentService.CreateAppointment(patient, doctor, model);
 
             return this.RedirectToAction("AllAppointments", "Appointment");

@@ -1,0 +1,65 @@
+﻿@model Medicard.Services.ViewModels.Admin.StatisticsViewModel
+
+@section Scripts{
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+        
+        Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Share of doctors and patients',
+        align: 'left'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Doctors',
+            y: @Model.DoctorsCount
+        },  {
+            name: 'Patients',
+            y: @Model.PatientsCount
+        }]
+    }]
+});    
+        
+</script>
+}
+
+<div id="container"></div>
+
+<div class="p-4 text-black" style="background-color: #f8f9fa;">
+    <div class="d-flex justify-content-end text-center py-1">
+         <div>
+                <p class="mb-1 h5">@Model.UsersCount</p>
+                <p class="small text-muted mb-0">Users</p>
+         </div>
+         <div class="px-3">
+                <p class="mb-1 h5">@Model.DoctorsCount</p>
+                <p class="small text-muted mb-0">Doctors</p>
+         </div>
+         <div>
+                <p class="mb-1 h5">@Model.PatientsCount</p>
+                <p class="small text-muted mb-0">Patients</p>
+         </div>
+    </div>
+</div>

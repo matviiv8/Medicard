@@ -150,6 +150,9 @@
   <data name="Register" xml:space="preserve">
     <value>Anmelden</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistiken</value>
+  </data>
   <data name="ViewProfile" xml:space="preserve">
     <value>Seite ansehen</value>
   </data>
