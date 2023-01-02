@@ -27,6 +27,10 @@ namespace Medicard.Domain.Concrete
 
         public DbSet<Message> Messages { get; set; }
 
+        public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<WorkHour> WorkHours { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new DoctorConfiguration());
@@ -35,11 +39,23 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new InstitutionConfiguration());
             builder.ApplyConfiguration(new DiagnosisConfiguration());
             builder.ApplyConfiguration(new MessageConfiguration());
+            builder.ApplyConfiguration(new ScheduleConfiguration());
+            builder.ApplyConfiguration(new WorkHourConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(doctor => doctor.Patients)
                 .WithOne(patient => patient.Doctor)
                 .HasForeignKey(patient => patient.DoctorId);
+
+            builder.Entity<Doctor>()
+                .HasOne(doctor => doctor.Schedule)
+                .WithMany(schedule => schedule.Doctors)
+                .HasForeignKey(doctor => doctor.ScheduleId);
+
+            builder.Entity<WorkHour>()
+                .HasOne(workHour => workHour.Sсhedule)
+                .WithMany(schedule => schedule.WorkHours)
+                .HasForeignKey(workHour => workHour.ScheduleId);
 
             builder.Entity<Patient>()
                 .HasMany(patient => patient.Appointments)

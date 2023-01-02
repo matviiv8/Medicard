@@ -58,6 +58,7 @@ namespace Medicard.Services.Services
                         DoctorPicture = imageUrl,
                         Specialization = doctor.Specialization,
                         ContactNumber = doctor.ContactNumber,
+                        ScheduleId = 1,
                     });
 
                     await _unitOfWork.SaveAsync();

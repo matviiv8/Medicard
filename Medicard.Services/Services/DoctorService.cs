@@ -91,9 +91,14 @@ namespace Medicard.Services.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public Doctor GetById(string userId)
+        public Doctor GetByUserId(string userId)
         {
             return _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
+        }
+
+        public Doctor GetById(int? id)
+        {
+            return _unitOfWork.GenericRepository<Doctor>().GetById(id);
         }
 
         public DoctorProfileViewModel ViewProfile(string userId)

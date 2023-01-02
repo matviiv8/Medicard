@@ -13,6 +13,7 @@ namespace Medicard.Services.Services
         public IEnumerable<AllDoctorsViewModel> AllDoctors();
         DoctorProfileViewModel ViewProfile(string userId);
         Task ChangeDoctor(DoctorProfileViewModel model, string userId);
-        Doctor GetById(string userId);
+        Doctor GetByUserId(string userId);
+        Doctor GetById(int? id);
     }
 }

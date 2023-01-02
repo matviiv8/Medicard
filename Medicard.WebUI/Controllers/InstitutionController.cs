@@ -46,7 +46,7 @@ namespace Medicard.WebUI.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var currentDoctor = this._doctorService.GetById(userId);
+            var currentDoctor = this._doctorService.GetByUserId(userId);
 
             await this._institutionService.JoinToInstitution(currentDoctor, id);
 

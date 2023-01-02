@@ -135,6 +135,9 @@
   <data name="FindByName" xml:space="preserve">
     <value>Nach Vor- oder Nachnamen suchen:</value>
   </data>
+  <data name="MakeAppointment" xml:space="preserve">
+    <value>Einen Termin machen</value>
+  </data>
   <data name="Message" xml:space="preserve">
     <value>Eine Nachricht schicken</value>
   </data>
