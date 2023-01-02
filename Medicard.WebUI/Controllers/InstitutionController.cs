@@ -1,6 +1,7 @@
 ﻿using Medicard.Services.Services;
 using Medicard.Services.ViewModels.Institution;
 using Medicard.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -42,6 +43,7 @@ namespace Medicard.WebUI.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles="Doctor")]
         public async Task<IActionResult> JoinToInstitution(int id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

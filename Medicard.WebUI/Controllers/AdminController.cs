@@ -14,11 +14,17 @@ namespace Medicard.WebUI.Controllers
     {
         private readonly IAdminService _adminService;
         private readonly IInstitutionService _institutionService;
-
-        public AdminController(IAdminService adminService , IInstitutionService institutionService)
+        private readonly UserManager<User> _userManager;
+        private readonly IPatientService _patientService;
+        private readonly IDoctorService _doctorService;
+             
+        public AdminController(IAdminService adminService, IInstitutionService institutionService, UserManager<User> userManager, IPatientService patientService, IDoctorService doctorService)
         {
             this._adminService = adminService;
             this._institutionService = institutionService;
+            this._userManager = userManager;
+            this._patientService = patientService;
+            this._doctorService = doctorService;
         }
 
         public IActionResult CreateDoctor()
@@ -88,6 +94,21 @@ namespace Medicard.WebUI.Controllers
             await this._adminService.ChangeInstitution(model, id);
 
             return this.RedirectToAction("AllInstitutions", "Institution");
+        }
+
+        [HttpGet]
+        public IActionResult Statistics()
+        {
+            var usersCount = _userManager.Users.Count();
+            var doctorsCount = _doctorService.AllDoctors().Count();
+            var patientsCount = _patientService.AllPatients().Count();
+
+            return this.View(new StatisticsViewModel
+            {
+                UsersCount = usersCount,
+                DoctorsCount = doctorsCount,
+                PatientsCount = patientsCount,
+            });
         }
     }
 }

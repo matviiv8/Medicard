@@ -150,6 +150,9 @@
   <data name="Register" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
   <data name="ViewProfile" xml:space="preserve">
     <value>Переглянути сторінку</value>
   </data>
