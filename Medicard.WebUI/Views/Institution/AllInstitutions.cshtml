@@ -8,7 +8,7 @@
 @addTagHelper *, Medicard.WebUI
 
  <div class="container">
-    @if (this.User.IsInRole("Admin"))
+    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Head doctor"))
     {
         <table class="table">
             <thead style="background-color:#e6e6e6">

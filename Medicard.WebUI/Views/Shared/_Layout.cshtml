@@ -65,7 +65,7 @@
                                         <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="ViewProfile">@Localizer["ViewProfile"]</a>
                                     </li>
                                 }
-                                else if(this.User.IsInRole("Doctor")){
+                                else if(this.User.IsInRole("Doctor") || this.User.IsInRole("Head doctor")){
                                     <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="ViewProfile">@Localizer["ViewProfile"]</a>
                                     </li>

@@ -38,7 +38,7 @@ namespace Medicard.Services.Services
 
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user,"Doctor").Wait();
+                    _userManager.AddToRoleAsync(user,"Head doctor").Wait();
 
                     string imageUrl;
                     if(doctor.Gender == Domain.Entities.Enums.Gender.Male)
@@ -49,8 +49,9 @@ namespace Medicard.Services.Services
                     {
                         imageUrl = "womenunknowndoctor.jpeg";
                     }
-                    _unitOfWork.GenericRepository<Doctor>().Add(new Doctor 
-                    { 
+
+                    var newDoctor = new Doctor
+                    {
                         UserId = user.Id,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
@@ -59,7 +60,18 @@ namespace Medicard.Services.Services
                         Specialization = doctor.Specialization,
                         ContactNumber = doctor.ContactNumber,
                         ScheduleId = 1,
-                    });
+                    };
+
+                    _unitOfWork.GenericRepository<Doctor>().Add(newDoctor);
+
+                    if (doctor.IsHeadDoctor == true)
+                    {
+                        _unitOfWork.GenericRepository<HeadDoctor>().Add(new HeadDoctor
+                        {
+                            DoctorId = newDoctor.Id,
+                            Doctor = newDoctor,
+                        });
+                    }
 
                     await _unitOfWork.SaveAsync();
                 }
@@ -77,7 +89,7 @@ namespace Medicard.Services.Services
                 WorkScheduleWeekendStart = institution.WorkScheduleWeekendStart,
                 WorkScheduleWeekendEnd = institution.WorkScheduleWeekendEnd,
                 ContactNumber = institution.ContactNumber,
-        });
+            });
 
             await _unitOfWork.SaveAsync();
         }
@@ -96,6 +108,20 @@ namespace Medicard.Services.Services
 
             _userManager.RemoveFromRoleAsync(user, "Doctor");
 
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async void DeleteHeadDoctor(string id)
+        {
+            var user = _unitOfWork.GenericRepository<User>().GetById(id);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == id);
+            var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(doctor.HeadDoctor.Id);
+
+            DeleteDoctor(id);
+
+            _unitOfWork.GenericRepository<HeadDoctor>().Delete(headDoctor);
+
+            _userManager.RemoveFromRoleAsync(user, "Head doctor");
             await _unitOfWork.SaveAsync();
         }
 

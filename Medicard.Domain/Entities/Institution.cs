@@ -24,6 +24,8 @@ namespace Medicard.Domain.Entities
 
         public string? ContactNumber { get; set; }
 
+        public HeadDoctor HeadDoctor { get; set; }
+
         public List<Doctor>? Doctors { get; set; }
     } 
 }

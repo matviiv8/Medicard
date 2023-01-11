@@ -48,6 +48,13 @@ namespace Medicard.Services.Services
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
                     };
 
+                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(doctor.Id);
+
+                    if(headDoctor != null)
+                    {
+                        currentDoctor.IsHeadDoctor = true;
+                    }
+
                     if(doctor.InstitutionId != null)
                     {
                         currentDoctor.Institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId).Name;

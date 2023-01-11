@@ -65,7 +65,6 @@ namespace Medicard.WebUI.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "Doctor")]
         public IActionResult ViewProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -75,7 +74,6 @@ namespace Medicard.WebUI.Controllers
             return this.View(patient);
         }
 
-        [Authorize(Roles = "Doctor")]
         public async Task<IActionResult> ChangeProfile(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -85,7 +83,6 @@ namespace Medicard.WebUI.Controllers
             return this.View(doctor);
         }
 
-        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(DoctorProfileViewModel model)
         {

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Medicard.Domain.Migrations
 {
     [DbContext(typeof(MedicardDbContext))]
-    [Migration("20230101210540_Initial")]
+    [Migration("20230108185235_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,7 +138,7 @@ namespace Medicard.Domain.Migrations
                             Gender = 1,
                             LastName = "Grinkiv",
                             Specialization = "Therapist",
-                            UserId = "ed38cfa2-9725-4d24-9079-d04980cdd3db"
+                            UserId = "a6db3863-065a-44fd-8946-70e04811748e"
                         },
                         new
                         {
@@ -149,8 +149,37 @@ namespace Medicard.Domain.Migrations
                             Gender = 2,
                             LastName = "Koval",
                             Specialization = "Pediatrician",
-                            UserId = "12e57149-5954-4f92-9fb6-898ee5363812"
+                            UserId = "bd2dab42-eb57-4d15-b6af-a8edd0b622f4"
                         });
+                });
+
+            modelBuilder.Entity("Medicard.Domain.Entities.HeadDoctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InstitutionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId")
+                        .IsUnique();
+
+                    b.HasIndex("Id")
+                        .IsUnique();
+
+                    b.HasIndex("InstitutionId")
+                        .IsUnique()
+                        .HasFilter("[InstitutionId] IS NOT NULL");
+
+                    b.ToTable("HeadDoctor", (string)null);
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Institution", b =>
@@ -289,7 +318,6 @@ namespace Medicard.Domain.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -297,18 +325,13 @@ namespace Medicard.Domain.Migrations
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Schedules");
+                    b.ToTable("Schedule", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "First shift"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Second shift"
+                            Name = "Shift"
                         });
                 });
 
@@ -410,9 +433,9 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "de42de78-fb97-4bc7-a4b0-7729c0e267ac",
+                            Id = "b1e98e88-ff35-4f35-bc9e-1ebd23d41721",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "07f187dd-c5e0-4eb3-8b25-b62039d2b29c",
+                            ConcurrencyStamp = "99babdd9-a177-40de-9ec1-a42ae9f90a10",
                             Email = "matviivandrij13@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Andrij",
@@ -420,17 +443,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MATVIIVANDRIJ13@GMAIL.COM",
                             NormalizedUserName = "MATVIIVANDRIJ13@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGFUjlkmHa2rGPN6gSA62kNS4QTyJEJSfuOcNdcrMm7mWab99uBcBz4yRXhWAiY5OQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELhXYZYsbUbGAKL2XZbfNduq+eT5I90+Eh0LaOdUxb/8ukt0gBe7lkNVy2H7yMcisg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4538607a-de5f-420c-9fd5-546289059209",
+                            SecurityStamp = "d1777e09-397b-4a49-874f-99256c282014",
                             TwoFactorEnabled = false,
                             UserName = "matviivandrij13@gmail.com"
                         },
                         new
                         {
-                            Id = "ed38cfa2-9725-4d24-9079-d04980cdd3db",
+                            Id = "a6db3863-065a-44fd-8946-70e04811748e",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "93fd4d8a-fdaf-49c0-b9a0-1468eb795fb8",
+                            ConcurrencyStamp = "fc3e002f-2286-4ee1-a84c-11551988a828",
                             Email = "petrogrinkiv@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Petro",
@@ -438,17 +461,17 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETROGRINKOV@GMAIL.COM",
                             NormalizedUserName = "PETROGRINKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI8XVwhbMlLh+mwsDkEfS6QKXVVTGMfWggw7LaZNFimbwNe0fo+bSW2hkkgrCX9cHg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJttGZx98lyFJzygHtpkHRlhsKyPVeMGmclzQkStkLSMY8DoVp6CIa4eYNJ6G1LM7A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "33d42abc-dbb3-4829-a85d-0544021ba267",
+                            SecurityStamp = "66b91860-251a-4d40-887e-a59df7ed1274",
                             TwoFactorEnabled = false,
                             UserName = "petrogrinkiv@gmail.com"
                         },
                         new
                         {
-                            Id = "12e57149-5954-4f92-9fb6-898ee5363812",
+                            Id = "bd2dab42-eb57-4d15-b6af-a8edd0b622f4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c50ead1a-33eb-4cb9-902e-4b9c1797540b",
+                            ConcurrencyStamp = "8d494c26-5629-4810-9ad9-7ac7abd5ae12",
                             Email = "mariakoval@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Maria",
@@ -456,9 +479,9 @@ namespace Medicard.Domain.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MARIAKOVAL@GMAIL.COM",
                             NormalizedUserName = "MARIAKOVAL@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFo+r/vHb0L8hG8hVd04qcsNWHHT7Ii8XGgAU8hZMYKrsg/rvUu9ZmmohZmZhtfWDQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMxNA6tS5uphXz/Xn8/LGxVXiUafl7WQg4WNxhlKIlkN7xqJlGzqgWwJY5sinx7m6Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "10b6454b-889c-4034-949f-b639bb0826f8",
+                            SecurityStamp = "99e7d5a2-8702-4bf0-b819-22165d145a1c",
                             TwoFactorEnabled = false,
                             UserName = "mariakoval@gmail.com"
                         });
@@ -537,67 +560,67 @@ namespace Medicard.Domain.Migrations
                         {
                             Id = 9,
                             Hour = "13:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 10,
                             Hour = "13:30",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 11,
                             Hour = "14:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 12,
                             Hour = "14:30",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 13,
                             Hour = "15:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 14,
                             Hour = "15:30",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 15,
                             Hour = "16:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 16,
                             Hour = "16:30",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 17,
                             Hour = "17:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 18,
                             Hour = "17:30",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         },
                         new
                         {
                             Id = 19,
                             Hour = "18:00",
-                            ScheduleId = 2
+                            ScheduleId = 1
                         });
                 });
 
@@ -630,24 +653,31 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b945c42c-c72e-4625-b722-56c83e47884a",
-                            ConcurrencyStamp = "6a50c818-9bb4-42d8-a078-ae544a2c1558",
+                            Id = "729192da-7279-477d-bab1-f8e27a573748",
+                            ConcurrencyStamp = "494bb178-f8ec-4539-b920-88c09b2d412b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9",
-                            ConcurrencyStamp = "ba2e07dd-45c8-4141-9f80-c53d8865d56c",
+                            Id = "9d15dbaa-318a-490b-bb4d-619956ff07fa",
+                            ConcurrencyStamp = "a775eb08-7c73-473b-8de4-9f03711a6fc9",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
-                            Id = "85ae9685-e1c2-4975-be14-df9a056ae1b6",
-                            ConcurrencyStamp = "b070da29-0ccb-40c5-b183-4bbd1ff61688",
+                            Id = "e1b732b4-1b7e-4222-8315-5adbc5cb37f9",
+                            ConcurrencyStamp = "41d39368-2ac2-4126-b545-fce0489b8ec5",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
+                        },
+                        new
+                        {
+                            Id = "fafba4c0-05bd-46e5-8967-f12ce4c6f094",
+                            ConcurrencyStamp = "dcd7c9e6-5195-4900-a5e5-3c5432a98ddc",
+                            Name = "Head doctor",
+                            NormalizedName = "HEAD DOCTOR"
                         });
                 });
 
@@ -740,18 +770,18 @@ namespace Medicard.Domain.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "de42de78-fb97-4bc7-a4b0-7729c0e267ac",
-                            RoleId = "b945c42c-c72e-4625-b722-56c83e47884a"
+                            UserId = "b1e98e88-ff35-4f35-bc9e-1ebd23d41721",
+                            RoleId = "729192da-7279-477d-bab1-f8e27a573748"
                         },
                         new
                         {
-                            UserId = "ed38cfa2-9725-4d24-9079-d04980cdd3db",
-                            RoleId = "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9"
+                            UserId = "a6db3863-065a-44fd-8946-70e04811748e",
+                            RoleId = "9d15dbaa-318a-490b-bb4d-619956ff07fa"
                         },
                         new
                         {
-                            UserId = "12e57149-5954-4f92-9fb6-898ee5363812",
-                            RoleId = "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9"
+                            UserId = "bd2dab42-eb57-4d15-b6af-a8edd0b622f4",
+                            RoleId = "9d15dbaa-318a-490b-bb4d-619956ff07fa"
                         });
                 });
 
@@ -821,6 +851,23 @@ namespace Medicard.Domain.Migrations
                     b.Navigation("Schedule");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Medicard.Domain.Entities.HeadDoctor", b =>
+                {
+                    b.HasOne("Medicard.Domain.Entities.Doctor", "Doctor")
+                        .WithOne("HeadDoctor")
+                        .HasForeignKey("Medicard.Domain.Entities.HeadDoctor", "DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Medicard.Domain.Entities.Institution", "Institution")
+                        .WithOne("HeadDoctor")
+                        .HasForeignKey("Medicard.Domain.Entities.HeadDoctor", "InstitutionId");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Institution");
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Message", b =>
@@ -933,12 +980,18 @@ namespace Medicard.Domain.Migrations
 
             modelBuilder.Entity("Medicard.Domain.Entities.Doctor", b =>
                 {
+                    b.Navigation("HeadDoctor")
+                        .IsRequired();
+
                     b.Navigation("Patients");
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Institution", b =>
                 {
                     b.Navigation("Doctors");
+
+                    b.Navigation("HeadDoctor")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Medicard.Domain.Entities.Patient", b =>

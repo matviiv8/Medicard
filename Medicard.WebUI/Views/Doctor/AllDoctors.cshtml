@@ -1,5 +1,6 @@
 ﻿@model ShowAllDoctorsViewModel
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject SignInManager<Medicard.Domain.Entities.User> SignInManager
 @using Microsoft.AspNetCore.Mvc.Localization
 
@@ -8,7 +9,7 @@
 @addTagHelper *, Medicard.WebUI
 
     <div class="container">
-        @if (this.User.IsInRole("Admin"))
+        @if (this.User.IsInRole("Admin") || this.User.IsInRole("Head doctor"))
         {
             <table class="table">
                 <thead style="background-color:#e6e6e6">
@@ -93,11 +94,18 @@ else{
                                     <td style="border-bottom: 1px solid #ffffff;"><i class="fas fa-building"></i></td>
                                     @if (String.IsNullOrEmpty(@doctor.Institution))
                                     {
-                                         <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoInstitution"]</td>
+                                        <td style="border-bottom: 1px solid #ffffff;">@Localizer["NoInstitution"]</td>
                                     }
                                     else
                                     {
-                                        <td style="border-bottom: 1px solid #ffffff;">@doctor.Institution</td>
+                                        @if (doctor.IsHeadDoctor == true)
+                                        {
+                                            <td style="border-bottom: 1px solid #ffffff;">head of the @doctor.Institution</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="border-bottom: 1px solid #ffffff;">@doctor.Institution</td>
+                                        }
                                     }
                                 </tr>
                                 <tr>
@@ -114,7 +122,7 @@ else{
                             </tbody>
                         </table>
 
-                             @if (SignInManager.IsSignedIn(this.User))
+                             @if (SignInManager.IsSignedIn(this.User) && doctor.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                              {
                                 <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
                                 @if (this.User.IsInRole("Admin"))

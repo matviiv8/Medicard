@@ -70,9 +70,7 @@ namespace Medicard.WebUI.Controllers
         public async Task<IActionResult> AllAppointments()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var allAppointments = _appointmentService.GetAllAppointments()
-                .OrderBy(appointment => DateTime.Parse(appointment.Date)).ThenBy(appointment => DateTime.Parse(appointment.Time));
-
+            var allAppointments = _appointmentService.GetAllAppointments();
             if (this.User.IsInRole("Patient"))
             {
                 return View(new ShowAllUserAppointmentsViewModel

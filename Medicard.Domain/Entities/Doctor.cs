@@ -40,5 +40,7 @@ namespace Medicard.Domain.Entities
         public int? ScheduleId { get; set; }
 
         public Schedule? Schedule { get; set; }
+
+        public HeadDoctor HeadDoctor { get; set; }
     }
 }

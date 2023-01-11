@@ -17,6 +17,8 @@ namespace Medicard.Domain.Concrete
 
         public DbSet<Doctor> Doctors { get; set; }
 
+        public DbSet<HeadDoctor> HeadDoctors { get; set; }
+
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Diagnosis> Diagnoses { get; set; }
@@ -41,11 +43,22 @@ namespace Medicard.Domain.Concrete
             builder.ApplyConfiguration(new MessageConfiguration());
             builder.ApplyConfiguration(new ScheduleConfiguration());
             builder.ApplyConfiguration(new WorkHourConfiguration());
+            builder.ApplyConfiguration(new HeadDoctorConfiguration());
 
             builder.Entity<Doctor>()
                 .HasMany(doctor => doctor.Patients)
                 .WithOne(patient => patient.Doctor)
                 .HasForeignKey(patient => patient.DoctorId);
+
+            builder.Entity<Doctor>()
+                .HasOne(doctor => doctor.HeadDoctor)
+                .WithOne(headDoctor => headDoctor.Doctor)
+                .HasForeignKey<HeadDoctor>(headDoctor => headDoctor.DoctorId);
+
+            builder.Entity<Institution>()
+                .HasOne(institution => institution.HeadDoctor)
+                .WithOne(headDoctor => headDoctor.Institution)
+                .HasForeignKey<HeadDoctor>(headDoctor => headDoctor.InstitutionId);
 
             builder.Entity<Doctor>()
                 .HasOne(doctor => doctor.Schedule)
@@ -123,6 +136,7 @@ namespace Medicard.Domain.Concrete
                 new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
                 new IdentityRole { Name = "Doctor", NormalizedName = "DOCTOR" },
                 new IdentityRole { Name = "Patient", NormalizedName = "PATIENT" },
+                new IdentityRole {Name = "Head doctor", NormalizedName = "HEAD DOCTOR"},
             };
             builder.Entity<IdentityRole>().HasData(roles);
 
