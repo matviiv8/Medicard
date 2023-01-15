@@ -117,10 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LinkToViewAllDoctors" xml:space="preserve">
-    <value>Ärzte</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
   </data>
-  <data name="LinkToViewAllInstitutions" xml:space="preserve">
-    <value>Institutionen</value>
+  <data name="Chats" xml:space="preserve">
+    <value>Mitteilungen</value>
+  </data>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>Persönliche Daten löschen</value>
+  </data>
+  <data name="LinkToViewAllAppointments" xml:space="preserve">
+    <value>Aufzeichnungen</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Einloggen</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Ausloggen</value>
+  </data>
+  <data name="Patients" xml:space="preserve">
+    <value>Patientinnen</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistiken</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>Seite ansehen</value>
   </data>
 </root>
