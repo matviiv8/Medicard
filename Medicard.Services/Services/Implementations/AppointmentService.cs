@@ -1,5 +1,6 @@
 ﻿using Medicard.Domain.Astract;
 using Medicard.Domain.Entities;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Appointment;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Implementations
 {
     public class AppointmentService : IAppointmentService
     {
@@ -56,14 +57,14 @@ namespace Medicard.Services.Services
             var appointmentViewModel = new AppointmentViewModel()
             {
                 DoctorId = doctor.Id,
-                DoctorFullName = $"{doctor.FirstName} {doctor.LastName}",
+                DoctorFullName = doctor.ToString(),
                 WorkHours = GetDoctorWorkHoursByDoctorId(doctor.Id),
                 ProfileImage = doctor.DoctorPicture,
                 Specialization = doctor.Specialization,
                 DoctorConctactNumber = doctor.ContactNumber,
             };
-            
-            if(institution != null)
+
+            if (institution != null)
             {
                 appointmentViewModel.InstitutionName = institution.Name;
                 appointmentViewModel.InstitutionAddress = institution.Address;
@@ -90,7 +91,7 @@ namespace Medicard.Services.Services
                     var currentAppointment = new AppointmentViewModel
                     {
                         Id = appointment.Id,
-                        DoctorFullName = $"{doctor.LastName} {doctor.FirstName}",
+                        DoctorFullName = doctor.ToString(),
                         DoctorId = appointment.DoctorId,
                         PatientId = appointment.PatientId,
                         ProfileImage = doctor.DoctorPicture,
@@ -98,10 +99,10 @@ namespace Medicard.Services.Services
                         Date = appointment.Date.ToString("dd.MM.yyyy"),
                         Time = appointment.Time.ToString("HH:mm"),
                         DoctorConctactNumber = doctor.ContactNumber,
-                        PatientFullName = $"{patient.LastName} {patient.FirstName}"
+                        PatientFullName = patient.ToString(),
                     };
 
-                    if(institution != null)
+                    if (institution != null)
                     {
                         currentAppointment.InstitutionName = institution.Name;
                         currentAppointment.InstitutionAddress = institution.Address;
@@ -137,7 +138,8 @@ namespace Medicard.Services.Services
 
             if (institution != null)
             {
-                foreach(var hour in workHours) {
+                foreach (var hour in workHours)
+                {
                     if (DateTime.ParseExact(hour, "HH:mm", CultureInfo.InvariantCulture) >= DateTime.ParseExact(institution.WorkScheduleWeekdayStart, "HH:mm", CultureInfo.InvariantCulture)
                         && DateTime.ParseExact(hour, "HH:mm", CultureInfo.InvariantCulture) <= DateTime.ParseExact(institution.WorkScheduleWeekdayEnd, "HH:mm", CultureInfo.InvariantCulture))
                     {

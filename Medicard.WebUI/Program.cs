@@ -2,7 +2,8 @@ using Medicard.Domain.Astract;
 using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Implementations;
+using Medicard.Services.Services.Interfaces;
 using Medicard.WebUI.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -46,6 +47,8 @@ builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IInstitutionService, InstitutionService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
+builder.Services.AddTransient<IHeadDoctorService, HeadDoctorService>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 

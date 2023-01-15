@@ -15,12 +15,19 @@ namespace Medicard.Domain.Astract.Repositories
             string includeProperties = "");
 
         T GetById(object id);
+
         Task<T> GetByIdAsync(object id);
+
         void Add(T entity);
+
         Task<T> AddAsync(T entity);
+
         void Delete(T entity);
+
         Task<T> DeleteAsync(T entity);
+
         void Update(T entity);
+
         Task<T> UpdateAsync(T entity);
     }
 }

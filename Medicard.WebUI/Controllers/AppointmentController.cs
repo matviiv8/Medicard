@@ -4,7 +4,7 @@ using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Appointment;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;

@@ -2,6 +2,7 @@
 using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Patient;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Implementations
 {
     public class PatientService : IPatientService
     {
@@ -17,7 +18,7 @@ namespace Medicard.Services.Services
 
         public PatientService(IUnitOfWork unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<AllPatientsViewModel> AllPatients()
@@ -34,15 +35,15 @@ namespace Medicard.Services.Services
                     var patientInfo = new AllPatientsViewModel
                     {
                         Id = patient.UserId,
-                        FullName = patient.FirstName + " " + patient.LastName,
+                        FullName = patient.ToString(),
                         Address = patient.Address,
                         ContactNumber = patient.ContactNumber,
                         BirthDate = patient.BirthDate,
                     };
 
-                    if(personalDoctor != null)
+                    if (personalDoctor != null)
                     {
-                        patientInfo.PersonalDoctorFullName = personalDoctor.FirstName + " " + personalDoctor.LastName;
+                        patientInfo.PersonalDoctorFullName = personalDoctor.ToString();
                     }
 
                     patients.Add(patientInfo);
@@ -73,7 +74,7 @@ namespace Medicard.Services.Services
             patient.MaritalStatus = model.MaritalStatus;
 
             _unitOfWork.GenericRepository<Patient>().Update(patient);
-            await _unitOfWork.SaveAsync(); 
+            await _unitOfWork.SaveAsync();
         }
 
         public Patient GetByUserId(string userId)

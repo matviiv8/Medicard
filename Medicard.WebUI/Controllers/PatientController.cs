@@ -1,7 +1,7 @@
 ﻿using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Patient;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;

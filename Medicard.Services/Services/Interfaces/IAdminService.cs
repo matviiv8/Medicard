@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Interfaces
 {
     public interface IAdminService
     {
@@ -17,7 +17,7 @@ namespace Medicard.Services.Services
         public void DeleteDoctor(string id);
 
         public void DeleteInstitution(int institutionId);
+
         Task ChangeInstitution(InstitutionViewModel model, int id);
     }
 }
-z

@@ -62,17 +62,28 @@
                 @Localizer["Weekends"]      @institution.WorkScheduleWeekendStart - @institution.WorkScheduleWeekendEnd
             </span>
         </p>
-        <span style="float:right;">
-            <span class="fa fa-phone"></span>
-           @if (String.IsNullOrEmpty(@institution.ContactNumber))
-           {
-                @Localizer["NoContactNumber"]
-           }
-           else
-           {
-                @institution.ContactNumber
-           }
-        </span>
+         <p style="text-align:left;">
+           <span class="fas fa-user-md"></span>
+               @if (String.IsNullOrEmpty(@institution.HeadDoctorFullName))
+               {
+                    @Localizer["NoHeadDoctor"]
+               }
+               else
+               {
+                    @institution.HeadDoctorFullName
+               }
+            <span style="float:right;">
+                <span class="fa fa-phone"></span>
+               @if (String.IsNullOrEmpty(@institution.ContactNumber))
+               {
+                    @Localizer["NoContactNumber"]
+               }
+               else
+               {
+                    @institution.ContactNumber
+               }
+            </span>
+        </p>
     </div>
     @if (SignInManager.IsSignedIn(this.User) && !this.User.IsInRole("Patient"))
     {

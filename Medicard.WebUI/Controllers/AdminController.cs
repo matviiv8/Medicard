@@ -1,11 +1,12 @@
 ﻿using Medicard.Domain.Astract;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Admin;
 using Medicard.Services.ViewModels.Institution;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace Medicard.WebUI.Controllers
@@ -17,14 +18,22 @@ namespace Medicard.WebUI.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IPatientService _patientService;
         private readonly IDoctorService _doctorService;
-             
-        public AdminController(IAdminService adminService, IInstitutionService institutionService, UserManager<User> userManager, IPatientService patientService, IDoctorService doctorService)
+        private readonly IHeadDoctorService _headDoctorService;
+
+        public AdminController(
+            IAdminService adminService,
+            IInstitutionService institutionService,
+            UserManager<User> userManager,
+            IPatientService patientService,
+            IDoctorService doctorService,
+            IHeadDoctorService headDoctorService)
         {
             this._adminService = adminService;
             this._institutionService = institutionService;
             this._userManager = userManager;
             this._patientService = patientService;
             this._doctorService = doctorService;
+            this._headDoctorService = headDoctorService;
         }
 
         public IActionResult CreateDoctor()
@@ -54,6 +63,10 @@ namespace Medicard.WebUI.Controllers
 
         public IActionResult CreateInstitution()
         {
+            var allHeadDoctors = _headDoctorService.AllHeadDoctors();
+
+            ViewBag.ListHeadDoctors = CompletingListOfHeadDoctors(allHeadDoctors);
+
             return this.View();
         }
 
@@ -109,6 +122,26 @@ namespace Medicard.WebUI.Controllers
                 DoctorsCount = doctorsCount,
                 PatientsCount = patientsCount,
             });
+        }
+
+        private List<SelectListItem> CompletingListOfHeadDoctors(IEnumerable<HeadDoctor> allHeadDoctors)
+        {
+            var headDoctorsSelectList = new List<SelectListItem>();
+
+            foreach (var headDoctor in allHeadDoctors)
+            {
+                if (headDoctor.Doctor == null)
+                {
+                    var doctor = _doctorService.GetById(headDoctor.DoctorId);
+                    headDoctorsSelectList.Add(new SelectListItem { Text = doctor.ToString(), Value = headDoctor.Id.ToString() });
+                }
+                else
+                {
+                    headDoctorsSelectList.Add(new SelectListItem { Text = headDoctor.Doctor.ToString(), Value = headDoctor.Id.ToString() });
+                }
+            }
+
+            return headDoctorsSelectList;
         }
     }
 }

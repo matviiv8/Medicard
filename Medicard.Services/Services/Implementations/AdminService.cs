@@ -1,5 +1,6 @@
 ﻿using Medicard.Domain.Astract;
 using Medicard.Domain.Entities;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Admin;
 using Medicard.Services.ViewModels.Institution;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Implementations
 {
     public class AdminService : IAdminService
     {
@@ -18,8 +19,8 @@ namespace Medicard.Services.Services
 
         public AdminService(IUnitOfWork unitOfWork, UserManager<User> userManager)
         {
-            this._unitOfWork = unitOfWork;
-            this._userManager = userManager;
+            _unitOfWork = unitOfWork;
+            _userManager = userManager;
         }
 
         public async Task CreateDoctor(CreateDoctorViewModel doctor)
@@ -38,10 +39,10 @@ namespace Medicard.Services.Services
 
                 if (result.Succeeded)
                 {
-                    _userManager.AddToRoleAsync(user,"Head doctor").Wait();
+                    _userManager.AddToRoleAsync(user, "Head doctor").Wait();
 
                     string imageUrl;
-                    if(doctor.Gender == Domain.Entities.Enums.Gender.Male)
+                    if (doctor.Gender == Domain.Entities.Enums.Gender.Male)
                     {
                         imageUrl = "menunknowndoctor.jpeg";
                     }
@@ -80,7 +81,7 @@ namespace Medicard.Services.Services
 
         public async Task CreateInstitution(InstitutionViewModel institution)
         {
-            _unitOfWork.GenericRepository<Institution>().Add(new Institution
+            var newInstitution = new Institution
             {
                 Name = institution.Name,
                 Address = institution.Address,
@@ -89,8 +90,18 @@ namespace Medicard.Services.Services
                 WorkScheduleWeekendStart = institution.WorkScheduleWeekendStart,
                 WorkScheduleWeekendEnd = institution.WorkScheduleWeekendEnd,
                 ContactNumber = institution.ContactNumber,
-            });
+            };
 
+            var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(institution.HeadDoctorId);
+            if (currentHeadDoctor != null)
+            {
+                currentHeadDoctor.InstitutionId = institution.Id;
+
+                newInstitution.HeadDoctor = currentHeadDoctor;
+                _unitOfWork.GenericRepository<HeadDoctor>().Update(currentHeadDoctor);
+            }
+
+            _unitOfWork.GenericRepository<Institution>().Add(newInstitution);
             await _unitOfWork.SaveAsync();
         }
 
@@ -107,8 +118,9 @@ namespace Medicard.Services.Services
             }
 
             _userManager.RemoveFromRoleAsync(user, "Doctor");
+            _userManager.DeleteAsync(user);
 
-            await _unitOfWork.SaveAsync();
+            _unitOfWork.SaveAsync();
         }
 
         public async void DeleteHeadDoctor(string id)
@@ -128,11 +140,23 @@ namespace Medicard.Services.Services
         public async void DeleteInstitution(int institutionId)
         {
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(institutionId);
+            var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institutionId).FirstOrDefault();
+
+            if(headDoctor != null)
+            {
+                headDoctor.InstitutionId = null;
+                headDoctor.Institution = null;
+                institution.HeadDoctor = null;
+
+                _unitOfWork.GenericRepository<HeadDoctor>().Update(headDoctor);
+                _unitOfWork.GenericRepository<Institution>().Update(institution);
+                _unitOfWork.Save();
+            }
 
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7015/api/");
-                var deleteTask = client.DeleteAsync("Institution/" + institution.Id);
+                var deleteTask = client.DeleteAsync("Institution/" + institutionId);
                 deleteTask.Wait();
             }
 

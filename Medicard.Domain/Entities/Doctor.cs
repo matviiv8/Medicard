@@ -42,5 +42,10 @@ namespace Medicard.Domain.Entities
         public Schedule? Schedule { get; set; }
 
         public HeadDoctor HeadDoctor { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace Medicard.Services.ViewModels.Institution
     public class InstitutionViewModel
     {
         public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Address { get; set; }
@@ -23,5 +24,6 @@ namespace Medicard.Services.ViewModels.Institution
 
         public string? ContactNumber { get; set; }
 
+        public int? HeadDoctorId { get; set; }
     }
 }

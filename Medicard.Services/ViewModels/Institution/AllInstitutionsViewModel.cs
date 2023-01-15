@@ -24,5 +24,6 @@ namespace Medicard.Services.ViewModels.Institution
 
         public string? ContactNumber { get; set; }
 
+        public string? HeadDoctorFullName { get; set; }
     }
 }
