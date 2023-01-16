@@ -1,6 +1,10 @@
+<div align="center">  
+
 # Medicard
+
 ### The idea of the project: the online medical card is similar to Medics
 
+</div>  
 
 * Anonymous visitors:
     * Log in;
