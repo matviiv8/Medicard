@@ -49,7 +49,7 @@ namespace Medicard.Services.Services.Implementations
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
                     };
 
-                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(doctor.Id);
+                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
 
                     if (headDoctor != null)
                     {

@@ -79,7 +79,7 @@ namespace Medicard.Services.Services.Implementations
             }
         }
 
-        public async Task CreateInstitution(InstitutionViewModel institution)
+        public async Task CreateInstitution(InstitutionViewModel institution, string userId = null)
         {
             var newInstitution = new Institution
             {
@@ -92,17 +92,27 @@ namespace Medicard.Services.Services.Implementations
                 ContactNumber = institution.ContactNumber,
             };
 
-            var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(institution.HeadDoctorId);
-            if (currentHeadDoctor != null)
+            if (userId == null)
             {
-                currentHeadDoctor.InstitutionId = institution.Id;
-
-                newInstitution.HeadDoctor = currentHeadDoctor;
-                _unitOfWork.GenericRepository<HeadDoctor>().Update(currentHeadDoctor);
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(institution.HeadDoctorId);
+                if (currentHeadDoctor != null)
+                {
+                    newInstitution.HeadDoctor = currentHeadDoctor;
+                }
+            }
+            else
+            {
+                var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == userId).FirstOrDefault();
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
+                if (currentHeadDoctor != null)
+                {
+                    newInstitution.HeadDoctor = currentHeadDoctor;
+                }
             }
 
             _unitOfWork.GenericRepository<Institution>().Add(newInstitution);
             await _unitOfWork.SaveAsync();
+
         }
 
         public async void DeleteDoctor(string id)
@@ -163,7 +173,7 @@ namespace Medicard.Services.Services.Implementations
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task ChangeInstitution(InstitutionViewModel model, int institutionId)
+        public async Task ChangeInstitution(InstitutionViewModel model, int institutionId, bool IsCurrentUserHeadOfThisInstitution = false)
         {
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(institutionId);
 
@@ -175,9 +185,58 @@ namespace Medicard.Services.Services.Implementations
             institution.WorkScheduleWeekdayStart = model.WorkScheduleWeekdayStart;
             institution.ContactNumber = model.ContactNumber;
 
+            if (IsCurrentUserHeadOfThisInstitution == false)
+            {
+                institution.HeadDoctor = null;
+
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(model.HeadDoctorId);
+
+                if (currentHeadDoctor != null)
+                {
+                    institution.HeadDoctor = currentHeadDoctor;
+                }
+            }
+            else
+            {
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
+                institution.HeadDoctor = currentHeadDoctor;
+            }
+
             _unitOfWork.GenericRepository<Institution>().Update(institution);
 
             await _unitOfWork.SaveAsync();
+        }
+
+        public void CommissionHeadDoctor(int? headDoctorId, int institutionId)
+        {
+            var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(headDoctorId);
+            currentHeadDoctor.InstitutionId = institutionId;
+
+            _unitOfWork.GenericRepository<HeadDoctor>().Update(currentHeadDoctor);
+            _unitOfWork.Save();
+
+            var currentDoctor = _unitOfWork.GenericRepository<Doctor>().GetById(currentHeadDoctor.DoctorId);
+
+            currentDoctor.InstitutionId = institutionId;
+            _unitOfWork.GenericRepository<Doctor>().Update(currentDoctor);
+            _unitOfWork.Save();
+        }
+
+        public async void DegradeHeadDoctor(int? headDoctorId)
+        {
+            var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(headDoctorId);
+
+            currentHeadDoctor.InstitutionId = null;
+            currentHeadDoctor.Institution = null;
+
+            _unitOfWork.GenericRepository<HeadDoctor>().Update(currentHeadDoctor);
+            _unitOfWork.Save();
+
+            var currentDoctor = _unitOfWork.GenericRepository<Doctor>().GetById(currentHeadDoctor.DoctorId);
+
+            currentDoctor.InstitutionId = null;
+            _unitOfWork.GenericRepository<Doctor>().Update(currentDoctor);
+            _unitOfWork.Save();
         }
     }
 }

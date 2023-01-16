@@ -54,6 +54,7 @@ namespace Medicard.WebUI.Controllers
             var items = doctors.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             ViewData["Specializations"] = doctors.Select(doctor => doctor.Specialization).Distinct();
             PageViewModel pagingInfo = new PageViewModel(count, page, pageSize);
+
             ShowAllDoctorsViewModel viewModel = new ShowAllDoctorsViewModel
             {
                 PagingInfo = pagingInfo,

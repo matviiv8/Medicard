@@ -11,7 +11,11 @@ namespace Medicard.Services.Services.Interfaces
     public interface IInstitutionService
     {
         public IEnumerable<AllInstitutionsViewModel> AllInstitutions();
+
         public InstitutionViewModel GetByIdReturnViewModel(int id);
+
         Task JoinToInstitution(Doctor currentDoctor, int id);
+
+        Institution GetLast();
     }
 }

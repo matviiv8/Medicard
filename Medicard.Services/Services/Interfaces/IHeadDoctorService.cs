@@ -10,5 +10,7 @@ namespace Medicard.Services.Services.Interfaces
     public interface IHeadDoctorService
     {
         public IEnumerable<HeadDoctor> AllHeadDoctors();
+
+        public HeadDoctor GetByUserId(string userId);
     }
 }

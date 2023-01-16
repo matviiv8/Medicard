@@ -8,7 +8,7 @@
 @addTagHelper *, Medicard.WebUI
 
  <div class="container">
-    @if (this.User.IsInRole("Admin") || this.User.IsInRole("Head doctor"))
+    @if (this.User.IsInRole("Admin") || (this.User.IsInRole("Head doctor") && Model.CurrentHeadDoctor.InstitutionId == null))
     {
         <table class="table">
             <thead style="background-color:#e6e6e6">
@@ -98,7 +98,13 @@
                     <a asp-controller="Admin" asp-action="ChangeInstitution" asp-route-id="@institution.Id" class="btn btn-info btn-primary">@Localizer["ChangeInstitution"]</a>
                 </div>
             }
-            @if (this.User.IsInRole("Doctor"))
+            else if (this.User.IsInRole("Head doctor") && Model.CurrentHeadDoctor.InstitutionId == institution.Id)
+            {
+                <div class="col">
+                    <a asp-controller="Admin" asp-action="ChangeInstitution" asp-route-id="@institution.Id" class="btn btn-info btn-primary">@Localizer["ChangeInstitution"]</a>
+                </div>
+            }
+            else if (this.User.IsInRole("Doctor"))
             {
                 <div class="col">
                     <a href="@Url.Action("JoinToInstitution", "Institution", new {id = institution.Id})" onclick = "return confirm('@Localizer["AgreeToJoin"]');" class="btn btn-info btn-primary">@Localizer["JoinToInstitution"]</a>

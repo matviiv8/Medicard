@@ -53,13 +53,16 @@
                 <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="HeadDoctorId"></label>
-                <select asp-for="HeadDoctorId" asp-items="ViewBag.ListHeadDoctors">
-                    <option value="">NoHeadDoctor</option>
-                </select> 
-                <input type="hidden" asp-for="HeadDoctorId" /> 
-            </div>
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="HeadDoctorId"></label>
+                    <select asp-for="HeadDoctorId" asp-items="ViewBag.ListHeadDoctorsWithoutInstitution">
+                        <option value="">NoHeadDoctor</option>
+                    </select> 
+                    <input type="hidden" asp-for="HeadDoctorId" /> 
+                </div>
+            }
 
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" class="btn btn-success">Create</button>

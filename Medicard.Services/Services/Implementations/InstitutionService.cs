@@ -75,5 +75,10 @@ namespace Medicard.Services.Services.Implementations
             _unitOfWork.GenericRepository<Doctor>().Update(currentDoctor);
             await _unitOfWork.SaveAsync();
         }
+
+        public Institution GetLast()
+        {
+            return _unitOfWork.GenericRepository<Institution>().GetAll().LastOrDefault();
+        }
     }
 }

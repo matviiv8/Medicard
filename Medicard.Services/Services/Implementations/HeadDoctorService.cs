@@ -22,5 +22,11 @@ namespace Medicard.Services.Services.Implementations
         {
             return _unitOfWork.GenericRepository<HeadDoctor>().GetAll();
         }
+
+        public HeadDoctor GetByUserId(string userId)
+        {
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == userId).FirstOrDefault();
+            return AllHeadDoctors().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
+        }
     }
 }

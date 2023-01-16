@@ -63,9 +63,9 @@ namespace Medicard.WebUI.Controllers
 
         public IActionResult CreateInstitution()
         {
-            var allHeadDoctors = _headDoctorService.AllHeadDoctors();
+            var allHeadDoctorsWithoutInstitution = _headDoctorService.AllHeadDoctors().Where(headDoctor => headDoctor.InstitutionId == null);
 
-            ViewBag.ListHeadDoctors = CompletingListOfHeadDoctors(allHeadDoctors);
+            ViewBag.ListHeadDoctorsWithoutInstitution = CompletingListOfHeadDoctors(allHeadDoctorsWithoutInstitution);
 
             return this.View();
         }
@@ -78,7 +78,27 @@ namespace Medicard.WebUI.Controllers
                 return this.BadRequest();
             }
 
-            await this._adminService.CreateInstitution(model);
+            if (this.User.IsInRole("Admin"))
+            {
+                await this._adminService.CreateInstitution(model);
+
+                if (model.HeadDoctorId != null)
+                {
+                    var institution = _institutionService.GetLast();
+                    this._adminService.CommissionHeadDoctor(model.HeadDoctorId, institution.Id);
+                }
+            }
+            else
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var headDoctor = _headDoctorService.GetByUserId(userId);
+
+                await this._adminService.CreateInstitution(model, userId);
+
+                var institution = _institutionService.GetLast();
+                this._adminService.CommissionHeadDoctor(headDoctor.Id, institution.Id);
+            }
+
 
             return this.RedirectToAction("AllInstitutions", "Institution");
         }
@@ -93,6 +113,16 @@ namespace Medicard.WebUI.Controllers
         public IActionResult ChangeInstitution(int id)
         {
             var institution = _institutionService.GetByIdReturnViewModel(id);
+            var allHeadDoctorsWithoutInstitution = _headDoctorService.AllHeadDoctors().Where(headDoctor => headDoctor.InstitutionId == null);
+            var currentHeadDoctor = _headDoctorService.AllHeadDoctors().Where(headDoctor => headDoctor.InstitutionId == id).FirstOrDefault();
+
+            ViewBag.ListHeadDoctorsWithoutInstitution = CompletingListOfHeadDoctors(allHeadDoctorsWithoutInstitution);
+
+            if (this.User.IsInRole("Admin") && currentHeadDoctor != null)
+            {
+                this._adminService.DegradeHeadDoctor(currentHeadDoctor.Id);
+            }
+
             return this.View(institution);
         }
 
@@ -104,7 +134,20 @@ namespace Medicard.WebUI.Controllers
                 return this.BadRequest();
             }
 
-            await this._adminService.ChangeInstitution(model, id);
+
+            if (this.User.IsInRole("Admin"))
+            {
+                await this._adminService.ChangeInstitution(model, id);
+
+                if (model.HeadDoctorId != null)
+                {
+                    this._adminService.CommissionHeadDoctor(model.HeadDoctorId, id);
+                }
+            }
+            else
+            {
+                await this._adminService.ChangeInstitution(model, id, true);
+            }
 
             return this.RedirectToAction("AllInstitutions", "Institution");
         }
