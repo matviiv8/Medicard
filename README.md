@@ -17,14 +17,24 @@
     * Can make changes to the profile;
     * Online chat with a doctor;
     * Can appoint a family doctor
+    
 * Doctor:
     * Their profile is created beforehand by the admin with username and password;
     * After log in doctors have to complete their profile (Upload picture, write biography);
     * Has access to the list of patients;
     * Can appoint an institution;
+  
+* Head doctor:
+    * Сreate of an institution (this doctor immediately becomes its head);
+    * Сhange only your institution;
+    * All the functions of a regular doctor;
     
 * Admin:
     * Create doctors;
-    * Create Institutions;
+    * Create head doctors;
+    * Create institutions;
     * Delete doctors;
+    * Delete head doctors;
     * Delete institutions;
+    * Change institutions;
+    * See statistics of the number of users by role (diagram);
