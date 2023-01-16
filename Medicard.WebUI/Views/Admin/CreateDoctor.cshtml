@@ -55,6 +55,15 @@
                 <option>Select Gender</option>
             </select>
             </div>
+            
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="IsHeadDoctor" class="form-check-label"></label>
+                    <input asp-for="IsHeadDoctor" class="form-check-input" type="checkbox">
+                    <span asp-validation-for="IsHeadDoctor" class="text-danger"></span>
+                </div>
+            }
 
             <div class="button-holder d-flex justify-content-center">
                 <button type="submit" class="btn btn-success">Create</button>

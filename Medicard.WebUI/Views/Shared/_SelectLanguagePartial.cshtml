@@ -12,14 +12,13 @@
         .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
         .ToList();
 }
+
  <ul class="navbar-nav">
-    <li class="nav-item">
-        <form asp-controller="Home" asp-action="SetLanguage"
-              asp-route-returnUrl="@Context.Request.Path"
-              method="post" class="form-horizontal">
-            @Localizer["Language"]: <select name="culture" onchange="this.form.submit();"
-                                            asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                                            asp-items="cultureItems"></select>
-        </form>
-    </li>
+    <form method="post" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path">
+        <li class="nav-item">
+            <select name="culture" onchange="this.form.submit();"
+                    asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                    asp-items="cultureItems"  style="border:none;background-color:#01ABC2"></select>
+        </li>
+    </form>
 </ul>

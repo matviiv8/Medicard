@@ -70,16 +70,16 @@ namespace Medicard.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Schedules",
+                name: "Schedule",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.PrimaryKey("PK_Schedule", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,9 +244,9 @@ namespace Medicard.Domain.Migrations
                         principalTable: "Institution",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Doctor_Schedules_ScheduleId",
+                        name: "FK_Doctor_Schedule_ScheduleId",
                         column: x => x.ScheduleId,
-                        principalTable: "Schedules",
+                        principalTable: "Schedule",
                         principalColumn: "Id");
                 });
 
@@ -263,11 +263,36 @@ namespace Medicard.Domain.Migrations
                 {
                     table.PrimaryKey("PK_Work hour", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Work hour_Schedules_ScheduleId",
+                        name: "FK_Work hour_Schedule_ScheduleId",
                         column: x => x.ScheduleId,
-                        principalTable: "Schedules",
+                        principalTable: "Schedule",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HeadDoctor",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    InstitutionId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HeadDoctor", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HeadDoctor_Doctor_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HeadDoctor_Institution_InstitutionId",
+                        column: x => x.InstitutionId,
+                        principalTable: "Institution",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -377,9 +402,10 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "85ae9685-e1c2-4975-be14-df9a056ae1b6", "b070da29-0ccb-40c5-b183-4bbd1ff61688", "Patient", "PATIENT" },
-                    { "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9", "ba2e07dd-45c8-4141-9f80-c53d8865d56c", "Doctor", "DOCTOR" },
-                    { "b945c42c-c72e-4625-b722-56c83e47884a", "6a50c818-9bb4-42d8-a078-ae544a2c1558", "Admin", "ADMIN" }
+                    { "317cd89b-5831-4f19-b977-4ffeb5811bec", "1f358310-ffa2-45a2-a215-414eb4c84904", "Head doctor", "HEAD DOCTOR" },
+                    { "35036dce-8cbb-4479-ad50-070650712e3a", "08419f62-aeec-4d66-bd49-f5059ed16fb7", "Patient", "PATIENT" },
+                    { "75931f8a-7142-40ac-9668-54409f0e9ee0", "97656ca0-0617-4f61-8521-d2ccd5fc7ab1", "Admin", "ADMIN" },
+                    { "f0ab67c8-512d-4aaf-902f-82655d6ae584", "e86adb5a-eba2-4fe7-b7d4-d553484c3c91", "Doctor", "DOCTOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -387,28 +413,24 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "12e57149-5954-4f92-9fb6-898ee5363812", 0, "c50ead1a-33eb-4cb9-902e-4b9c1797540b", "mariakoval@gmail.com", false, "Maria", "Koval", false, null, "MARIAKOVAL@GMAIL.COM", "MARIAKOVAL@GMAIL.COM", "AQAAAAEAACcQAAAAEFo+r/vHb0L8hG8hVd04qcsNWHHT7Ii8XGgAU8hZMYKrsg/rvUu9ZmmohZmZhtfWDQ==", null, false, "10b6454b-889c-4034-949f-b639bb0826f8", false, "mariakoval@gmail.com" },
-                    { "de42de78-fb97-4bc7-a4b0-7729c0e267ac", 0, "07f187dd-c5e0-4eb3-8b25-b62039d2b29c", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, "MATVIIVANDRIJ13@GMAIL.COM", "MATVIIVANDRIJ13@GMAIL.COM", "AQAAAAEAACcQAAAAEGFUjlkmHa2rGPN6gSA62kNS4QTyJEJSfuOcNdcrMm7mWab99uBcBz4yRXhWAiY5OQ==", null, false, "4538607a-de5f-420c-9fd5-546289059209", false, "matviivandrij13@gmail.com" },
-                    { "ed38cfa2-9725-4d24-9079-d04980cdd3db", 0, "93fd4d8a-fdaf-49c0-b9a0-1468eb795fb8", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, "PETROGRINKOV@GMAIL.COM", "PETROGRINKOV@GMAIL.COM", "AQAAAAEAACcQAAAAEI8XVwhbMlLh+mwsDkEfS6QKXVVTGMfWggw7LaZNFimbwNe0fo+bSW2hkkgrCX9cHg==", null, false, "33d42abc-dbb3-4829-a85d-0544021ba267", false, "petrogrinkiv@gmail.com" }
+                    { "102267aa-5cc0-4790-82f1-6bb1c4e21d32", 0, "d02945ce-50d7-44da-abfa-f897122af172", "petrogrinkiv@gmail.com", false, "Petro", "Grinkiv", false, null, "PETROGRINKOV@GMAIL.COM", "PETROGRINKOV@GMAIL.COM", "AQAAAAEAACcQAAAAEPQlZcji91p7ERyrKPtAG1pqVv7zlM90VB20jdfPNZy86y23Yu8KgQFRAJq9rZ3qcQ==", null, false, "896bc8a6-87a1-45a8-bd25-87f4a976360f", false, "petrogrinkiv@gmail.com" },
+                    { "26818c84-63e6-44c7-8038-91b43daf3c02", 0, "737b4271-aa05-410b-a588-7a115f6e90c2", "mariakoval@gmail.com", false, "Maria", "Koval", false, null, "MARIAKOVAL@GMAIL.COM", "MARIAKOVAL@GMAIL.COM", "AQAAAAEAACcQAAAAEPX/iLrzr17qNy7+LCOmf4eefF9/RfVLdD9YuP/IyItjAXq078maHcm0VK+UPHo3Ig==", null, false, "cc7ca7fe-0d75-41ae-9e9e-d851fa29623d", false, "mariakoval@gmail.com" },
+                    { "f27b54f3-d7b6-46d7-a75a-7789fb2ca70f", 0, "a06e04f9-63c8-4f46-854a-fdd8091fde17", "matviivandrij13@gmail.com", false, "Andrij", "Matviiv", false, null, "MATVIIVANDRIJ13@GMAIL.COM", "MATVIIVANDRIJ13@GMAIL.COM", "AQAAAAEAACcQAAAAEERSJNSZq/VlWqgfKUy6+EXzuGJD2xzOjTmwYmAVOmE+BBvQRXQeMkW6gUOknn7cnQ==", null, false, "19d665bd-bbc1-42bc-b491-a30b012605d1", false, "matviivandrij13@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
-                table: "Schedules",
+                table: "Schedule",
                 columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "First shift" },
-                    { 2, "Second shift" }
-                });
+                values: new object[] { 1, "Shift" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9", "12e57149-5954-4f92-9fb6-898ee5363812" },
-                    { "b945c42c-c72e-4625-b722-56c83e47884a", "de42de78-fb97-4bc7-a4b0-7729c0e267ac" },
-                    { "8df78b4b-84f0-4c3f-ae83-d599a4ecc3b9", "ed38cfa2-9725-4d24-9079-d04980cdd3db" }
+                    { "f0ab67c8-512d-4aaf-902f-82655d6ae584", "102267aa-5cc0-4790-82f1-6bb1c4e21d32" },
+                    { "f0ab67c8-512d-4aaf-902f-82655d6ae584", "26818c84-63e6-44c7-8038-91b43daf3c02" },
+                    { "75931f8a-7142-40ac-9668-54409f0e9ee0", "f27b54f3-d7b6-46d7-a75a-7789fb2ca70f" }
                 });
 
             migrationBuilder.InsertData(
@@ -416,8 +438,8 @@ namespace Medicard.Domain.Migrations
                 columns: new[] { "Id", "Age", "ContactNumber", "DoctorPicture", "FirstName", "Gender", "InstitutionId", "LastName", "ScheduleId", "Specialization", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 0, null, "menunknowndoctor.jpeg", "Petro", 1, null, "Grinkiv", null, "Therapist", "ed38cfa2-9725-4d24-9079-d04980cdd3db" },
-                    { 2, 0, null, "womenunknowndoctor.jpeg", "Maria", 2, null, "Koval", null, "Pediatrician", "12e57149-5954-4f92-9fb6-898ee5363812" }
+                    { 1, 0, null, "menunknowndoctor.jpeg", "Petro", 1, null, "Grinkiv", null, "Therapist", "102267aa-5cc0-4790-82f1-6bb1c4e21d32" },
+                    { 2, 0, null, "womenunknowndoctor.jpeg", "Maria", 2, null, "Koval", null, "Pediatrician", "26818c84-63e6-44c7-8038-91b43daf3c02" }
                 });
 
             migrationBuilder.InsertData(
@@ -433,17 +455,17 @@ namespace Medicard.Domain.Migrations
                     { 6, "10:30", 1 },
                     { 7, "11:00", 1 },
                     { 8, "11:30", 1 },
-                    { 9, "13:00", 2 },
-                    { 10, "13:30", 2 },
-                    { 11, "14:00", 2 },
-                    { 12, "14:30", 2 },
-                    { 13, "15:00", 2 },
-                    { 14, "15:30", 2 },
-                    { 15, "16:00", 2 },
-                    { 16, "16:30", 2 },
-                    { 17, "17:00", 2 },
-                    { 18, "17:30", 2 },
-                    { 19, "18:00", 2 }
+                    { 9, "13:00", 1 },
+                    { 10, "13:30", 1 },
+                    { 11, "14:00", 1 },
+                    { 12, "14:30", 1 },
+                    { 13, "15:00", 1 },
+                    { 14, "15:30", 1 },
+                    { 15, "16:00", 1 },
+                    { 16, "16:30", 1 },
+                    { 17, "17:00", 1 },
+                    { 18, "17:30", 1 },
+                    { 19, "18:00", 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -517,6 +539,25 @@ namespace Medicard.Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HeadDoctor_DoctorId",
+                table: "HeadDoctor",
+                column: "DoctorId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HeadDoctor_Id",
+                table: "HeadDoctor",
+                column: "Id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HeadDoctor_InstitutionId",
+                table: "HeadDoctor",
+                column: "InstitutionId",
+                unique: true,
+                filter: "[InstitutionId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Message_UserId",
                 table: "Message",
                 column: "UserId");
@@ -538,8 +579,8 @@ namespace Medicard.Domain.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Schedules_Id",
-                table: "Schedules",
+                name: "IX_Schedule_Id",
+                table: "Schedule",
                 column: "Id",
                 unique: true);
 
@@ -570,6 +611,9 @@ namespace Medicard.Domain.Migrations
                 name: "Diagnosis");
 
             migrationBuilder.DropTable(
+                name: "HeadDoctor");
+
+            migrationBuilder.DropTable(
                 name: "Message");
 
             migrationBuilder.DropTable(
@@ -597,7 +641,7 @@ namespace Medicard.Domain.Migrations
                 name: "Institution");
 
             migrationBuilder.DropTable(
-                name: "Schedules");
+                name: "Schedule");
         }
     }
 }

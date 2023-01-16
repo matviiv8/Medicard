@@ -1,6 +1,6 @@
-﻿
-using Medicard.Domain.Astract;
+﻿using Medicard.Domain.Astract;
 using Medicard.Domain.Entities;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Institution;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Implementations
 {
     public class InstitutionService : IInstitutionService
     {
@@ -16,7 +16,7 @@ namespace Medicard.Services.Services
 
         public InstitutionService(IUnitOfWork unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<AllInstitutionsViewModel> AllInstitutions()
@@ -29,7 +29,7 @@ namespace Medicard.Services.Services
                 var data = response.Content.ReadAsAsync<List<Institution>>().Result;
                 foreach (var institution in data)
                 {
-                    institutions.Add(new AllInstitutionsViewModel
+                    var currentInstitution = new AllInstitutionsViewModel
                     {
                         Id = institution.Id,
                         Name = institution.Name,
@@ -39,7 +39,15 @@ namespace Medicard.Services.Services
                         WorkScheduleWeekdayStart = institution.WorkScheduleWeekdayStart,
                         WorkScheduleWeekendEnd = institution.WorkScheduleWeekendEnd,
                         ContactNumber = institution.ContactNumber,
-                    });
+                    };
+                    var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
+                    
+                    if (currentHeadDoctor != null)
+                    {
+                        currentInstitution.HeadDoctorFullName = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.Id == currentHeadDoctor.DoctorId).FirstOrDefault().ToString();
+                    }
+
+                    institutions.Add(currentInstitution);
                 }
             }
             return institutions;
@@ -66,6 +74,11 @@ namespace Medicard.Services.Services
             currentDoctor.InstitutionId = id;
             _unitOfWork.GenericRepository<Doctor>().Update(currentDoctor);
             await _unitOfWork.SaveAsync();
+        }
+
+        public Institution GetLast()
+        {
+            return _unitOfWork.GenericRepository<Institution>().GetAll().LastOrDefault();
         }
     }
 }

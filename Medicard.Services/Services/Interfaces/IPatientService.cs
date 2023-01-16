@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Interfaces
 {
     public interface IPatientService
     {

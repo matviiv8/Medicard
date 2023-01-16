@@ -6,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Interfaces
 {
     public interface IInstitutionService
     {
         public IEnumerable<AllInstitutionsViewModel> AllInstitutions();
+
         public InstitutionViewModel GetByIdReturnViewModel(int id);
+
         Task JoinToInstitution(Doctor currentDoctor, int id);
+
+        Institution GetLast();
     }
 }

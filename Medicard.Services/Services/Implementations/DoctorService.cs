@@ -13,8 +13,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Medicard.WebAPI.Controllers;
+using Medicard.Services.Services.Interfaces;
 
-namespace Medicard.Services.Services
+namespace Medicard.Services.Services.Implementations
 {
     public class DoctorService : IDoctorService
     {
@@ -22,8 +23,8 @@ namespace Medicard.Services.Services
         private readonly IWebHostEnvironment _webHostEnvironment;
         public DoctorService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
-            this._unitOfWork = unitOfWork;
-            this._webHostEnvironment = webHostEnvironment;
+            _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<AllDoctorsViewModel> AllDoctors()
@@ -40,7 +41,7 @@ namespace Medicard.Services.Services
                     var currentDoctor = new AllDoctorsViewModel
                     {
                         Id = doctor.UserId,
-                        FullName = doctor.FirstName + " " + doctor.LastName,
+                        FullName = doctor.ToString(),
                         Specialization = doctor.Specialization,
                         ContactNumber = doctor.ContactNumber,
                         Gender = doctor.Gender,
@@ -48,7 +49,14 @@ namespace Medicard.Services.Services
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
                     };
 
-                    if(doctor.InstitutionId != null)
+                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
+
+                    if (headDoctor != null)
+                    {
+                        currentDoctor.IsHeadDoctor = true;
+                    }
+
+                    if (doctor.InstitutionId != null)
                     {
                         currentDoctor.Institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId).Name;
                     }
@@ -61,7 +69,7 @@ namespace Medicard.Services.Services
 
         public async Task ChangeDoctor(DoctorProfileViewModel model, string userId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(doctor => doctor.UserId == userId); 
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(doctor => doctor.UserId == userId);
 
             doctor.FirstName = model.FirstName;
             doctor.LastName = model.LastName;
@@ -117,7 +125,7 @@ namespace Medicard.Services.Services
                 PictureName = doctor.DoctorPicture,
             };
 
-            if(doctor.Institution != null)
+            if (doctor.Institution != null)
             {
                 doctorInfo.Institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId).Name;
             }

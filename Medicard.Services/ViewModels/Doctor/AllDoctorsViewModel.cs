@@ -20,5 +20,7 @@ namespace Medicard.Services.ViewModels.Doctor
         public string UserName { get; set; }
 
         public string Institution { get; set; }
+
+        public bool IsHeadDoctor { get; set; } = false;
     }
 }

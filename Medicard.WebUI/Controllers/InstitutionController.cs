@@ -1,4 +1,4 @@
-﻿using Medicard.Services.Services;
+﻿using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Institution;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,11 +11,13 @@ namespace Medicard.WebUI.Controllers
     {
         private readonly IInstitutionService _institutionService;
         private readonly IDoctorService _doctorService;
+        private readonly IHeadDoctorService _headDoctorService;
 
-        public InstitutionController(IInstitutionService institutionService, IDoctorService doctorService)
+        public InstitutionController(IInstitutionService institutionService, IDoctorService doctorService, IHeadDoctorService headDoctorService)
         {
-            _institutionService = institutionService;
-            _doctorService = doctorService;
+            this._institutionService = institutionService;
+            this._doctorService = doctorService;
+            this._headDoctorService = headDoctorService;
         }
 
         public IActionResult AllInstitutions(string search, int page = 1)
@@ -39,6 +41,14 @@ namespace Medicard.WebUI.Controllers
                 PagingInfo = pagingInfo,
                 AllInstitutions = items,
             };
+
+            if(this.User.IsInRole("Head doctor"))
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var headDoctor = _headDoctorService.GetByUserId(userId);
+
+                viewModel.CurrentHeadDoctor = headDoctor;
+            }
 
             return View(viewModel);
         }

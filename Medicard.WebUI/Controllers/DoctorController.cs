@@ -1,7 +1,7 @@
 ﻿using Medicard.Domain.Astract.Repositories;
 using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Doctor;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -54,6 +54,7 @@ namespace Medicard.WebUI.Controllers
             var items = doctors.Skip((page - 1) * pageSize).Take(pageSize).ToList();
             ViewData["Specializations"] = doctors.Select(doctor => doctor.Specialization).Distinct();
             PageViewModel pagingInfo = new PageViewModel(count, page, pageSize);
+
             ShowAllDoctorsViewModel viewModel = new ShowAllDoctorsViewModel
             {
                 PagingInfo = pagingInfo,
@@ -65,7 +66,6 @@ namespace Medicard.WebUI.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "Doctor")]
         public IActionResult ViewProfile()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -75,7 +75,6 @@ namespace Medicard.WebUI.Controllers
             return this.View(patient);
         }
 
-        [Authorize(Roles = "Doctor")]
         public async Task<IActionResult> ChangeProfile(string id)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -85,7 +84,6 @@ namespace Medicard.WebUI.Controllers
             return this.View(doctor);
         }
 
-        [Authorize(Roles = "Doctor")]
         [HttpPost]
         public async Task<IActionResult> ChangeProfile(DoctorProfileViewModel model)
         {

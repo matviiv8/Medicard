@@ -36,5 +36,10 @@ namespace Medicard.Domain.Entities
         public Doctor? Doctor { get; set; }
 
         public List<Appointment>? Appointments { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
     }
 }

@@ -4,7 +4,7 @@ using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Medicard.Domain.Entities;
-using Medicard.Services.Services;
+using Medicard.Services.Services.Interfaces;
 using Medicard.Services.ViewModels.Appointment;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
@@ -70,9 +70,7 @@ namespace Medicard.WebUI.Controllers
         public async Task<IActionResult> AllAppointments()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var allAppointments = _appointmentService.GetAllAppointments()
-                .OrderBy(appointment => DateTime.Parse(appointment.Date)).ThenBy(appointment => DateTime.Parse(appointment.Time));
-
+            var allAppointments = _appointmentService.GetAllAppointments();
             if (this.User.IsInRole("Patient"))
             {
                 return View(new ShowAllUserAppointmentsViewModel

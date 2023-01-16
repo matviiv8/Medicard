@@ -31,6 +31,8 @@ namespace Medicard.Services.ViewModels.Admin
         [Required]
         public Gender Gender { get; set; }
 
+        public bool IsHeadDoctor { get; set; } = false;
+
         public string? Specialization { get; set; }
 
         public string? ContactNumber { get; set; }

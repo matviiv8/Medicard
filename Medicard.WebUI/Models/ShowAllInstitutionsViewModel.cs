@@ -7,5 +7,7 @@ namespace Medicard.WebUI.Models
         public IEnumerable<AllInstitutionsViewModel> AllInstitutions { get; set; }
 
         public PageViewModel PagingInfo { get; set; }
+
+        public Medicard.Domain.Entities.HeadDoctor CurrentHeadDoctor { get; set; }
     }
 }

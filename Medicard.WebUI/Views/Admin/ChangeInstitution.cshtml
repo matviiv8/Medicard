@@ -47,6 +47,17 @@
                 <input asp-for="ContactNumber" type="text" class="form-control" placeholder="+3808888888888">
                 <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
+            
+            @if (this.User.IsInRole("Admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="HeadDoctorId"></label>
+                    <select asp-for="HeadDoctorId" asp-items="ViewBag.ListHeadDoctorsWithoutInstitution">
+                        <option value="">NoHeadDoctor</option>
+                    </select> 
+                    <input type="hidden" asp-for="HeadDoctorId" /> 
+                </div>
+            }
 
             <input class="btn mt-3 text-center" style="background-color:#01ABC2" type="submit" value=@Localizer["Change"] />
         </form>
