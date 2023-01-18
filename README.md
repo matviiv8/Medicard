@@ -45,8 +45,8 @@
 
 #### The project includes:
 
-    - UA, EN and DE localization;
-    - Online chat implemented using SignalR;
-    - External authentication with Google;
-    - Highcharts pie chart;
+    * UA, EN and DE localization;
+    * Online chat implemented using SignalR;
+    * External authentication with Google;
+    * Highcharts pie chart;
     
