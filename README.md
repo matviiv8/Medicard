@@ -43,10 +43,10 @@
     * Change institutions;
     * See statistics of the number of users by role (diagram);
 
-- The project includes:
+The project includes:
 
-    * UA, EN and DE localization;
-    * Online chat implemented using SignalR;
-    * External authentication with Google;
-    * Highcharts pie chart;
+1) UA, EN and DE localization;
+2) Online chat implemented using SignalR;
+3) External authentication with Google;
+4) Highcharts pie chart;
     
