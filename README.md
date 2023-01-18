@@ -42,3 +42,11 @@
     * Delete institutions;
     * Change institutions;
     * See statistics of the number of users by role (diagram);
+
+#### The project includes:
+
+    - UA, EN and DE localization;
+    - Online chat implemented using SignalR;
+    - External authentication with Google;
+    - Highcharts pie chart;
+    
