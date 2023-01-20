@@ -53,7 +53,7 @@ namespace Medicard.WebUI.Controllers
             return this.RedirectToAction("ViewProfile", "Patient");
         }
 
-        [Authorize(Roles = "Doctor, Admin")]
+        [Authorize(Roles = "Doctor, Head doctor")]
         public IActionResult AllPatients(string search, int page = 1)
         {
             ViewData["CurrentFilter"] = search;

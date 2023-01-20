@@ -6,8 +6,9 @@
 @model LoginViewModel;
 
 @{
-    ViewBag.Title = "User Login";
+     ViewData["Title"] = "Login";
 }
+
 <div class="container mt-5">
     <div class="row">
         <div class="offset-lg-4 offset-sm-2 col-sm-8 col-lg-4">
@@ -40,7 +41,7 @@
                                 <span asp-validation-for="Password" class="text-danger mt-2"></span>
                                 <div class="row">
                                     <div class="col-4 offset-4 mt-3">
-                                        <button type="submit" class="btn mt-3 text-center" style="background-color:#01ABC2">Log in</button>
+                                        <button type="submit" class="btn mt-3 text-center text-white" style="background-color:#01ABC2">Log in</button>
                                     </div>
                                 </div>
                             </form>

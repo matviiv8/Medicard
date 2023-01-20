@@ -8,6 +8,10 @@
 
 @addTagHelper *, Medicard.WebUI
 
+@{
+     ViewData["Title"] = "Doctors";
+}
+
     <div class="container">
         @if (this.User.IsInRole("Admin") || this.User.IsInRole("Head doctor"))
         {
@@ -100,7 +104,7 @@ else{
                                     {
                                         @if (doctor.IsHeadDoctor == true)
                                         {
-                                            <td style="border-bottom: 1px solid #ffffff;">Head of the @doctor.Institution</td>
+                                            <td style="border-bottom: 1px solid #ffffff;">@Localizer["HeadOfThe"] @doctor.Institution</td>
                                         }
                                         else
                                         {
