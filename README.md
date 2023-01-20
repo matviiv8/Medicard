@@ -50,6 +50,6 @@ The project includes:
 3) External authentication with Google;
 4) Highcharts pie chart;
 
-##Screenshot - Home Page
+## Screenshot - Home Page
 
 ![1](https://user-images.githubusercontent.com/73823120/213707258-81c32433-de6e-46e8-abd0-889337a01299.png)
