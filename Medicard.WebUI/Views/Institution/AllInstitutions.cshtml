@@ -7,6 +7,10 @@
 
 @addTagHelper *, Medicard.WebUI
 
+@{
+     ViewData["Title"] = "Institutions";
+}
+
  <div class="container">
     @if (this.User.IsInRole("Admin") || (this.User.IsInRole("Head doctor") && Model.CurrentHeadDoctor.InstitutionId == null))
     {

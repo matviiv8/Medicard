@@ -4,69 +4,29 @@
 @inject IViewLocalizer Localizer
 
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="AllDoctors">@Localizer["LinkToViewAllDoctors"]</a>
+    <a class="nav-link text-white" asp-area="" asp-controller="Doctor" asp-action="AllDoctors"><i class="fas fa-user-md"></i> @Localizer["LinkToViewAllDoctors"]</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Institution" asp-action="AllInstitutions">@Localizer["LinkToViewAllInstitutions"]</a>
+    <a class="nav-link text-white" asp-area="" asp-controller="Institution" asp-action="AllInstitutions"><i class="fas fa-building"></i> @Localizer["LinkToViewAllInstitutions"]</a>
 </li>
 @if (SignInManager.IsSignedIn(this.User))
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Appointment" asp-action="AllAppointments">@Localizer["LinkToViewAllAppointments"]</a>
+        <a class="nav-link text-white" asp-area="" asp-controller="Appointment" asp-action="AllAppointments"><i class="fas fa fa-calendar"></i> @Localizer["LinkToViewAllAppointments"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Private">@Localizer["Chats"]</a>
+        <a class="nav-link text-white" asp-area="" asp-controller="Chat" asp-action="Private"><i class="fas fa-comment"></i> @Localizer["Chats"]</a>
     </li>
+    @if (this.User.IsInRole("Doctor") || this.User.IsInRole("Head doctor"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" asp-controller="Patient" asp-action="AllPatients"><i class="fas fa-head-side-cough"></i> @Localizer["Patients"]</a>
+        </li>
+    }
+    @if (this.User.IsInRole("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-white" asp-area="" asp-controller="Admin" asp-action="Statistics"><i class="fas fa-percent"></i> @Localizer["Statistics"]</a>
+        </li>
+    }
 }
-@if (this.User.IsInRole("Doctor"))
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="AllPatients">@Localizer["Patients"]</a>
-    </li>
-}
-@if (this.User.IsInRole("Admin"))
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Statistics">@Localizer["Statistics"]</a>
-    </li>
-}
-<li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            @Localizer["Profile"]
-        </a>
-        <ul class="dropdown-menu">
-        @if (SignInManager.IsSignedIn(this.User))
-        {
-            @if (this.User.IsInRole("Patient"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="ViewProfile">@Localizer["ViewProfile"]</a>
-                </li>
-            }
-            else if (this.User.IsInRole("Doctor") || this.User.IsInRole("Head doctor"))
-            {
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="ViewProfile">@Localizer["ViewProfile"]</a>
-                </li>
-            }
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangePassword">@Localizer["ChangePassword"]</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="DeletePersonalData">@Localizer["DeletePersonalData"]</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</a>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a>
-            </li>
-        }
-    </ul>
-</li>

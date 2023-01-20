@@ -135,6 +135,9 @@
   <data name="FindByName" xml:space="preserve">
     <value>Find by firstname or lastname:</value>
   </data>
+  <data name="HeadOfThe" xml:space="preserve">
+    <value>Head of the</value>
+  </data>
   <data name="MakeAppointment" xml:space="preserve">
     <value>Make an appointment</value>
   </data>

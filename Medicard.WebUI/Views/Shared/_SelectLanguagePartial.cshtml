@@ -9,16 +9,17 @@
 @{
     var requestCulture = Context.Features.Get<IRequestCultureFeature>();
     var cultureItems = LocOptions.Value.SupportedUICultures
-        .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.Name })
         .ToList();
 }
 
  <ul class="navbar-nav">
     <form method="post" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path">
         <li class="nav-item">
+                    <i class="fa fa-globe" style="color:white"></i>
             <select name="culture" onchange="this.form.submit();"
                     asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                    asp-items="cultureItems"  style="border:none;background-color:#01ABC2"></select>
+                    asp-items="cultureItems"  style="border:none;background-color:#01ABC2;color:white;"></select>
         </li>
     </form>
 </ul>

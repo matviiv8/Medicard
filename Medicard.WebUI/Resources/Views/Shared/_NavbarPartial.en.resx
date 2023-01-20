@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ChangePassword" xml:space="preserve">
-    <value>Change password</value>
-  </data>
   <data name="Chats" xml:space="preserve">
     <value>Messages</value>
-  </data>
-  <data name="DeletePersonalData" xml:space="preserve">
-    <value>Delete personal data</value>
   </data>
   <data name="LinkToViewAllAppointments" xml:space="preserve">
     <value>Records</value>
@@ -135,25 +129,10 @@
   <data name="LinkToViewAllInstitutions" xml:space="preserve">
     <value>Institutions</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Log in</value>
-  </data>
-  <data name="Logout" xml:space="preserve">
-    <value>Log out</value>
-  </data>
   <data name="Patients" xml:space="preserve">
     <value>Patients</value>
   </data>
-  <data name="Profile" xml:space="preserve">
-    <value>Profile</value>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>Sign up</value>
-  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Statistics</value>
-  </data>
-  <data name="ViewProfile" xml:space="preserve">
-    <value>View profile</value>
   </data>
 </root>

@@ -135,6 +135,9 @@
   <data name="FindByName" xml:space="preserve">
     <value>Знайти за прізвищем або ім'ям:</value>
   </data>
+  <data name="HeadOfThe" xml:space="preserve">
+    <value>Керівник в</value>
+  </data>
   <data name="MakeAppointment" xml:space="preserve">
     <value>Записатися на прийом</value>
   </data>

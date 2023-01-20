@@ -26,10 +26,11 @@ namespace Medicard.WebUI.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User);
             var isCurrentRoleDoctor = await _userManager.IsInRoleAsync(currentUser, "Doctor");
+            var isCurrentRoleHeadDoctor = await _userManager.IsInRoleAsync(currentUser, "Head doctor");
             var isCurrentRoleAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
             var allUsers = new List<User>();
 
-            if(isCurrentRoleDoctor || isCurrentRoleAdmin)
+            if (isCurrentRoleDoctor || isCurrentRoleAdmin || isCurrentRoleHeadDoctor)
             {
                 allUsers = _context.Users.Where(u => u.UserName != currentUser.UserName).ToList();
             }

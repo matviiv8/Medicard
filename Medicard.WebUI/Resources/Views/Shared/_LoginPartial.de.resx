@@ -117,25 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Chats" xml:space="preserve">
-    <value>Повідомлення</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Passwort ändern</value>
   </data>
-  <data name="LinkToViewAllAppointments" xml:space="preserve">
-    <value>Записи</value>
+  <data name="DeletePersonalData" xml:space="preserve">
+    <value>Persönliche Daten löschen</value>
   </data>
-  <data name="LinkToViewAllDoctors" xml:space="preserve">
-    <value>Лікарі</value>
+  <data name="Login" xml:space="preserve">
+    <value>Einloggen</value>
   </data>
-  <data name="LinkToViewAllInstitutions" xml:space="preserve">
-    <value>Заклади</value>
-  </data>
-  <data name="Patients" xml:space="preserve">
-    <value>Пацієнти</value>
+  <data name="Logout" xml:space="preserve">
+    <value>Ausloggen</value>
   </data>
   <data name="Profile" xml:space="preserve">
-    <value>Профіль</value>
+    <value>Profil</value>
   </data>
-  <data name="Statistics" xml:space="preserve">
-    <value>Статистика</value>
+  <data name="Register" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>Seite ansehen</value>
   </data>
 </root>

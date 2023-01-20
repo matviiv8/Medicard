@@ -5,6 +5,10 @@
 
 @addTagHelper *, Medicard.WebUI
 
+@{
+     ViewData["Title"] = "Patients";
+}
+
 <nav class="navbar navbar-light bg-white justify-content-between">
  <div class="container-fluid">
 <form asp-action="AllPatients" method="get" class="d-flex" role="search">
