@@ -15,7 +15,7 @@
         <a class="nav-link text-white" asp-area="" asp-controller="Appointment" asp-action="AllAppointments"><i class="fas fa fa-calendar"></i> @Localizer["LinkToViewAllAppointments"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-white" asp-area="" asp-controller="Chat" asp-action="Private"><i class="fas fa-comment"></i> @Localizer["Chats"]</a>
+        <a class="nav-link text-white" asp-area="" asp-controller="Chat" asp-action="AllChats"><i class="fas fa-comment"></i> @Localizer["Chats"]</a>
     </li>
     @if (this.User.IsInRole("Doctor") || this.User.IsInRole("Head doctor"))
     {

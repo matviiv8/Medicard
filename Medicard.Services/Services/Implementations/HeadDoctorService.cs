@@ -15,7 +15,7 @@ namespace Medicard.Services.Services.Implementations
 
         public HeadDoctorService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            this._unitOfWork = unitOfWork;
         }
 
         public IEnumerable<HeadDoctor> AllHeadDoctors()
@@ -25,7 +25,7 @@ namespace Medicard.Services.Services.Implementations
 
         public HeadDoctor GetByUserId(string userId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == userId).FirstOrDefault();
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == userId).FirstOrDefault();
             return AllHeadDoctors().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
         }
     }

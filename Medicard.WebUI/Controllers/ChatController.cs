@@ -1,5 +1,6 @@
 ﻿using Medicard.Domain.Concrete;
 using Medicard.Domain.Entities;
+using Medicard.Services.Services.Interfaces;
 using Medicard.WebUI.Hubs;
 using Medicard.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
@@ -11,69 +12,57 @@ namespace Medicard.WebUI.Controllers
 {
     public class ChatController : Controller
     {
-        private readonly MedicardDbContext _context;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IChatService _chatService;
 
-        public ChatController(MedicardDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public ChatController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IChatService chatService)
         {
-            _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _chatService = chatService;
         }
 
-        public async Task<IActionResult> Private()
+        public async Task<IActionResult> AllChats(string search, string userName = "")
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var isCurrentRoleDoctor = await _userManager.IsInRoleAsync(currentUser, "Doctor");
-            var isCurrentRoleHeadDoctor = await _userManager.IsInRoleAsync(currentUser, "Head doctor");
-            var isCurrentRoleAdmin = await _userManager.IsInRoleAsync(currentUser, "Admin");
-            var allUsers = new List<User>();
+            var targetUser = await _userManager.FindByNameAsync(userName);
+            var allUsers = await _chatService.GetAllTargetUsersBasedOnRole(currentUser);
 
-            if (isCurrentRoleDoctor || isCurrentRoleAdmin || isCurrentRoleHeadDoctor)
+            ViewData["Search"] = search;
+
+            if (!String.IsNullOrEmpty(search))
             {
-                allUsers = _context.Users.Where(u => u.UserName != currentUser.UserName).ToList();
-            }
-            else
-            {
-                var allDoctors = _context.Doctors.ToList();
-                foreach (var doctor in allDoctors)
-                {
-                    allUsers.Add(_context.Users.Where(u => u.UserName != currentUser.UserName && u.Id == doctor.UserId).First());
-                }
+                allUsers = allUsers
+                    .Where(user => user.ToString().ToLower().Contains(search.ToLower())).ToList();
             }
 
-            return View(allUsers);
+            var chatsViewModel = await _chatService.GetListChats(allUsers, currentUser);
+
+            if(!string.IsNullOrEmpty(userName))
+            {
+                var messages = _chatService.GetAllMessages(currentUser, targetUser);
+
+                ViewBag.Messages = messages;
+                ViewBag.CurrentUser = currentUser;
+                ViewBag.TargetUser = targetUser;
+
+                ViewBag.UserName = userName;
+            }
+
+            return View(chatsViewModel);
         }
 
-        public async Task<IActionResult> PrivateMessage(string user)
+        [HttpPost]
+        public IActionResult SwitchChat(string userName)
         {
-            var current = await _userManager.GetUserAsync(User);
-            var target = await _userManager.FindByNameAsync(user);
-
-            var sentMessages = _context.Messages.Where(m => m.UserName == current.UserName && m.TargetName == target.UserName).ToList();
-            var receivedMessages = _context.Messages.Where(m => m.UserName == target.UserName && m.TargetName == current.UserName).ToList();
-            var messages = sentMessages.Concat(receivedMessages).ToList();
-
-            ViewBag.Messages = messages;
-            ViewBag.CurrentUser = current;
-            ViewBag.TargetUser = target;
-            return View();
+            return this.RedirectToAction("AllChats", new { userName = userName });
         }
 
         public async Task<IActionResult> SendMessage(string Text, [FromServices] IHubContext<ChatHub> chat)
         {
             var sender = await _userManager.GetUserAsync(User);
-            Message message = new Message
-            {
-                Text = Text,
-                UserName = User.Identity.Name,
-                UserId = sender.Id,
-                When = DateTime.Now
-            };
-
-            _context.Messages.Add(message);
-            _context.SaveChanges();
+            var message = _chatService.AddMessage(Text, sender);
 
             await chat.Clients.All.SendAsync("ReceiveMessage", message);
 

@@ -21,10 +21,11 @@ namespace Medicard.Services.Services.Implementations
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+
         public DoctorService(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
-            _unitOfWork = unitOfWork;
-            _webHostEnvironment = webHostEnvironment;
+            this._unitOfWork = unitOfWork;
+            this._webHostEnvironment = webHostEnvironment;
         }
 
         public IEnumerable<AllDoctorsViewModel> AllDoctors()
@@ -49,7 +50,7 @@ namespace Medicard.Services.Services.Implementations
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
                     };
 
-                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
+                    var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
 
                     if (headDoctor != null)
                     {
@@ -69,7 +70,7 @@ namespace Medicard.Services.Services.Implementations
 
         public async Task ChangeDoctor(DoctorProfileViewModel model, string userId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(doctor => doctor.UserId == userId);
+            var doctor = GetByUserId(userId);
 
             doctor.FirstName = model.FirstName;
             doctor.LastName = model.LastName;
@@ -101,7 +102,7 @@ namespace Medicard.Services.Services.Implementations
 
         public Doctor GetByUserId(string userId)
         {
-            return _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
+            return _unitOfWork.GenericRepository<Doctor>().GetAll(user => user.UserId == userId).FirstOrDefault();
         }
 
         public Doctor GetById(int? id)
@@ -111,7 +112,7 @@ namespace Medicard.Services.Services.Implementations
 
         public DoctorProfileViewModel ViewProfile(string userId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == userId);
+            var doctor = GetByUserId(userId);
 
             var doctorInfo = new DoctorProfileViewModel
             {

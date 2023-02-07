@@ -16,7 +16,7 @@ namespace Medicard.Services.Services.Implementations
 
         public InstitutionService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            this._unitOfWork = unitOfWork;
         }
 
         public IEnumerable<AllInstitutionsViewModel> AllInstitutions()
@@ -40,11 +40,11 @@ namespace Medicard.Services.Services.Implementations
                         WorkScheduleWeekendEnd = institution.WorkScheduleWeekendEnd,
                         ContactNumber = institution.ContactNumber,
                     };
-                    var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
+                    var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
                     
                     if (currentHeadDoctor != null)
                     {
-                        currentInstitution.HeadDoctorFullName = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.Id == currentHeadDoctor.DoctorId).FirstOrDefault().ToString();
+                        currentInstitution.HeadDoctorFullName = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.Id == currentHeadDoctor.DoctorId).FirstOrDefault().ToString();
                     }
 
                     institutions.Add(currentInstitution);

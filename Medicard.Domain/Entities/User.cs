@@ -21,5 +21,9 @@ namespace Medicard.Domain.Entities
 
         public ICollection<Message> Messages { get; set; }
 
+        public override string ToString()
+        {
+            return $"{this.FirstName} {this.LastName}";
+        }
     }
 }

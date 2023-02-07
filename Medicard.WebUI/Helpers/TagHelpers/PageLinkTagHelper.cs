@@ -29,14 +29,11 @@ namespace Medicard.WebUI.TagHelpers
             Microsoft.AspNetCore.Mvc.IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
-            // набор ссылок будет представлять список ul
             TagBuilder tag = new TagBuilder("ul");
             tag.AddCssClass("pagination");
 
-            // формируем три ссылки - на текущую, предыдущую и следующую
             TagBuilder currentItem = CreateTag(PagingInfo.PageNumber, urlHelper);
 
-            // создаем ссылку на предыдущую страницу, если она есть
             if (PagingInfo.HasPreviousPage)
             {
                 TagBuilder prevItem = CreateTag(PagingInfo.PageNumber - 1, urlHelper);
@@ -44,7 +41,7 @@ namespace Medicard.WebUI.TagHelpers
             }
 
             tag.InnerHtml.AppendHtml(currentItem);
-            // создаем ссылку на следующую страницу, если она есть
+
             if (PagingInfo.HasNextPage)
             {
                 TagBuilder nextItem = CreateTag(PagingInfo.PageNumber + 1, urlHelper);
@@ -57,6 +54,7 @@ namespace Medicard.WebUI.TagHelpers
         {
             TagBuilder item = new TagBuilder("li");
             TagBuilder link = new TagBuilder("a");
+
             if (pageNumber == this.PagingInfo.PageNumber)
             {
                 item.AddCssClass("active");
@@ -65,10 +63,12 @@ namespace Medicard.WebUI.TagHelpers
             {
                 link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber });
             }
+
             item.AddCssClass("page-item");
             link.AddCssClass("page-link");
             link.InnerHtml.Append(pageNumber.ToString());
             item.InnerHtml.AppendHtml(link);
+
             return item;
         }
     }
