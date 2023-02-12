@@ -11,11 +11,11 @@
      ViewData["Title"] = "Institutions";
 }
 
- <div class="container">
+ <div class="container mt-3">
     @if (this.User.IsInRole("Admin") || (this.User.IsInRole("Head doctor") && Model.CurrentHeadDoctor.InstitutionId == null))
     {
         <table class="table">
-            <thead style="background-color:#e6e6e6">
+            <thead style="background-color:white">
             <tr scope="col" colspan="12" class="text-center">
                 <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateInstitution" class="btn btn-secondary">@Localizer["CreateInstitution"]</a></th>
             </tr>
@@ -25,22 +25,22 @@
     <form asp-action="AllInstitutions" method="get" class="pb-3" role="search">
             <div class="row justify-content-md-center">
 
-            <div class="card-header col-sm-3 col-lg-4 align-self-center">
+            <div class="col-sm-3 col-lg-4 align-self-center">
                 <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
                      <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
                 </div>
             </div>
            
-            <div class="card-header col-sm-2 col-lg-1 align-self-center">
-                <div class="form-group px-1 pb-3">
-                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
+            <div class="col-sm-2 col-lg-2 align-self-center">
+                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start form-group px-1 pb-3">
+                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary"><i class="text-white fa fa-search"></i> @Localizer["Search"]</button>
                 </div>
             </div>
-            <div class="card-header col-sm-4 col-lg-3 align-self-center">
-                <div class="form-group px-1 pb-3">
+            <div class="col-sm-2 col-lg-2 align-self-center">
+                <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start form-group px-1 pb-3">
                     <a class="btn btn-warning" type="reset"
                        asp-controller="Institution"
-                       asp-action="AllInstitutions">@Localizer["Reset"]</a>
+                       asp-action="AllInstitutions"><i class="fa fa-refresh"></i> @Localizer["Reset"]</a>
             </div>
         </div>
      </div>

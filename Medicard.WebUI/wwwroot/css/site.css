@@ -28,3 +28,21 @@ body {
     height: 71px;
     width: 92px;
 }
+
+.chat,
+.list-chats {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    height: 410px;
+}
+
+.chat::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: silver;
+}

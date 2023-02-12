@@ -18,7 +18,7 @@ namespace Medicard.Services.Services.Implementations
 
         public AppointmentService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            this._unitOfWork = unitOfWork;
         }
 
         public async Task CreateAppointment(Patient patient, Doctor doctor, AppointmentViewModel model)
@@ -51,7 +51,7 @@ namespace Medicard.Services.Services.Implementations
 
         public AppointmentViewModel FillAppointViewModel(string doctorId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == doctorId).FirstOrDefault();
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == doctorId).FirstOrDefault();
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId);
 
             var appointmentViewModel = new AppointmentViewModel()
@@ -115,7 +115,7 @@ namespace Medicard.Services.Services.Implementations
 
         public Appointment GetByDoctorId(int doctorId)
         {
-            return _unitOfWork.GenericRepository<Appointment>().GetAll().Where(appointment => appointment.DoctorId == doctorId).FirstOrDefault();
+            return _unitOfWork.GenericRepository<Appointment>().GetAll(appointment => appointment.DoctorId == doctorId).FirstOrDefault();
         }
         public Appointment GetAppointment(string userId, AppointmentViewModel model)
         {
@@ -123,16 +123,14 @@ namespace Medicard.Services.Services.Implementations
             var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
             var patient = _unitOfWork.GenericRepository<Patient>().GetAll().Where(patient => patient.UserId == userId).FirstOrDefault();
 
-            return _unitOfWork.GenericRepository<Appointment>().GetAll()
-                .Where(e => e.PatientId == patient.Id)
-                .Where(d => d.Date == date && d.Time == time)
+            return _unitOfWork.GenericRepository<Appointment>().GetAll(appointment => appointment.PatientId == patient.Id && appointment.Date == date && appointment.Time == time)
                 .FirstOrDefault();
         }
 
         public IEnumerable<string> GetDoctorWorkHoursByDoctorId(int id)
         {
             var doctor = _unitOfWork.GenericRepository<Doctor>().GetById(id);
-            var workHours = _unitOfWork.GenericRepository<WorkHour>().GetAll().Where(hour => hour.ScheduleId == doctor.ScheduleId).Select(hour => hour.Hour);
+            var workHours = _unitOfWork.GenericRepository<WorkHour>().GetAll(hour => hour.ScheduleId == doctor.ScheduleId).Select(hour => hour.Hour);
             var doctorWorkHours = new List<string>();
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(doctor.InstitutionId);
 
@@ -159,7 +157,7 @@ namespace Medicard.Services.Services.Implementations
         {
             var date = DateTime.ParseExact(model.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
-            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().Where(patient => patient.UserId == userId).FirstOrDefault();
+            var patient = _unitOfWork.GenericRepository<Patient>().GetAll(patient => patient.UserId == userId).FirstOrDefault();
 
             return _unitOfWork.GenericRepository<Appointment>().GetAll()
                 .Where(e => e.PatientId == patient.Id)
@@ -172,9 +170,7 @@ namespace Medicard.Services.Services.Implementations
             var date = DateTime.ParseExact(model.Date, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             var time = DateTime.ParseExact(model.Time, "HH:mm", CultureInfo.InvariantCulture);
 
-            return _unitOfWork.GenericRepository<Appointment>().GetAll()
-                .Where(e => e.DoctorId == model.DoctorId)
-                .Where(d => d.Date == date && d.Time == time)
+            return _unitOfWork.GenericRepository<Appointment>().GetAll(appointment => appointment.DoctorId == model.DoctorId && appointment.Date == date && appointment.Time == time)
                 .FirstOrDefault() == null;
         }
     }

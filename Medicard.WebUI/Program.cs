@@ -15,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<MedicardDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-
 });
 
 builder.Services.AddLocalization(o => { o.ResourcesPath = "Resources"; });
@@ -48,6 +47,7 @@ builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IInstitutionService, InstitutionService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
 builder.Services.AddTransient<IHeadDoctorService, HeadDoctorService>();
+builder.Services.AddTransient<IChatService, ChatService>();
 
 builder.Services.AddRazorPages();
 builder.Services.AddSignalR();

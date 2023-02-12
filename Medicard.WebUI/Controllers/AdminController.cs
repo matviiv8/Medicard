@@ -99,7 +99,6 @@ namespace Medicard.WebUI.Controllers
                 this._adminService.CommissionHeadDoctor(headDoctor.Id, institution.Id);
             }
 
-
             return this.RedirectToAction("AllInstitutions", "Institution");
         }
 

@@ -18,7 +18,7 @@ namespace Medicard.Services.Services.Implementations
 
         public PatientService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            this._unitOfWork = unitOfWork;
         }
 
         public IEnumerable<AllPatientsViewModel> AllPatients()
@@ -54,7 +54,7 @@ namespace Medicard.Services.Services.Implementations
 
         public async Task AppointPersonalDoctor(Patient patient, string doctorsUserId)
         {
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == doctorsUserId).FirstOrDefault();
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == doctorsUserId).FirstOrDefault();
             patient.DoctorId = doctor.Id;
             _unitOfWork.GenericRepository<Patient>().Update(patient);
             await _unitOfWork.SaveAsync();
@@ -62,7 +62,7 @@ namespace Medicard.Services.Services.Implementations
 
         public async Task ChangePatient(PatientProfileViewModel model, string userId)
         {
-            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().FirstOrDefault(d => d.UserId == userId);
+            var patient = GetByUserId(userId);
 
             patient.FirstName = model.FirstName;
             patient.LastName = model.LastName;
@@ -79,12 +79,12 @@ namespace Medicard.Services.Services.Implementations
 
         public Patient GetByUserId(string userId)
         {
-            return _unitOfWork.GenericRepository<Patient>().GetAll().Where(patient => patient.UserId == userId).FirstOrDefault();
+            return _unitOfWork.GenericRepository<Patient>().GetAll(patient => patient.UserId == userId).FirstOrDefault();
         }
 
         public PatientProfileViewModel ViewProfile(string userId)
         {
-            var patient = _unitOfWork.GenericRepository<Patient>().GetAll().FirstOrDefault(d => d.UserId == userId);
+            var patient = GetByUserId(userId);
 
             var patientInfo = new PatientProfileViewModel
             {

@@ -12,21 +12,21 @@
      ViewData["Title"] = "Doctors";
 }
 
-    <div class="container">
+    <div class="container mt-3">
         @if (this.User.IsInRole("Admin") || this.User.IsInRole("Head doctor"))
         {
             <table class="table">
-                <thead style="background-color:#e6e6e6">
+                <thead style="background-color:white">
                 <tr scope="col" colspan="12" class="text-center">
                     <th scope="col" colspan="12"><a asp-controller="Admin" asp-action="CreateDoctor" class="btn btn-secondary">@Localizer["CreateDoctor"]</a></th>
                 </tr>
             </thead>
         </table>
         }
-    <form asp-action="AllDoctors" method="get" class="pb-3" role="search">
-                <div class="row">
+    <form asp-action="AllDoctors" method="get" class="pb-4" role="search">
+                <div class="row mt-1">
 
-                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                <div class="col-sm-2 col-lg-2 align-self-center">
                     <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
                         <select name="institution" value="institution" class="form-control">
                             <option value="">@Localizer["Institution"]</option>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                <div class="col-sm-2 col-lg-2 align-self-center">
                     <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
                         <select name="specialization" value="specialization" class="form-control">
                             <option value="">@Localizer["Specialization"]</option>
@@ -53,22 +53,22 @@
                     </div>
                 </div>
 
-                <div class="card-header col-sm-2 col-lg-3 align-self-center">
+                <div class="col-sm-2 col-lg-3 align-self-center">
                     <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start px-1 pb-3">
                          <input class="form-control" type="text" name="Search" value="@ViewData["Search"]" placeholder="@Localizer["FindByName"]" />
                     </div>
                 </div>
            
-                <div class="card-header col-sm-2 col-lg-1 align-self-center">
-                    <div class="form-group px-1 pb-3">
-                        <button type="submit" style="background-color:#01ABC2" class="btn btn-primary">@Localizer["Search"]</button>
+                <div class="col-sm-2 col-lg-2 align-self-center">
+                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start form-group px-1 pb-3">
+                        <button type="submit" style="background-color:#01ABC2" class="btn btn-primary"><i class="text-white fa fa-search"></i> @Localizer["Search"]</button>
                     </div>
                 </div>
-                <div class="card-header col-sm-3 col-lg-2 align-self-center">
-                    <div class="form-group px-1 pb-3">
+                <div class="col-sm-2 col-lg-2 align-self-center">
+                    <div class="mx-0 mb-0 row justify-content-sm-center justify-content-start form-group px-1 pb-3">
                         <a class="btn btn-warning" type="reset"
                            asp-controller="Doctor"
-                           asp-action="AllDoctors">@Localizer["Reset"]</a>
+                           asp-action="AllDoctors"><i class="fa fa-refresh"></i> @Localizer["Reset"]</a>
                 </div>
             </div>
          </div>
@@ -87,6 +87,10 @@ else{
                 <div class="row">
                     <div class="col-2" style="width: 10rem; ">
                         <img class="card-img-top img-responsive w-100 m-2" style="width: 10rem;" src="~/images/@doctor.Image" alt="Doctor Image">
+                        @if (SignInManager.IsSignedIn(this.User) && this.User.IsInRole("Patient") && doctor.Specialization == "Family doctor")
+                        {
+                            <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info mt-1 mb-1" style="font-size: 15px;">@Localizer["AppointPersonalDoctor"]</a>
+                        }
                     </div>
                     <div class="col-lg-8 col-m-5 col-sm-8">
 
@@ -128,16 +132,15 @@ else{
 
                              @if (SignInManager.IsSignedIn(this.User) && doctor.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                              {
-                                <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info">@Localizer["Message"]</a>
+                                <a asp-controller="Chat" asp-action="PrivateMessage" asp-route-user="@doctor.UserName" class="btn btn-info mt-1 mb-1">@Localizer["Message"]</a>
                                 @if (this.User.IsInRole("Admin"))
                                 {
-                                    <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" onclick = "return confirm('@Localizer["AgreeToDelete"]');" class="btn btn-info">@Localizer["DeleteDoctor"]</a>
+                                <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" onclick = "return confirm('@Localizer["AgreeToDelete"]');" class="btn btn-info mt-1 mb-1">@Localizer["DeleteDoctor"]</a>
                                 }
-                                @if (doctor.Specialization == "Family doctor")
+                                else if (this.User.IsInRole("Patient"))
                                 {
-                                    <a href="@Url.Action("AppointPersonalDoctor", "Doctor", new {id = doctor.Id})"  class="btn btn-info">@Localizer["AppointPersonalDoctor"]</a>
+                                    <a href="@Url.Action("Appoint", "Appointment", new {id = doctor.Id})"  class="btn btn-info mt-1 mb-1">@Localizer["MakeAppointment"]</a>
                                 }
-                                <a href="@Url.Action("Appoint", "Appointment", new {id = doctor.Id})"  class="btn btn-info">@Localizer["MakeAppointment"]</a>
                         }
                     </div>
                 </div>

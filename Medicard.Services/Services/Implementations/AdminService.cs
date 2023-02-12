@@ -19,8 +19,8 @@ namespace Medicard.Services.Services.Implementations
 
         public AdminService(IUnitOfWork unitOfWork, UserManager<User> userManager)
         {
-            _unitOfWork = unitOfWork;
-            _userManager = userManager;
+            this._unitOfWork = unitOfWork;
+            this._userManager = userManager;
         }
 
         public async Task CreateDoctor(CreateDoctorViewModel doctor)
@@ -102,8 +102,8 @@ namespace Medicard.Services.Services.Implementations
             }
             else
             {
-                var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().Where(doctor => doctor.UserId == userId).FirstOrDefault();
-                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
+                var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == userId).FirstOrDefault();
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
                 if (currentHeadDoctor != null)
                 {
                     newInstitution.HeadDoctor = currentHeadDoctor;
@@ -118,7 +118,7 @@ namespace Medicard.Services.Services.Implementations
         public async void DeleteDoctor(string id)
         {
             var user = _unitOfWork.GenericRepository<User>().GetById(id);
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == id);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == id).FirstOrDefault();
 
             using (var client = new HttpClient())
             {
@@ -136,7 +136,7 @@ namespace Medicard.Services.Services.Implementations
         public async void DeleteHeadDoctor(string id)
         {
             var user = _unitOfWork.GenericRepository<User>().GetById(id);
-            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll().FirstOrDefault(d => d.UserId == id);
+            var doctor = _unitOfWork.GenericRepository<Doctor>().GetAll(doctor => doctor.UserId == id).FirstOrDefault();
             var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetById(doctor.HeadDoctor.Id);
 
             DeleteDoctor(id);
@@ -150,7 +150,7 @@ namespace Medicard.Services.Services.Implementations
         public async void DeleteInstitution(int institutionId)
         {
             var institution = _unitOfWork.GenericRepository<Institution>().GetById(institutionId);
-            var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institutionId).FirstOrDefault();
+            var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.InstitutionId == institutionId).FirstOrDefault();
 
             if(headDoctor != null)
             {
@@ -198,7 +198,7 @@ namespace Medicard.Services.Services.Implementations
             }
             else
             {
-                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll().Where(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
+                var currentHeadDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.InstitutionId == institution.Id).FirstOrDefault();
                 institution.HeadDoctor = currentHeadDoctor;
             }
 

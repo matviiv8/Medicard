@@ -1,0 +1,195 @@
+﻿@model List<Medicard.Services.ViewModels.Chat.ChatViewModel>
+
+<section class="mt-3">
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-5 col-lg-5 col-xl-4 mb-4 mb-md-0">
+          <br />
+          <div class="card">
+              <div class="card-body">
+                <div class="list-chats">
+                      <form asp-action="AllChats" method="get" class="pb-1" role="search">
+                        <div class="row">
+                            <div class="col-sm-1 col-lg-7">
+                                <div class="mx-0 mb-0 px-1 pb-1">
+                                    <input class="form-control" type="text" value="@ViewData["Search"]" placeholder="Search" name="Search">
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-lg-2">
+                                <div class="mx-0 px-3 pb-1">
+                                    <button type="submit" style="background-color:#01ABC2" class="btn btn-primary"><i class="text-white fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-lg-2">
+                                <div class="mx-0 px-3 pb-1">
+                                    <a class="btn btn-warning" type="reset"
+                                       asp-controller="Chat"
+                                       asp-action="AllChats"><i class="fa fa-refresh"></i></a>
+                                </div>
+                           </div>
+                        </div>
+                    </form>
+                    <ul class="list-unstyled mb-1" id="userlist">
+                    @foreach(var chat in Model.OrderByDescending(chat => chat.LastMessageDateTime))
+                    {
+                      <li class="p-2 border-bottom">
+                         <form asp-action="SwitchChat" method="post" asp-route-userName="@chat.UserName" class="d-flex justify-content-between">
+                             <button class="w-100" style=" background:none; border:none;">
+                          <div class="d-flex flex-row">
+                            <div>
+                              <img
+                                src="~/images/@chat.Picture"
+                                alt="avatar" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                              <span class="badge bg-success badge-dot"></span>
+                            </div>
+                            <div class="pt-1">
+                              <p class="fw-bold mb-0">@chat.FullName</p>
+                              @if(!String.IsNullOrEmpty(chat.LastMessageText))
+                              {
+                                <p class="small text-muted mb-1"><i class="far fa-clock"></i> <span id="lastmessagedatetime @chat.Id">@chat.LastMessageDateTime.ToString("yyyy-MM-dd HH:mm") </span></p>
+                              }
+                            </div>
+                          </div>
+                          <div class="d-flex w-100 justify-content-start">
+                              @if (!String.IsNullOrEmpty(chat.LastMessageText))
+                              {
+                                <p  class="mb-1 markertext fw-bold" id="lastmessagesender @chat.Id">@chat.LastMessageSender:</p>
+                              }
+                              <div class="ordinary-text-color text-sm-left">
+                                &nbsp;<span id="lastmessagetext @chat.Id">@chat.LastMessageText</span>
+                              </div>
+                          </div>
+                          </button>
+                        </form>
+                      </li>
+                      }
+                      </ul>
+                    </div>
+                </div>
+              </div>
+          </div>
+
+            @if (ViewBag.UserName != null)
+            {
+                    var messages = ViewBag.Messages as List<Medicard.Domain.Entities.Message>;
+                    var current = ViewBag.CurrentUser as Medicard.Domain.Entities.User;
+                    var target = ViewBag.TargetUser as Medicard.Domain.Entities.User;
+                    var chatId = target.Id;
+                    var username = current.UserName;
+                    var targetname = target.UserName;
+                    <div class="col-md-6 col-lg-7 col-xl-8">
+                        <h2 class="text-center">Chatting to @target</h2>
+                        <div class="chat" id="chat">
+                            @if (messages != null)
+                            {
+                                @foreach (var message in messages.OrderBy(m => m.When))
+                                {
+                                    var position = current.ToString() == message.User.ToString() ? "text-end" : "text-start";
+                                    var alert = current.ToString() == message.User.ToString() ? "alert-secondary" : "alert-info";
+                                    <div class="row">
+                                    <div class="col-md @position">
+                                        <br>
+                                        <span class="text-dark">@message.User.ToString()</span>
+                                        <div class="alert col-md mb-0 @alert" role="alert">
+                                            <span class = "d-block" style="word-wrap: break-word;">@message.Text</span>
+                                        </div>
+                                        <small class="text-info">@message.When.ToString("yyyy-MM-dd HH:mm")</small>
+                                </div>
+                            </div>
+                                }
+                            }
+                        </div>
+                            <form asp-action="SendMessage" id="SendMessageForm" class="row">
+                                <div class="input-group mb-4 col-md-12">
+                                    <input name="Text" id="MessageText" class="form-control" />
+                                    <button type="submit" id="submitBtn" class="btn btn-info">Send</button>
+                                </div>
+                            </form>
+                      </div>
+
+      @section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var div = document.getElementById("chat");
+        div.scrollTop = div.scrollHeight;
+    </script>
+    <script>
+        var username = "@username";
+        var targetname = "@targetname";
+        var currentFullName = "@current.ToString():";
+        var targetFullName = "@target.ToString():";
+        var chatId = "@chatId";
+        var objDiv = document.getElementById("chat");
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+            connection.start().then(function () {
+                connection.invoke('joinPrivate', targetname);
+                document.getElementById("SendMessageForm").addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    var data = {
+                        Text: document.getElementById("MessageText").value,
+                        UserName: username,
+                        TargetName: targetname
+                    }
+                    if (document.getElementById("MessageText").value == "" || document.getElementById("MessageText").value.match(/^(\s)+$/)) return;
+                    document.getElementById("MessageText").value = ""
+                    connection.invoke("sendPrivateMessage", data).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                });
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+            window.addEventListener("unload", function () {
+                connection.invoke("leavePrivate", targetname);
+            });
+            function formatDate(dateString) {
+                var date = new Date(Date.parse(dateString))
+                var dateStr =
+                    ((date.getFullYear())) + "-" +
+                    ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
+                    ("00" + date.getDate()).slice(-2) + " " +
+                    ("00" + date.getHours()).slice(-2) + ":" +
+                    ("00" + date.getMinutes()).slice(-2);
+                return dateStr;
+            }
+            connection.on("PrivateMessage", (data) => {
+                var position = data.userName === username ? "text-end" : "text-start";
+                var alert = data.userName === username ? "alert-secondary" : "alert-info";
+                var fullname = data.userName == username ? currentFullName : targetFullName;
+                var message = document.createElement("div");
+                message.className = "row";
+                var messageCol = document.createElement("div");
+                messageCol.classList = "col-md " + position;
+                var messageUser = document.createElement("small");
+                messageUser.className = "text-dark";
+                messageUser.textContent = fullname;
+                var messageAlert = document.createElement("div");
+                messageAlert.classList = "alert mb-0 " + alert;
+                var messageAlertMessage = document.createElement("div");
+                messageAlertMessage.className = "d-block";
+                messageAlertMessage.style.cssText = "word-wrap: break-word;";
+                messageAlertMessage.innerHTML = data.text;
+                var messageDt = document.createElement("small");
+                messageDt.className = "text-info";
+                messageDt.textContent = formatDate(data.when);
+                document.getElementById("lastmessagedatetime " + chatId).textContent = formatDate(data.when);
+                document.getElementById("lastmessagesender " + chatId).textContent = fullname;
+                document.getElementById("lastmessagetext " + chatId).textContent = data.text;
+                messageAlert.appendChild(messageAlertMessage);
+                messageCol.appendChild(messageUser);
+                messageCol.appendChild(messageAlert);
+                messageCol.appendChild(messageDt);
+                message.appendChild(messageCol);
+                console.log(message);
+                document.getElementById("chat").appendChild(message);
+                objDiv.scrollTop = objDiv.scrollHeight;
+            });
+        </script >
+        }
+      }
+    </div>
+  </div>
+</section>
+

@@ -22,7 +22,7 @@
                         <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
                                 <div asp-validation-summary="ModelOnly" class="alert alert-danger alert-dismissible fade show"></div>
                                 <div class="input-group mb-1">
-                                    <input asp-for="Email" class="form-control" placeholder="Email" autocomplete="email" />
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Email" autocomplete="email" />
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-envelope"></span>
@@ -31,10 +31,10 @@
                                 </div>
                                 <span asp-validation-for="Email" class="text-danger"></span>
                                 <div class="input-group mb-1 mt-3">
-                                    <input asp-for="Password" class="form-control" placeholder="Password" autocomplete="password" />
+                                    <input asp-for="Password" class="form-control" id="password" placeholder="Password" autocomplete="password" />
                                     <div class="input-group-append">
                                         <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
+                                            <span class="fas fa-lock" onclick='ShowPassword()'></span>
                                         </div>
                                     </div>
                                 </div>
@@ -88,4 +88,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/ShowPassword.js"></script>
 }
