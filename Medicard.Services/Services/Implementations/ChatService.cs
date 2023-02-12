@@ -31,6 +31,7 @@ namespace Medicard.Services.Services.Implementations
             {
                 var chat = new ChatViewModel
                 {
+                    Id = targetUser.Id,
                     UserName = targetUser.UserName,
                     FullName = targetUser.ToString(),
                 };

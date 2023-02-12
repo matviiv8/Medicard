@@ -46,17 +46,17 @@
                               <p class="fw-bold mb-0">@chat.FullName</p>
                               @if(!String.IsNullOrEmpty(chat.LastMessageText))
                               {
-                                <p class="small text-muted mb-1"><i class="far fa-clock"></i> <span id="lastmessagedatetime">@chat.LastMessageDateTime.ToString("yyyy-MM-dd HH:mm") </span></p>
+                                <p class="small text-muted mb-1"><i class="far fa-clock"></i> <span id="lastmessagedatetime @chat.Id">@chat.LastMessageDateTime.ToString("yyyy-MM-dd HH:mm") </span></p>
                               }
                             </div>
                           </div>
                           <div class="d-flex w-100 justify-content-start">
                               @if (!String.IsNullOrEmpty(chat.LastMessageText))
                               {
-                                <p  class="mb-1 markertext fw-bold" id="lastmessagesender">@chat.LastMessageSender:</p>
+                                <p  class="mb-1 markertext fw-bold" id="lastmessagesender @chat.Id">@chat.LastMessageSender:</p>
                               }
                               <div class="ordinary-text-color text-sm-left">
-                                &nbsp;<span id="lastmessagetext">@chat.LastMessageText</span>
+                                &nbsp;<span id="lastmessagetext @chat.Id">@chat.LastMessageText</span>
                               </div>
                           </div>
                           </button>
@@ -74,6 +74,7 @@
                     var messages = ViewBag.Messages as List<Medicard.Domain.Entities.Message>;
                     var current = ViewBag.CurrentUser as Medicard.Domain.Entities.User;
                     var target = ViewBag.TargetUser as Medicard.Domain.Entities.User;
+                    var chatId = target.Id;
                     var username = current.UserName;
                     var targetname = target.UserName;
                     <div class="col-md-6 col-lg-7 col-xl-8">
@@ -119,6 +120,7 @@
         var targetname = "@targetname";
         var currentFullName = "@current.ToString():";
         var targetFullName = "@target.ToString():";
+        var chatId = "@chatId";
         var objDiv = document.getElementById("chat");
         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
             connection.start().then(function () {
@@ -172,9 +174,9 @@
                 var messageDt = document.createElement("small");
                 messageDt.className = "text-info";
                 messageDt.textContent = formatDate(data.when);
-                document.getElementById("lastmessagedatetime").textContent = formatDate(data.when);
-                document.getElementById("lastmessagesender").textContent = fullname;
-                document.getElementById("lastmessagetext").textContent = data.text;
+                document.getElementById("lastmessagedatetime " + chatId).textContent = formatDate(data.when);
+                document.getElementById("lastmessagesender " + chatId).textContent = fullname;
+                document.getElementById("lastmessagetext " + chatId).textContent = data.text;
                 messageAlert.appendChild(messageAlertMessage);
                 messageCol.appendChild(messageUser);
                 messageCol.appendChild(messageAlert);
