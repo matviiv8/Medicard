@@ -29,7 +29,7 @@
                            </div>
                         </div>
                     </form>
-                    <ul class="list-unstyled mb-1">
+                    <ul class="list-unstyled mb-1" id="userlist">
                     @foreach(var chat in Model.OrderByDescending(chat => chat.LastMessageDateTime))
                     {
                       <li class="p-2 border-bottom">
@@ -51,7 +51,10 @@
                             </div>
                           </div>
                           <div class="d-flex w-100 justify-content-start">
-                              <p  class="mb-1 markertext fw-bold" id="lastmessagesender">@chat.LastMessageSender:</p>
+                              @if (!String.IsNullOrEmpty(chat.LastMessageText))
+                              {
+                                <p  class="mb-1 markertext fw-bold" id="lastmessagesender">@chat.LastMessageSender:</p>
+                              }
                               <div class="ordinary-text-color text-sm-left">
                                 &nbsp;<span id="lastmessagetext">@chat.LastMessageText</span>
                               </div>
