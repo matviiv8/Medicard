@@ -135,6 +135,9 @@
   <data name="FindByName" xml:space="preserve">
     <value>Знайти за прізвищем або ім'ям:</value>
   </data>
+  <data name="Free" xml:space="preserve">
+    <value>Безкоштовний</value>
+  </data>
   <data name="HeadOfThe" xml:space="preserve">
     <value>Керівник в</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="NoInstitution" xml:space="preserve">
     <value>Не вказано місце роботи</value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Платний: Вартість одного прийому</value>
   </data>
   <data name="Reset" xml:space="preserve">
     <value>Скинути</value>

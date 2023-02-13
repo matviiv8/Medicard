@@ -22,5 +22,9 @@ namespace Medicard.Services.ViewModels.Doctor
         public string Institution { get; set; }
 
         public bool IsHeadDoctor { get; set; } = false;
+
+        public bool IsPaid { get; set; } = false;
+
+        public decimal ServicePrice { get; set; }
     }
 }

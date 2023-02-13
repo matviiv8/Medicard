@@ -56,6 +56,18 @@
             </select>
             </div>
             
+            <div class="form-group">
+                <label asp-for="IsPaid" class="form-check-label"></label>
+                <input asp-for="IsPaid" class="form-check-input" id="ispaid" type="checkbox">
+                <span asp-validation-for="IsPaid" class="text-danger"></span>
+            </div>
+
+            <div id="serviceprice">
+                <label asp-for="ServicePrice" class="control-label"></label>
+                <input asp-for="ServicePrice" class="form-control input-validation-error" type="number" value="0"/>
+                <span asp-validation-for="ServicePrice" class="text-danger"></span>
+            </div>
+
             @if (this.User.IsInRole("Admin"))
             {
                 <div class="form-group">
@@ -75,4 +87,16 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+          $("#serviceprice").hide();
+          $("#ispaid").click(function() {
+            if ($(this).is(":checked")) {
+               $("#serviceprice").show();
+            } else {
+              $("#serviceprice").hide();
+            }
+          });
+        });
+    </script>
 }

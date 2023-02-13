@@ -96,6 +96,14 @@ else{
 
                         <h5 class="card-title mt-1 mb-2">@Localizer["Doctor"] @doctor.FullName</h5>
                         <h6 class="mb-3">@doctor.Specialization</h6>
+                        @if (@doctor.IsPaid == true)
+                        {
+                            <h7 class="mb-4"><i class="fas fa-money-bill-alt"></i> @Localizer["Paid"] @doctor.ServicePrice</h7>
+                        }
+                        else
+                        {
+                            <h7 class="mb-4"><i class="fas fa-money-bill-alt"></i> @Localizer["Free"]</h7>
+                        }
                         <table class="table">
                             <tbody>
                                 <tr>
@@ -136,11 +144,11 @@ else{
                                 @if (this.User.IsInRole("Admin"))
                                 {
                                 <a href="@Url.Action("DeleteDoctor", "Admin", new { id = doctor.Id })" onclick = "return confirm('@Localizer["AgreeToDelete"]');" class="btn btn-info mt-1 mb-1">@Localizer["DeleteDoctor"]</a>
-                                }
-                                else if (this.User.IsInRole("Patient"))
-                                {
-                                    <a href="@Url.Action("Appoint", "Appointment", new {id = doctor.Id})"  class="btn btn-info mt-1 mb-1">@Localizer["MakeAppointment"]</a>
-                                }
+                            }
+                            else if (this.User.IsInRole("Patient"))
+                            {
+                                <a href="@Url.Action("Appoint", "Appointment", new {id = doctor.Id})"  class="btn btn-info mt-1 mb-1">@Localizer["MakeAppointment"]</a>
+                            }
                         }
                     </div>
                 </div>

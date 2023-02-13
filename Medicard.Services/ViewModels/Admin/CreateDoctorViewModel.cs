@@ -36,5 +36,9 @@ namespace Medicard.Services.ViewModels.Admin
         public string? Specialization { get; set; }
 
         public string? ContactNumber { get; set; }
+
+        public bool IsPaid { get; set; } = false;
+
+        public decimal ServicePrice { get; set; }
     }
 }
