@@ -23,6 +23,11 @@ namespace Medicard.Domain.Entities
 
         public Gender Gender { get; set; }
 
+        public bool IsPaid { get; set; } = false;
+
+        [Column(TypeName = "decimal(18, 2)")]
+        public decimal ServicePrice { get; set; }
+
         public string? DoctorPicture { get; set; }
 
         public User? User { get; set; }

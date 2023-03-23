@@ -61,6 +61,8 @@ namespace Medicard.Services.Services.Implementations
                         Specialization = doctor.Specialization,
                         ContactNumber = doctor.ContactNumber,
                         ScheduleId = 1,
+                        IsPaid = doctor.IsPaid,
+                        ServicePrice = doctor.ServicePrice,
                     };
 
                     _unitOfWork.GenericRepository<Doctor>().Add(newDoctor);

@@ -48,6 +48,8 @@ namespace Medicard.Services.Services.Implementations
                         Gender = doctor.Gender,
                         Image = doctor.DoctorPicture,
                         UserName = _unitOfWork.GenericRepository<User>().GetById(doctor.UserId).UserName,
+                        IsPaid = doctor.IsPaid,
+                        ServicePrice = doctor.ServicePrice,
                     };
 
                     var headDoctor = _unitOfWork.GenericRepository<HeadDoctor>().GetAll(headDoctor => headDoctor.DoctorId == doctor.Id).FirstOrDefault();
